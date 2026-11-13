@@ -151,10 +151,36 @@ docker compose up -d --build
 
 - Certificates persist in the `edge-certs` volume. They are **self-signed**.
 
-## Testing and CI
+## Gateway CLI flags
+
+```text
+-http-port          Public HTTP ingress port (default 80)
+-tls-port           Public HTTPS ingress port with SNI TLS (default 443)
+-tunnel-port        Agent tunnel port (default 4242)
+-domain             Base wildcard domain (default edgeproxy.mesh)
+-rps / -burst       Per-IP token bucket (default 100 / 150)
+-internal-addr      Private IPC address (default 127.0.0.1:8081)
+-internal-secret    Shared secret for private IPC (required to enable it)
+-cert-dir           TLS certificate directory (default ./certs)
+-tunnel-tls         Enable TLS on the tunnel wire (default false)
+-tunnel-cert        PEM certificate for the tunnel listener (optional)
+-tunnel-key         PEM private key for the tunnel listener (optional)
+-tunnel-ca          CA bundle to verify agent client certs (enables mTLS)
+-tunnel-max-conns   Max concurrent agent connections (default 1024)
+```
+
+## Observability
+
+- Prometheus metrics: `GET /metrics` on the private IPC listener (`:8081`), including active tunnels, goroutines, heap usage and per-tunnel byte counters.
+- Profiling: `/debug/pprof/*` (index, cmdline, profile, symbol, trace) behind the same shared-secret auth.
+- Agent telemetry: per-tunnel RPS, latency percentiles, bytes in/out, error count, reported every 5 s via `FrameMetrics`.
+
+## Testing, benchmarks and CI
 
 ```bash
 make test        # go vet + go test + node tests + tsc
+make bench       # Go micro-benchmarks (framing, routing, authorization)
+make fuzz        # Fuzz wire protocol parser and subdomain validator
 make security    # gitleaks over the working tree
 npm run build
 ```
@@ -219,5 +245,5 @@ npm run dev
 - Панель за замовчуванням слухає `127.0.0.1`; для віддаленого доступу задайте `EDGEPROXY_API_KEY`.
 - Firestore-правила закриті повністю; сервер працює через Admin SDK.
 - Токени агентів зберігаються лише як SHA-256-хеш.
-- TLS у шлюзі **самопідписаний**, а тунель `:4242` — звичайний TCP без шифрування.
+- TLS у шлюзі **самопідписаний**; тунель `:4242` за замовчуванням — звичайний TCP, але можна увімкнути TLS/mTLS через `-tunnel-tls`.
 - PostgreSQL-схема в `db/` є довідковою; робоче сховище — Firestore (або пам'ять).
