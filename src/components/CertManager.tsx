@@ -124,15 +124,15 @@ export const CertManager: React.FC<CertManagerProps> = ({
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-zinc-900/80 border border-zinc-800 p-5 rounded-xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[var(--paper-2)]/80 border border-[var(--line)] p-5 rounded-xl">
         <div>
           <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+            <span className="p-1.5 rounded-lg bg-[var(--accent)]/10 border border-[var(--accent)] text-[var(--accent)]">
               <KeyRound className="w-5 h-5" />
             </span>
             <h1 className="text-xl font-bold text-white tracking-tight font-mono">{t.title}</h1>
           </div>
-          <p className="text-sm text-zinc-400 mt-1">{t.subtitle}</p>
+          <p className="text-sm text-[var(--muted)] mt-1">{t.subtitle}</p>
         </div>
 
         <button
@@ -140,7 +140,7 @@ export const CertManager: React.FC<CertManagerProps> = ({
             setIssueStep('form');
             setIsModalOpen(true);
           }}
-          className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-mono text-sm font-semibold transition-colors shadow-lg shadow-emerald-900/30"
+          className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-[var(--accent)] hover:bg-[var(--accent)] text-white font-mono text-sm font-semibold transition-colors shadow-lg shadow-emerald-900/30"
         >
           <Plus className="w-4 h-4" />
           <span>{t.issueNewBtn}</span>
@@ -148,29 +148,29 @@ export const CertManager: React.FC<CertManagerProps> = ({
       </div>
 
       {/* ACME Status Banner */}
-      <div className="bg-zinc-950/70 border border-zinc-800/80 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono">
-        <div className="flex items-center gap-2 text-emerald-300">
-          <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+      <div className="bg-[var(--paper)]/70 border border-[var(--line)]/80 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono">
+        <div className="flex items-center gap-2 text-[var(--accent)]">
+          <CheckCircle2 className="w-4 h-4 text-[var(--accent)]" />
           <span>{t.acmeStatus}</span>
         </div>
-        <div className="flex items-center gap-3 text-zinc-400">
+        <div className="flex items-center gap-3 text-[var(--muted)]">
           <span className="flex items-center gap-1">
-            <Lock className="w-3.5 h-3.5 text-emerald-400" />
+            <Lock className="w-3.5 h-3.5 text-[var(--accent)]" />
             <span>TLS 1.3 / ECDSA P-256</span>
           </span>
           <span>•</span>
-          <span className="text-zinc-300">{t.ocspStapled}</span>
+          <span className="text-[var(--ink-2)]">{t.ocspStapled}</span>
         </div>
       </div>
 
       {/* Certificates Cards / Table */}
       {certificates.length === 0 ? (
-        <div className="bg-zinc-950/70 border border-zinc-800/80 rounded-xl p-8 text-center space-y-3 font-mono">
-          <KeyRound className="w-10 h-10 text-zinc-600 mx-auto" />
-          <h3 className="text-sm font-semibold text-zinc-300">
+        <div className="bg-[var(--paper)]/70 border border-[var(--line)]/80 rounded-xl p-8 text-center space-y-3 font-mono">
+          <KeyRound className="w-10 h-10 text-[var(--faint)] mx-auto" />
+          <h3 className="text-sm font-semibold text-[var(--ink-2)]">
             {language === 'ua' ? 'Немає активних SSL/TLS сертифікатів' : 'No active SSL/TLS certificates'}
           </h3>
-          <p className="text-xs text-zinc-500 max-w-md mx-auto">
+          <p className="text-xs text-[var(--muted)] max-w-md mx-auto">
             {language === 'ua'
               ? 'Натисніть кнопку "Випустити Новий Сертифікат" для автоматичного запиту валідації ACME v2 DNS-01 або HTTP-01.'
               : 'Click "Issue New Certificate" to trigger automated ACME v2 DNS-01 or HTTP-01 issuance.'}
@@ -180,7 +180,7 @@ export const CertManager: React.FC<CertManagerProps> = ({
               setIssueStep('form');
               setIsModalOpen(true);
             }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-lg shadow-emerald-900/30 transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--accent)] hover:bg-[var(--accent)] text-white text-xs font-semibold shadow-lg shadow-emerald-900/30 transition-colors"
           >
             <Plus className="w-4 h-4" />
             <span>{t.issueNewBtn}</span>
@@ -191,51 +191,51 @@ export const CertManager: React.FC<CertManagerProps> = ({
           {certificates.map((cert) => (
             <div
               key={cert.id}
-              className="bg-zinc-900/90 border border-zinc-800 hover:border-zinc-700 rounded-xl p-5 shadow-sm space-y-4 font-mono text-xs transition-all"
+              className="bg-[var(--paper-2)]/90 border border-[var(--line)] hover:border-[var(--line)] rounded-xl p-5 shadow-sm space-y-4 font-mono text-xs transition-all"
             >
               <div className="flex items-start justify-between">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.7)]"></span>
+                    <span className="w-2.5 h-2.5 rounded-full bg-[var(--accent)] shadow-[0_0_8px_rgba(16,185,129,0.7)]"></span>
                     <h3 className="font-bold text-white text-sm tracking-wide">{cert.domain}</h3>
                   </div>
-                  <div className="text-[11px] text-zinc-400 mt-1">Issuer: {cert.issuer}</div>
+                  <div className="text-[11px] text-[var(--muted)] mt-1">Issuer: {cert.issuer}</div>
                 </div>
 
-                <span className="px-2 py-0.5 rounded bg-emerald-950/80 border border-emerald-800 text-emerald-300 uppercase text-[10px] font-bold">
+                <span className="px-2 py-0.5 rounded bg-[var(--accent-soft)]/80 border border-emerald-800 text-[var(--accent)] uppercase text-[10px] font-bold">
                   {cert.status}
                 </span>
               </div>
 
               {/* SANs and challenge info */}
-              <div className="bg-zinc-950/80 p-3 rounded-lg border border-zinc-800/80 space-y-2">
+              <div className="bg-[var(--paper)]/80 p-3 rounded-lg border border-[var(--line)]/80 space-y-2">
                 <div className="flex justify-between">
-                  <span className="text-zinc-500">Challenge Type:</span>
-                  <span className="text-zinc-300">{cert.challengeType}</span>
+                  <span className="text-[var(--muted)]">Challenge Type:</span>
+                  <span className="text-[var(--ink-2)]">{cert.challengeType}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-zinc-500">Valid Period:</span>
-                  <span className="text-zinc-300">{cert.validFrom} → {cert.validTo}</span>
+                  <span className="text-[var(--muted)]">Valid Period:</span>
+                  <span className="text-[var(--ink-2)]">{cert.validFrom} → {cert.validTo}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-zinc-500">Days Remaining:</span>
-                  <span className="text-emerald-400 font-bold">{cert.daysRemaining} days</span>
+                  <span className="text-[var(--muted)]">Days Remaining:</span>
+                  <span className="text-[var(--accent)] font-bold">{cert.daysRemaining} days</span>
                 </div>
-                <div className="text-[10px] text-zinc-500 truncate pt-1 border-t border-zinc-850">
+                <div className="text-[10px] text-[var(--muted)] truncate pt-1 border-t border-zinc-850">
                   Fingerprint: {cert.fingerprint}
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-2 border-t border-zinc-800 text-xs">
-                <span className="text-zinc-400 flex items-center gap-1.5">
-                  <RefreshCw className="w-3.5 h-3.5 text-emerald-400" />
+              <div className="flex items-center justify-between pt-2 border-t border-[var(--line)] text-xs">
+                <span className="text-[var(--muted)] flex items-center gap-1.5">
+                  <RefreshCw className="w-3.5 h-3.5 text-[var(--accent)]" />
                   <span>Auto-renew: ON (at 30 days)</span>
                 </span>
 
                 <button
                   onClick={() => onRenewCert(cert.id)}
                   disabled={cert.status === 'renewing'}
-                  className="px-3 py-1 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-200 transition-colors flex items-center gap-1"
+                  className="px-3 py-1 rounded bg-[var(--paper-2)] hover:bg-[var(--line)] text-[var(--ink)] transition-colors flex items-center gap-1"
                 >
                   <RefreshCw className={`w-3 h-3 ${cert.status === 'renewing' ? 'animate-spin' : ''}`} />
                   <span>{cert.status === 'renewing' ? t.renewing : t.forceRenewBtn}</span>
@@ -249,30 +249,30 @@ export const CertManager: React.FC<CertManagerProps> = ({
       {/* Modal for Issuing New SSL Cert */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
-          <div className="bg-zinc-900 border border-zinc-800 rounded-xl max-w-lg w-full p-6 shadow-2xl space-y-4 font-mono text-xs">
-            <div className="flex items-start justify-between border-b border-zinc-800 pb-3">
+          <div className="bg-[var(--paper-2)] border border-[var(--line)] rounded-xl max-w-lg w-full p-6 shadow-2xl space-y-4 font-mono text-xs">
+            <div className="flex items-start justify-between border-b border-[var(--line)] pb-3">
               <div>
                 <h2 className="text-base font-bold text-white">{t.modalTitle}</h2>
-                <p className="text-[11px] text-zinc-400 mt-0.5">{t.modalSubtitle}</p>
+                <p className="text-[11px] text-[var(--muted)] mt-0.5">{t.modalSubtitle}</p>
               </div>
-              <button onClick={handleModalClose} className="text-zinc-500 hover:text-white">✕</button>
+              <button onClick={handleModalClose} className="text-[var(--muted)] hover:text-white">✕</button>
             </div>
 
             {issueStep === 'form' && (
               <form onSubmit={handleStartIssue} className="space-y-4">
                 <div>
-                  <label className="block text-zinc-300 mb-1">{t.domainLabel}</label>
+                  <label className="block text-[var(--ink-2)] mb-1">{t.domainLabel}</label>
                   <input
                     type="text"
                     required
                     value={domainInput}
                     onChange={(e) => setDomainInput(e.target.value)}
                     placeholder="myhomelab.dev"
-                    className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-500"
+                    className="w-full bg-[var(--paper)] border border-[var(--line)] rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-500"
                   />
                 </div>
 
-                <label className="flex items-center gap-2 cursor-pointer text-zinc-300">
+                <label className="flex items-center gap-2 cursor-pointer text-[var(--ink-2)]">
                   <input
                     type="checkbox"
                     checked={isWildcard}
@@ -283,19 +283,19 @@ export const CertManager: React.FC<CertManagerProps> = ({
                 </label>
 
                 <div>
-                  <label className="block text-zinc-300 mb-1">{t.challengeLabel}</label>
+                  <label className="block text-[var(--ink-2)] mb-1">{t.challengeLabel}</label>
                   <div className="grid grid-cols-2 gap-2">
                     <button
                       type="button"
                       onClick={() => setChallengeType('DNS-01')}
                       className={`p-2 rounded border text-left transition-colors ${
                         challengeType === 'DNS-01'
-                          ? 'bg-emerald-950/60 border-emerald-500 text-emerald-300'
-                          : 'bg-zinc-950 border-zinc-800 text-zinc-400'
+                          ? 'bg-[var(--accent-soft)]/60 border-emerald-500 text-[var(--accent)]'
+                          : 'bg-[var(--paper)] border-[var(--line)] text-[var(--muted)]'
                       }`}
                     >
                       <span className="font-bold block mb-1">DNS-01 Challenge</span>
-                      <span className="text-[10px] text-zinc-500 leading-tight block">{t.dnsChallengeDesc}</span>
+                      <span className="text-[10px] text-[var(--muted)] leading-tight block">{t.dnsChallengeDesc}</span>
                     </button>
 
                     <button
@@ -303,27 +303,27 @@ export const CertManager: React.FC<CertManagerProps> = ({
                       onClick={() => setChallengeType('HTTP-01')}
                       className={`p-2 rounded border text-left transition-colors ${
                         challengeType === 'HTTP-01'
-                          ? 'bg-emerald-950/60 border-emerald-500 text-emerald-300'
-                          : 'bg-zinc-950 border-zinc-800 text-zinc-400'
+                          ? 'bg-[var(--accent-soft)]/60 border-emerald-500 text-[var(--accent)]'
+                          : 'bg-[var(--paper)] border-[var(--line)] text-[var(--muted)]'
                       }`}
                     >
                       <span className="font-bold block mb-1">HTTP-01 Challenge</span>
-                      <span className="text-[10px] text-zinc-500 leading-tight block">{t.httpChallengeDesc}</span>
+                      <span className="text-[10px] text-[var(--muted)] leading-tight block">{t.httpChallengeDesc}</span>
                     </button>
                   </div>
                 </div>
 
-                <div className="flex justify-end gap-2 pt-3 border-t border-zinc-800">
+                <div className="flex justify-end gap-2 pt-3 border-t border-[var(--line)]">
                   <button
                     type="button"
                     onClick={handleModalClose}
-                    className="px-4 py-2 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300"
+                    className="px-4 py-2 rounded bg-[var(--paper-2)] hover:bg-[var(--line)] text-[var(--ink-2)]"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 rounded bg-emerald-600 hover:bg-emerald-500 text-white font-bold"
+                    className="px-4 py-2 rounded bg-[var(--accent)] hover:bg-[var(--accent)] text-white font-bold"
                   >
                     {t.startIssueBtn}
                   </button>
@@ -333,10 +333,10 @@ export const CertManager: React.FC<CertManagerProps> = ({
 
             {issueStep === 'challenge' && (
               <div className="py-8 text-center space-y-3">
-                <RefreshCw className="w-8 h-8 text-emerald-400 animate-spin mx-auto" />
+                <RefreshCw className="w-8 h-8 text-[var(--accent)] animate-spin mx-auto" />
                 <h3 className="text-white font-bold text-sm">{t.verifyingTitle}</h3>
-                <p className="text-zinc-400 text-[11px] max-w-sm mx-auto">{t.verifyingDesc}</p>
-                <div className="bg-zinc-950 p-2 rounded text-[10px] text-emerald-400 border border-zinc-800 inline-block font-mono">
+                <p className="text-[var(--muted)] text-[11px] max-w-sm mx-auto">{t.verifyingDesc}</p>
+                <div className="bg-[var(--paper)] p-2 rounded text-[10px] text-[var(--accent)] border border-[var(--line)] inline-block font-mono">
                   TXT _acme-challenge.{domainInput} → {Math.random().toString(36).substring(2, 18)}
                 </div>
               </div>
@@ -344,14 +344,14 @@ export const CertManager: React.FC<CertManagerProps> = ({
 
             {issueStep === 'issued' && (
               <div className="py-6 text-center space-y-4">
-                <CheckCircle2 className="w-10 h-10 text-emerald-400 mx-auto" />
+                <CheckCircle2 className="w-10 h-10 text-[var(--accent)] mx-auto" />
                 <h3 className="text-white font-bold text-sm">{t.issuedSuccess}</h3>
-                <p className="text-zinc-400 text-[11px]">
+                <p className="text-[var(--muted)] text-[11px]">
                   ECDSA certificate active for *.${domainInput}. Traffic automatically routes over HTTPS with HTTP/3 QUIC support.
                 </p>
                 <button
                   onClick={handleModalClose}
-                  className="px-5 py-2 rounded bg-emerald-600 hover:bg-emerald-500 text-white font-bold"
+                  className="px-5 py-2 rounded bg-[var(--accent)] hover:bg-[var(--accent)] text-white font-bold"
                 >
                   {t.closeBtn}
                 </button>

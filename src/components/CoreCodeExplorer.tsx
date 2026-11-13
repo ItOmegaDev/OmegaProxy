@@ -152,29 +152,29 @@ export const CoreCodeExplorer: React.FC<CoreCodeExplorerProps> = ({ language }) 
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-zinc-900/80 border border-zinc-800 rounded-xl p-5 shadow-lg">
+      <div className="bg-[var(--paper-2)]/80 border border-[var(--line)] rounded-xl p-5 shadow-lg">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <span className="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+            <span className="p-2.5 rounded-lg bg-[var(--accent)]/10 border border-[var(--accent)] text-[var(--accent)]">
               <Code2 className="w-5 h-5" />
             </span>
             <div>
               <h1 className="text-xl font-bold text-white font-mono">{t.title}</h1>
-              <p className="text-sm text-zinc-400 mt-0.5">{t.subtitle}</p>
+              <p className="text-sm text-[var(--muted)] mt-0.5">{t.subtitle}</p>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
             <button
               onClick={loadFiles}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-mono transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--paper-2)] hover:bg-[var(--line)] text-[var(--ink-2)] text-xs font-mono transition-colors"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
               <span>{t.refresh}</span>
             </button>
             <button
               onClick={copyCode}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-mono font-bold transition-colors shadow-sm"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[var(--accent)] hover:bg-[var(--accent)] text-white text-xs font-mono font-bold transition-colors shadow-sm"
             >
               {copied ? <Check className="w-3.5 h-3.5 text-white" /> : <Copy className="w-3.5 h-3.5" />}
               <span>{copied ? t.copied : t.copyCode}</span>
@@ -186,15 +186,15 @@ export const CoreCodeExplorer: React.FC<CoreCodeExplorerProps> = ({ language }) 
       {/* Explorer Split Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
         {/* Left Sidebar: File Tree */}
-        <div className="lg:col-span-4 bg-zinc-900/90 border border-zinc-800 rounded-xl p-4 space-y-4 font-mono">
-          <div className="text-xs font-bold text-zinc-400 uppercase tracking-wider flex items-center gap-2">
-            <Folder className="w-4 h-4 text-emerald-400" />
+        <div className="lg:col-span-4 bg-[var(--paper-2)]/90 border border-[var(--line)] rounded-xl p-4 space-y-4 font-mono">
+          <div className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider flex items-center gap-2">
+            <Folder className="w-4 h-4 text-[var(--accent)]" />
             <span>{t.filesTree}</span>
           </div>
 
           <div className="space-y-1">
-            <div className="text-[11px] text-zinc-500 font-bold px-2 py-1 flex items-center gap-1.5">
-              <Server className="w-3 h-3 text-emerald-400" />
+            <div className="text-[11px] text-[var(--muted)] font-bold px-2 py-1 flex items-center gap-1.5">
+              <Server className="w-3 h-3 text-[var(--accent)]" />
               <span>/gateway (Go High-Load Edge)</span>
             </div>
             {fileList
@@ -207,22 +207,22 @@ export const CoreCodeExplorer: React.FC<CoreCodeExplorerProps> = ({ language }) 
                     onClick={() => setSelectedFile(file)}
                     className={`w-full text-left px-3 py-2 rounded-lg text-xs flex items-center justify-between transition-all ${
                       isSel
-                        ? 'bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 font-bold'
-                        : 'text-zinc-400 hover:bg-zinc-800/70 hover:text-zinc-200'
+                        ? 'bg-[var(--accent-soft)]/80 border border-[var(--accent)] text-[var(--accent)] font-bold'
+                        : 'text-[var(--muted)] hover:bg-[var(--paper-2)]/70 hover:text-[var(--ink)]'
                     }`}
                   >
                     <div className="flex items-center gap-2 truncate">
-                      <FileCode className={`w-3.5 h-3.5 ${isSel ? 'text-emerald-400' : 'text-zinc-500'}`} />
+                      <FileCode className={`w-3.5 h-3.5 ${isSel ? 'text-[var(--accent)]' : 'text-[var(--muted)]'}`} />
                       <span className="truncate">{file.replace('gateway/', '')}</span>
                     </div>
-                    <span className="text-[10px] text-zinc-500 bg-zinc-950 px-1.5 py-0.5 rounded border border-zinc-800">
+                    <span className="text-[10px] text-[var(--muted)] bg-[var(--paper)] px-1.5 py-0.5 rounded border border-[var(--line)]">
                       Go
                     </span>
                   </button>
                 );
               })}
 
-            <div className="text-[11px] text-zinc-500 font-bold px-2 pt-3 py-1 flex items-center gap-1.5">
+            <div className="text-[11px] text-[var(--muted)] font-bold px-2 pt-3 py-1 flex items-center gap-1.5">
               <Terminal className="w-3 h-3 text-amber-400" />
               <span>/agent (Go CLI Agent)</span>
             </div>
@@ -237,21 +237,21 @@ export const CoreCodeExplorer: React.FC<CoreCodeExplorerProps> = ({ language }) 
                     className={`w-full text-left px-3 py-2 rounded-lg text-xs flex items-center justify-between transition-all ${
                       isSel
                         ? 'bg-amber-950/80 border border-amber-500/50 text-amber-300 font-bold'
-                        : 'text-zinc-400 hover:bg-zinc-800/70 hover:text-zinc-200'
+                        : 'text-[var(--muted)] hover:bg-[var(--paper-2)]/70 hover:text-[var(--ink)]'
                     }`}
                   >
                     <div className="flex items-center gap-2 truncate">
-                      <FileCode className={`w-3.5 h-3.5 ${isSel ? 'text-amber-400' : 'text-zinc-500'}`} />
+                      <FileCode className={`w-3.5 h-3.5 ${isSel ? 'text-amber-400' : 'text-[var(--muted)]'}`} />
                       <span className="truncate">{file.replace('agent/', '')}</span>
                     </div>
-                    <span className="text-[10px] text-zinc-500 bg-zinc-950 px-1.5 py-0.5 rounded border border-zinc-800">
+                    <span className="text-[10px] text-[var(--muted)] bg-[var(--paper)] px-1.5 py-0.5 rounded border border-[var(--line)]">
                       CLI
                     </span>
                   </button>
                 );
               })}
 
-            <div className="text-[11px] text-zinc-500 font-bold px-2 pt-3 py-1 flex items-center gap-1.5">
+            <div className="text-[11px] text-[var(--muted)] font-bold px-2 pt-3 py-1 flex items-center gap-1.5">
               <Database className="w-3 h-3 text-cyan-400" />
               <span>/db (PostgreSQL 16 Schema)</span>
             </div>
@@ -266,14 +266,14 @@ export const CoreCodeExplorer: React.FC<CoreCodeExplorerProps> = ({ language }) 
                     className={`w-full text-left px-3 py-2 rounded-lg text-xs flex items-center justify-between transition-all ${
                       isSel
                         ? 'bg-cyan-950/80 border border-cyan-500/50 text-cyan-300 font-bold'
-                        : 'text-zinc-400 hover:bg-zinc-800/70 hover:text-zinc-200'
+                        : 'text-[var(--muted)] hover:bg-[var(--paper-2)]/70 hover:text-[var(--ink)]'
                     }`}
                   >
                     <div className="flex items-center gap-2 truncate">
-                      <FileCode className={`w-3.5 h-3.5 ${isSel ? 'text-cyan-400' : 'text-zinc-500'}`} />
+                      <FileCode className={`w-3.5 h-3.5 ${isSel ? 'text-cyan-400' : 'text-[var(--muted)]'}`} />
                       <span className="truncate">{file.replace('db/', '')}</span>
                     </div>
-                    <span className="text-[10px] text-zinc-500 bg-zinc-950 px-1.5 py-0.5 rounded border border-zinc-800">
+                    <span className="text-[10px] text-[var(--muted)] bg-[var(--paper)] px-1.5 py-0.5 rounded border border-[var(--line)]">
                       SQL
                     </span>
                   </button>
@@ -283,14 +283,14 @@ export const CoreCodeExplorer: React.FC<CoreCodeExplorerProps> = ({ language }) 
         </div>
 
         {/* Right Editor View: Code & Details */}
-        <div className="lg:col-span-8 bg-zinc-900/90 border border-zinc-800 rounded-xl p-5 space-y-4 font-mono">
+        <div className="lg:col-span-8 bg-[var(--paper-2)]/90 border border-[var(--line)] rounded-xl p-5 space-y-4 font-mono">
           {/* File Header & Badge */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-800 pb-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--line)] pb-3">
             <div className="flex items-center gap-2">
-              <FileCode className="w-4 h-4 text-emerald-400" />
+              <FileCode className="w-4 h-4 text-[var(--accent)]" />
               <span className="text-sm font-bold text-white">{selectedFile}</span>
               {fileDescriptions[selectedFile] && (
-                <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                <span className="text-[10px] px-2 py-0.5 rounded bg-[var(--accent)]/20 text-[var(--accent)] border border-[var(--accent)]">
                   {fileDescriptions[selectedFile].badge}
                 </span>
               )}
@@ -298,23 +298,23 @@ export const CoreCodeExplorer: React.FC<CoreCodeExplorerProps> = ({ language }) 
 
             <button
               onClick={copyCode}
-              className="text-zinc-400 hover:text-white text-xs flex items-center gap-1.5 self-start sm:self-auto"
+              className="text-[var(--muted)] hover:text-white text-xs flex items-center gap-1.5 self-start sm:self-auto"
             >
-              {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+              {copied ? <Check className="w-3.5 h-3.5 text-[var(--accent)]" /> : <Copy className="w-3.5 h-3.5" />}
               <span>{copied ? t.copied : t.copyCode}</span>
             </button>
           </div>
 
           {/* Description */}
           {fileDescriptions[selectedFile] && (
-            <p className="text-xs text-zinc-300 bg-zinc-950/80 p-3 rounded-lg border border-zinc-800/80 leading-relaxed">
+            <p className="text-xs text-[var(--ink-2)] bg-[var(--paper)]/80 p-3 rounded-lg border border-[var(--line)]/80 leading-relaxed">
               {language === 'ua' ? fileDescriptions[selectedFile].ua : fileDescriptions[selectedFile].en}
             </p>
           )}
 
           {/* Code Viewer */}
-          <div className="bg-zinc-950 border border-zinc-800/90 rounded-lg p-4 overflow-x-auto max-h-[540px]">
-            <pre className="text-xs text-emerald-300/90 font-mono leading-relaxed whitespace-pre">
+          <div className="bg-[var(--paper)] border border-[var(--line)]/90 rounded-lg p-4 overflow-x-auto max-h-[540px]">
+            <pre className="text-xs text-[var(--accent)]/90 font-mono leading-relaxed whitespace-pre">
               {files[selectedFile] || '// Loading source file from Go core...'}
             </pre>
           </div>

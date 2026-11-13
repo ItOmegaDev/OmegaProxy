@@ -189,15 +189,15 @@ export const TunnelsView: React.FC<TunnelsViewProps> = ({
   return (
     <div className="space-y-6">
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-zinc-900/80 border border-zinc-800 p-5 rounded-xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[var(--paper-2)]/80 border border-[var(--line)] p-5 rounded-xl">
         <div>
           <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+            <span className="p-1.5 rounded-lg bg-[var(--accent)]/10 border border-[var(--accent)] text-[var(--accent)]">
               <Server className="w-5 h-5" />
             </span>
             <h1 className="text-xl font-bold text-white tracking-tight font-mono">{t.title}</h1>
           </div>
-          <p className="text-sm text-zinc-400 mt-1">{t.subtitle}</p>
+          <p className="text-sm text-[var(--muted)] mt-1">{t.subtitle}</p>
         </div>
 
         <button
@@ -205,7 +205,7 @@ export const TunnelsView: React.FC<TunnelsViewProps> = ({
             resetForm();
             setIsModalOpen(true);
           }}
-          className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-mono text-sm font-semibold transition-colors shadow-lg shadow-emerald-900/30"
+          className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-[var(--accent)] hover:bg-[var(--accent)] text-white font-mono text-sm font-semibold transition-colors shadow-lg shadow-emerald-900/30"
         >
           <Plus className="w-4 h-4" />
           <span>{t.newTunnelBtn}</span>
@@ -213,28 +213,28 @@ export const TunnelsView: React.FC<TunnelsViewProps> = ({
       </div>
 
       {/* Auto-Discovery Bar */}
-      <div className="bg-zinc-950/70 border border-zinc-800/90 rounded-xl p-4">
-        <div className="flex items-center gap-2 text-xs font-mono font-bold text-zinc-300 mb-3">
+      <div className="bg-[var(--paper)]/70 border border-[var(--line)]/90 rounded-xl p-4">
+        <div className="flex items-center gap-2 text-xs font-mono font-bold text-[var(--ink-2)] mb-3">
           <Zap className="w-4 h-4 text-amber-400" />
           <span>{t.autoDiscoveryTitle}</span>
         </div>
 
         <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
           {discoveredServices.length === 0 ? (
-            <div className="text-xs text-zinc-500 py-1 font-mono">
+            <div className="text-xs text-[var(--muted)] py-1 font-mono">
               {language === 'ua' ? 'Локальні порти скануються на 127.0.0.1...' : 'Scanning local ports on 127.0.0.1...'}
             </div>
           ) : (
             discoveredServices.map((service) => (
               <div
                 key={service.id}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-mono whitespace-nowrap flex-shrink-0 hover:border-zinc-700"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[var(--paper-2)] border border-[var(--line)] text-xs font-mono whitespace-nowrap flex-shrink-0 hover:border-[var(--line)]"
               >
-                <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                <span className="w-2 h-2 rounded-full bg-[var(--accent)]"></span>
                 <span className="text-white font-medium">{service.name}</span>
-                <span className="text-zinc-500">:{service.port}</span>
+                <span className="text-[var(--muted)]">:{service.port}</span>
                 {service.isTunneled ? (
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">
+                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-[var(--accent-soft)] text-[var(--accent)] border border-emerald-800">
                     Active
                   </span>
                 ) : (
@@ -259,22 +259,22 @@ export const TunnelsView: React.FC<TunnelsViewProps> = ({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={t.searchPlaceholder}
-            className="w-full bg-zinc-900/90 border border-zinc-800 rounded-lg px-3 py-2 text-xs font-mono text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-emerald-500"
+            className="w-full bg-[var(--paper-2)]/90 border border-[var(--line)] rounded-lg px-3 py-2 text-xs font-mono text-[var(--ink)] placeholder-zinc-500 focus:outline-none focus:border-emerald-500"
           />
         </div>
-        <div className="text-xs font-mono text-zinc-400">
+        <div className="text-xs font-mono text-[var(--muted)]">
           Total: <span className="text-white font-bold">{filteredTunnels.length}</span> active tunnels
         </div>
       </div>
 
       {/* Tunnel Cards Grid */}
       {filteredTunnels.length === 0 ? (
-        <div className="bg-zinc-950/70 border border-zinc-800/80 rounded-xl p-8 text-center space-y-3 font-mono">
-          <Server className="w-10 h-10 text-zinc-600 mx-auto" />
-          <h3 className="text-sm font-semibold text-zinc-300">
+        <div className="bg-[var(--paper)]/70 border border-[var(--line)]/80 rounded-xl p-8 text-center space-y-3 font-mono">
+          <Server className="w-10 h-10 text-[var(--faint)] mx-auto" />
+          <h3 className="text-sm font-semibold text-[var(--ink-2)]">
             {language === 'ua' ? 'Немає активних тунелів' : 'No active tunnels'}
           </h3>
-          <p className="text-xs text-zinc-500 max-w-md mx-auto">
+          <p className="text-xs text-[var(--muted)] max-w-md mx-auto">
             {language === 'ua'
               ? 'Створіть новий тунель через кнопку вище або підключіть локальний Go Agent (go run agent/main.go --port 3000)'
               : 'Create a new tunnel using the button above or connect local Go Agent (go run agent/main.go --port 3000)'}
@@ -284,7 +284,7 @@ export const TunnelsView: React.FC<TunnelsViewProps> = ({
               resetForm();
               setIsModalOpen(true);
             }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-lg shadow-emerald-900/30 transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--accent)] hover:bg-[var(--accent)] text-white text-xs font-semibold shadow-lg shadow-emerald-900/30 transition-colors"
           >
             <Plus className="w-4 h-4" />
             {language === 'ua' ? 'Створити перший тунель' : 'Create First Tunnel'}
@@ -299,8 +299,8 @@ export const TunnelsView: React.FC<TunnelsViewProps> = ({
           return (
             <div
               key={tunnel.id}
-              className={`bg-zinc-900/90 border rounded-xl p-4 transition-all ${
-                isOnline ? 'border-zinc-800 hover:border-zinc-700' : 'border-zinc-800/50 opacity-60'
+              className={`bg-[var(--paper-2)]/90 border rounded-xl p-4 transition-all ${
+                isOnline ? 'border-[var(--line)] hover:border-[var(--line)]' : 'border-[var(--line)]/50 opacity-60'
               }`}
             >
               {/* Header */}
@@ -309,20 +309,20 @@ export const TunnelsView: React.FC<TunnelsViewProps> = ({
                   <div className="flex items-center gap-2">
                     <span
                       className={`w-2.5 h-2.5 rounded-full ${
-                        isOnline ? 'bg-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.8)]' : 'bg-zinc-600'
+                        isOnline ? 'bg-[var(--accent)] shadow-[0_0_8px_rgba(16,185,129,0.8)]' : 'bg-zinc-600'
                       }`}
                     ></span>
                     <h3 className="font-bold text-white font-mono text-sm">{tunnel.name}</h3>
                   </div>
                   <div className="flex items-center gap-2 mt-1 text-xs font-mono">
-                    <span className="text-emerald-400 font-medium">{publicUrl}</span>
+                    <span className="text-[var(--accent)] font-medium">{publicUrl}</span>
                     <button
                       onClick={() => handleCopy(tunnel.id, publicUrl)}
-                      className="text-zinc-500 hover:text-zinc-200 transition-colors"
+                      className="text-[var(--muted)] hover:text-[var(--ink)] transition-colors"
                       title={t.copyUrl}
                     >
                       {copiedId === tunnel.id ? (
-                        <Check className="w-3.5 h-3.5 text-emerald-400" />
+                        <Check className="w-3.5 h-3.5 text-[var(--accent)]" />
                       ) : (
                         <Copy className="w-3.5 h-3.5" />
                       )}
@@ -331,39 +331,39 @@ export const TunnelsView: React.FC<TunnelsViewProps> = ({
                 </div>
 
                 <div className="flex items-center gap-1">
-                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 border border-zinc-700 font-bold">
+                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-[var(--paper-2)] text-[var(--ink-2)] border border-[var(--line)] font-bold">
                     {tunnel.protocol}
                   </span>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-800">
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[var(--accent-soft)]/80 text-[var(--accent)] border border-emerald-800">
                     TLS 1.3
                   </span>
                 </div>
               </div>
 
               {/* Stats row */}
-              <div className="grid grid-cols-4 gap-2 bg-zinc-950/70 p-2.5 rounded-lg border border-zinc-800/80 font-mono text-xs mb-3">
+              <div className="grid grid-cols-4 gap-2 bg-[var(--paper)]/70 p-2.5 rounded-lg border border-[var(--line)]/80 font-mono text-xs mb-3">
                 <div>
-                  <span className="text-[10px] text-zinc-500 block uppercase">{t.target}</span>
+                  <span className="text-[10px] text-[var(--muted)] block uppercase">{t.target}</span>
                   <span className="text-white font-semibold">:{tunnel.targetPort}</span>
                 </div>
                 <div>
-                  <span className="text-[10px] text-zinc-500 block uppercase">{t.streams}</span>
-                  <span className="text-emerald-400 font-semibold">{tunnel.activeStreams}</span>
+                  <span className="text-[10px] text-[var(--muted)] block uppercase">{t.streams}</span>
+                  <span className="text-[var(--accent)] font-semibold">{tunnel.activeStreams}</span>
                 </div>
                 <div>
-                  <span className="text-[10px] text-zinc-500 block uppercase">{t.traffic}</span>
-                  <span className="text-zinc-300">{formatBytes(tunnel.bytesIn + tunnel.bytesOut)}</span>
+                  <span className="text-[10px] text-[var(--muted)] block uppercase">{t.traffic}</span>
+                  <span className="text-[var(--ink-2)]">{formatBytes(tunnel.bytesIn + tunnel.bytesOut)}</span>
                 </div>
                 <div>
-                  <span className="text-[10px] text-zinc-500 block uppercase">{t.rateLimit}</span>
+                  <span className="text-[10px] text-[var(--muted)] block uppercase">{t.rateLimit}</span>
                   <span className="text-amber-300">{tunnel.rateLimit.maxRps} r/s</span>
                 </div>
               </div>
 
               {/* Footer actions */}
-              <div className="flex items-center justify-between pt-2 border-t border-zinc-800/80 text-xs font-mono">
-                <div className="flex items-center gap-2 text-zinc-400">
-                  <Globe className="w-3.5 h-3.5 text-zinc-500" />
+              <div className="flex items-center justify-between pt-2 border-t border-[var(--line)]/80 text-xs font-mono">
+                <div className="flex items-center gap-2 text-[var(--muted)]">
+                  <Globe className="w-3.5 h-3.5 text-[var(--muted)]" />
                   <span>NAT: Direct P2P (14ms)</span>
                 </div>
 
@@ -374,15 +374,15 @@ export const TunnelsView: React.FC<TunnelsViewProps> = ({
                         status: tunnel.status === 'online' ? 'offline' : 'online',
                       })
                     }
-                    className="p-1.5 rounded hover:bg-zinc-800 text-zinc-400 hover:text-white transition-colors"
+                    className="p-1.5 rounded hover:bg-[var(--paper-2)] text-[var(--muted)] hover:text-white transition-colors"
                     title={tunnel.status === 'online' ? t.pause : t.resume}
                   >
-                    {tunnel.status === 'online' ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 text-emerald-400" />}
+                    {tunnel.status === 'online' ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 text-[var(--accent)]" />}
                   </button>
 
                   <button
                     onClick={() => onDeleteTunnel(tunnel.id)}
-                    className="p-1.5 rounded hover:bg-rose-950/50 text-zinc-500 hover:text-rose-400 transition-colors"
+                    className="p-1.5 rounded hover:bg-rose-950/50 text-[var(--muted)] hover:text-rose-400 transition-colors"
                     title={t.delete}
                   >
                     <Trash2 className="w-3.5 h-3.5" />
@@ -398,15 +398,15 @@ export const TunnelsView: React.FC<TunnelsViewProps> = ({
       {/* Modal for Creating New Tunnel */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-fadeIn">
-          <div className="bg-zinc-900 border border-zinc-800 rounded-xl max-w-lg w-full p-6 shadow-2xl space-y-4">
+          <div className="bg-[var(--paper-2)] border border-[var(--line)] rounded-xl max-w-lg w-full p-6 shadow-2xl space-y-4">
             <div className="flex items-start justify-between">
               <div>
                 <h2 className="text-lg font-bold text-white font-mono">{t.modalTitle}</h2>
-                <p className="text-xs text-zinc-400 mt-0.5">{t.modalSubtitle}</p>
+                <p className="text-xs text-[var(--muted)] mt-0.5">{t.modalSubtitle}</p>
               </div>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="text-zinc-500 hover:text-zinc-300 text-sm font-mono"
+                className="text-[var(--muted)] hover:text-[var(--ink-2)] text-sm font-mono"
               >
                 ✕
               </button>
@@ -414,20 +414,20 @@ export const TunnelsView: React.FC<TunnelsViewProps> = ({
 
             <form onSubmit={handleFormSubmit} className="space-y-3 font-mono text-xs">
               <div>
-                <label className="block text-zinc-300 mb-1">{t.nameLabel}</label>
+                <label className="block text-[var(--ink-2)] mb-1">{t.nameLabel}</label>
                 <input
                   type="text"
                   required
                   value={formName}
                   onChange={(e) => setFormName(e.target.value)}
                   placeholder="e.g. Nextcloud Homelab / Vite Dev"
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-[var(--paper)] border border-[var(--line)] rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-500"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-zinc-300 mb-1">{t.subdomainLabel}</label>
+                  <label className="block text-[var(--ink-2)] mb-1">{t.subdomainLabel}</label>
                   <div className="flex items-center">
                     <input
                       type="text"
@@ -435,33 +435,33 @@ export const TunnelsView: React.FC<TunnelsViewProps> = ({
                       value={formSubdomain}
                       onChange={(e) => setFormSubdomain(e.target.value)}
                       placeholder="myapp"
-                      className="w-full bg-zinc-950 border border-zinc-800 rounded-l px-3 py-2 text-white focus:outline-none focus:border-emerald-500"
+                      className="w-full bg-[var(--paper)] border border-[var(--line)] rounded-l px-3 py-2 text-white focus:outline-none focus:border-emerald-500"
                     />
-                    <span className="bg-zinc-800 text-zinc-400 px-2 py-2 rounded-r border border-l-0 border-zinc-800 text-[10px]">
+                    <span className="bg-[var(--paper-2)] text-[var(--muted)] px-2 py-2 rounded-r border border-l-0 border-[var(--line)] text-[10px]">
                       .edgeproxy.mesh
                     </span>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-zinc-300 mb-1">{t.portLabel}</label>
+                  <label className="block text-[var(--ink-2)] mb-1">{t.portLabel}</label>
                   <input
                     type="number"
                     required
                     value={formPort}
                     onChange={(e) => setFormPort(Number(e.target.value))}
-                    className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-500"
+                    className="w-full bg-[var(--paper)] border border-[var(--line)] rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-500"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-zinc-300 mb-1">{t.protoLabel}</label>
+                  <label className="block text-[var(--ink-2)] mb-1">{t.protoLabel}</label>
                   <select
                     value={formProtocol}
                     onChange={(e) => setFormProtocol(e.target.value as ProtocolType)}
-                    className="w-full bg-zinc-950 border border-zinc-800 rounded px-2 py-2 text-white focus:outline-none focus:border-emerald-500 uppercase"
+                    className="w-full bg-[var(--paper)] border border-[var(--line)] rounded px-2 py-2 text-white focus:outline-none focus:border-emerald-500 uppercase"
                   >
                     <option value="quic">QUIC (HTTP/3)</option>
                     <option value="http2">HTTP/2</option>
@@ -471,28 +471,28 @@ export const TunnelsView: React.FC<TunnelsViewProps> = ({
                 </div>
 
                 <div>
-                  <label className="block text-zinc-300 mb-1">{t.rpsLabel}</label>
+                  <label className="block text-[var(--ink-2)] mb-1">{t.rpsLabel}</label>
                   <input
                     type="number"
                     value={formMaxRps}
                     onChange={(e) => setFormMaxRps(Number(e.target.value))}
-                    className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-500"
+                    className="w-full bg-[var(--paper)] border border-[var(--line)] rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-zinc-300 mb-1">{t.burstLabel}</label>
+                  <label className="block text-[var(--ink-2)] mb-1">{t.burstLabel}</label>
                   <input
                     type="number"
                     value={formBurst}
                     onChange={(e) => setFormBurst(Number(e.target.value))}
-                    className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-500"
+                    className="w-full bg-[var(--paper)] border border-[var(--line)] rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-500"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-zinc-300 mb-1">{t.authLabel}</label>
+                <label className="block text-[var(--ink-2)] mb-1">{t.authLabel}</label>
                 <div className="grid grid-cols-3 gap-2 mb-2">
                   {(['none', 'token', 'basic'] as const).map((type) => (
                     <button
@@ -501,8 +501,8 @@ export const TunnelsView: React.FC<TunnelsViewProps> = ({
                       onClick={() => setFormAuthType(type)}
                       className={`py-1.5 rounded uppercase border text-center transition-colors ${
                         formAuthType === type
-                          ? 'bg-emerald-600 text-white border-emerald-500'
-                          : 'bg-zinc-950 text-zinc-400 border-zinc-800 hover:text-white'
+                          ? 'bg-[var(--accent)] text-white border-emerald-500'
+                          : 'bg-[var(--paper)] text-[var(--muted)] border-[var(--line)] hover:text-white'
                       }`}
                     >
                       {type}
@@ -516,22 +516,22 @@ export const TunnelsView: React.FC<TunnelsViewProps> = ({
                     value={formToken}
                     onChange={(e) => setFormToken(e.target.value)}
                     placeholder="Enter Secret Bearer Token..."
-                    className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-500"
+                    className="w-full bg-[var(--paper)] border border-[var(--line)] rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-500"
                   />
                 )}
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-3 border-t border-zinc-800">
+              <div className="flex items-center justify-end gap-2 pt-3 border-t border-[var(--line)]">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 transition-colors"
+                  className="px-4 py-2 rounded bg-[var(--paper-2)] hover:bg-[var(--line)] text-[var(--ink-2)] transition-colors"
                 >
                   {t.cancelBtn}
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition-colors"
+                  className="px-4 py-2 rounded bg-[var(--accent)] hover:bg-[var(--accent)] text-white font-semibold transition-colors"
                 >
                   {t.createBtn}
                 </button>

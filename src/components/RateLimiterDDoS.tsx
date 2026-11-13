@@ -122,20 +122,20 @@ export const RateLimiterDDoS: React.FC<RateLimiterDDoSProps> = ({
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-zinc-900/80 border border-zinc-800 p-5 rounded-xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[var(--paper-2)]/80 border border-[var(--line)] p-5 rounded-xl">
         <div>
           <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+            <span className="p-1.5 rounded-lg bg-[var(--accent)]/10 border border-[var(--accent)] text-[var(--accent)]">
               <ShieldCheck className="w-5 h-5" />
             </span>
             <h1 className="text-xl font-bold text-white tracking-tight font-mono">{t.title}</h1>
           </div>
-          <p className="text-sm text-zinc-400 mt-1">{t.subtitle}</p>
+          <p className="text-sm text-[var(--muted)] mt-1">{t.subtitle}</p>
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-xs font-mono px-2.5 py-1 rounded bg-emerald-950/70 border border-emerald-500/40 text-emerald-300 flex items-center gap-1.5">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+          <span className="text-xs font-mono px-2.5 py-1 rounded bg-[var(--accent-soft)]/70 border border-[var(--accent)] text-[var(--accent)] flex items-center gap-1.5">
+            <CheckCircle2 className="w-3.5 h-3.5 text-[var(--accent)]" />
             <span>Redis State Synced</span>
           </span>
         </div>
@@ -144,24 +144,24 @@ export const RateLimiterDDoS: React.FC<RateLimiterDDoSProps> = ({
       {/* Main Grid: Visual Bucket on Left, Controls on Right */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Visual Token Bucket Container */}
-        <div className="lg:col-span-5 bg-zinc-950 border border-zinc-800 rounded-xl p-5 flex flex-col justify-between shadow-lg">
+        <div className="lg:col-span-5 bg-[var(--paper)] border border-[var(--line)] rounded-xl p-5 flex flex-col justify-between shadow-lg">
           <div>
             <div className="flex items-center justify-between mb-3">
               <span className="text-xs font-bold text-white font-mono">{t.bucketVisual}</span>
-              <span className="text-xs font-mono text-emerald-400 font-bold">
+              <span className="text-xs font-mono text-[var(--accent)] font-bold">
                 {Math.floor(config.currentTokens)} / {config.capacity} Tokens
               </span>
             </div>
 
             {/* The Bucket representation */}
-            <div className="relative w-full h-56 bg-zinc-900 border-2 border-zinc-700 rounded-b-2xl rounded-t-lg overflow-hidden flex flex-col justify-end p-2 shadow-inner">
+            <div className="relative w-full h-56 bg-[var(--paper-2)] border-2 border-[var(--line)] rounded-b-2xl rounded-t-lg overflow-hidden flex flex-col justify-end p-2 shadow-inner">
               {/* Background measurement marks */}
-              <div className="absolute inset-0 flex flex-col justify-between p-3 pointer-events-none opacity-20 font-mono text-[10px] text-zinc-400">
-                <div className="border-b border-zinc-600">MAX BURST ({config.capacity})</div>
-                <div className="border-b border-zinc-600">75%</div>
-                <div className="border-b border-zinc-600">50%</div>
-                <div className="border-b border-zinc-600">25%</div>
-                <div className="border-b border-zinc-600">EMPTY (429 ACTIVE)</div>
+              <div className="absolute inset-0 flex flex-col justify-between p-3 pointer-events-none opacity-20 font-mono text-[10px] text-[var(--muted)]">
+                <div className="border-b border-[var(--line-strong)]">MAX BURST ({config.capacity})</div>
+                <div className="border-b border-[var(--line-strong)]">75%</div>
+                <div className="border-b border-[var(--line-strong)]">50%</div>
+                <div className="border-b border-[var(--line-strong)]">25%</div>
+                <div className="border-b border-[var(--line-strong)]">EMPTY (429 ACTIVE)</div>
               </div>
 
               {/* Water / Token level */}
@@ -180,16 +180,16 @@ export const RateLimiterDDoS: React.FC<RateLimiterDDoSProps> = ({
               </div>
             </div>
 
-            <div className="flex items-center justify-between text-xs font-mono text-zinc-400 mt-3 pt-2 border-t border-zinc-800">
+            <div className="flex items-center justify-between text-xs font-mono text-[var(--muted)] mt-3 pt-2 border-t border-[var(--line)]">
               <div className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span className="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse"></span>
                 <span>Refill: +{config.refillRate} tokens/s</span>
               </div>
               <div>
                 Status:{' '}
                 <span
                   className={`font-bold ${
-                    tokenPercent < 15 ? 'text-rose-400' : 'text-emerald-400'
+                    tokenPercent < 15 ? 'text-rose-400' : 'text-[var(--accent)]'
                   }`}
                 >
                   {tokenPercent < 15 ? 'THROTTLING (429)' : 'NOMINAL (200 OK)'}
@@ -199,15 +199,15 @@ export const RateLimiterDDoS: React.FC<RateLimiterDDoSProps> = ({
           </div>
 
           {/* Algorithm selection pills */}
-          <div className="mt-4 pt-4 border-t border-zinc-800">
-            <span className="text-[11px] font-mono text-zinc-400 block mb-2">{t.algoTitle}</span>
+          <div className="mt-4 pt-4 border-t border-[var(--line)]">
+            <span className="text-[11px] font-mono text-[var(--muted)] block mb-2">{t.algoTitle}</span>
             <div className="grid grid-cols-2 gap-2">
               <button
                 onClick={() => onUpdateConfig({ algorithm: 'token_bucket' })}
                 className={`py-2 px-3 rounded-lg border text-xs font-mono font-medium transition-colors ${
                   config.algorithm === 'token_bucket'
-                    ? 'bg-emerald-600 text-white border-emerald-500 shadow-md'
-                    : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-white'
+                    ? 'bg-[var(--accent)] text-white border-emerald-500 shadow-md'
+                    : 'bg-[var(--paper-2)] border-[var(--line)] text-[var(--muted)] hover:text-white'
                 }`}
               >
                 {t.tokenBucket}
@@ -216,8 +216,8 @@ export const RateLimiterDDoS: React.FC<RateLimiterDDoSProps> = ({
                 onClick={() => onUpdateConfig({ algorithm: 'leaky_bucket' })}
                 className={`py-2 px-3 rounded-lg border text-xs font-mono font-medium transition-colors ${
                   config.algorithm === 'leaky_bucket'
-                    ? 'bg-emerald-600 text-white border-emerald-500 shadow-md'
-                    : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-white'
+                    ? 'bg-[var(--accent)] text-white border-emerald-500 shadow-md'
+                    : 'bg-[var(--paper-2)] border-[var(--line)] text-[var(--muted)] hover:text-white'
                 }`}
               >
                 {t.leakyBucket}
@@ -229,20 +229,20 @@ export const RateLimiterDDoS: React.FC<RateLimiterDDoSProps> = ({
         {/* Configuration Sliders & Toggles on Right */}
         <div className="lg:col-span-7 space-y-4">
           {/* Sliders Box */}
-          <div className="bg-zinc-900/90 border border-zinc-800 rounded-xl p-5 space-y-4 font-mono text-xs">
+          <div className="bg-[var(--paper-2)]/90 border border-[var(--line)] rounded-xl p-5 space-y-4 font-mono text-xs">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Sliders className="w-4 h-4 text-emerald-400" />
+                <Sliders className="w-4 h-4 text-[var(--accent)]" />
                 <span className="font-bold text-white text-sm">Dynamic Parameters</span>
               </div>
-              <span className="text-[11px] text-zinc-400">Hot-reloaded without service restart</span>
+              <span className="text-[11px] text-[var(--muted)]">Hot-reloaded without service restart</span>
             </div>
 
             {/* Capacity Slider */}
             <div className="space-y-1.5">
-              <div className="flex justify-between text-zinc-300">
+              <div className="flex justify-between text-[var(--ink-2)]">
                 <span>{t.capacityLabel}</span>
-                <span className="text-emerald-400 font-bold">{config.capacity} requests</span>
+                <span className="text-[var(--accent)] font-bold">{config.capacity} requests</span>
               </div>
               <input
                 type="range"
@@ -257,9 +257,9 @@ export const RateLimiterDDoS: React.FC<RateLimiterDDoSProps> = ({
 
             {/* Refill Rate Slider */}
             <div className="space-y-1.5">
-              <div className="flex justify-between text-zinc-300">
+              <div className="flex justify-between text-[var(--ink-2)]">
                 <span>{t.refillLabel}</span>
-                <span className="text-emerald-400 font-bold">{config.refillRate} req/sec</span>
+                <span className="text-[var(--accent)] font-bold">{config.refillRate} req/sec</span>
               </div>
               <input
                 type="range"
@@ -274,7 +274,7 @@ export const RateLimiterDDoS: React.FC<RateLimiterDDoSProps> = ({
 
             {/* Anomaly Threshold Slider */}
             <div className="space-y-1.5">
-              <div className="flex justify-between text-zinc-300">
+              <div className="flex justify-between text-[var(--ink-2)]">
                 <span>{t.anomalyLabel}</span>
                 <span className="text-amber-400 font-bold">{config.anomalyThresholdRps} RPS burst</span>
               </div>
@@ -290,8 +290,8 @@ export const RateLimiterDDoS: React.FC<RateLimiterDDoSProps> = ({
             </div>
 
             {/* Feature Checkboxes */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-zinc-800">
-              <label className="flex items-center gap-2 cursor-pointer text-zinc-300">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-[var(--line)]">
+              <label className="flex items-center gap-2 cursor-pointer text-[var(--ink-2)]">
                 <input
                   type="checkbox"
                   checked={config.enableL7FloodShield}
@@ -301,7 +301,7 @@ export const RateLimiterDDoS: React.FC<RateLimiterDDoSProps> = ({
                 <span>{t.l7Shield}</span>
               </label>
 
-              <label className="flex items-center gap-2 cursor-pointer text-zinc-300">
+              <label className="flex items-center gap-2 cursor-pointer text-[var(--ink-2)]">
                 <input
                   type="checkbox"
                   checked={config.enableSynFloodShield}
@@ -314,7 +314,7 @@ export const RateLimiterDDoS: React.FC<RateLimiterDDoSProps> = ({
           </div>
 
           {/* Interactive Attack Simulator Control */}
-          <div className="bg-zinc-900/90 border border-zinc-800 rounded-xl p-5 font-mono text-xs">
+          <div className="bg-[var(--paper-2)]/90 border border-[var(--line)] rounded-xl p-5 font-mono text-xs">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <Flame className="w-4 h-4 text-rose-400" />
@@ -325,7 +325,7 @@ export const RateLimiterDDoS: React.FC<RateLimiterDDoSProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
               <button
                 onClick={onSendProbe}
-                className="py-2.5 px-3 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 transition-colors"
+                className="py-2.5 px-3 rounded-lg bg-[var(--paper-2)] hover:bg-[var(--line)] text-[var(--ink)] transition-colors"
               >
                 {t.probeBtn}
               </button>
@@ -362,20 +362,20 @@ export const RateLimiterDDoS: React.FC<RateLimiterDDoSProps> = ({
       </div>
 
       {/* Jailed IPs Table */}
-      <div className="bg-zinc-950 border border-zinc-800 rounded-xl p-5">
+      <div className="bg-[var(--paper)] border border-[var(--line)] rounded-xl p-5">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
             <Lock className="w-4 h-4 text-rose-400" />
             <h3 className="font-bold text-white font-mono text-sm">{t.jailedIpsTitle}</h3>
           </div>
-          <span className="text-xs font-mono text-zinc-500">
+          <span className="text-xs font-mono text-[var(--muted)]">
             Auto-purged when timer expires
           </span>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left font-mono text-xs">
-            <thead className="bg-zinc-900/80 text-zinc-400 text-[10px] uppercase border-b border-zinc-800">
+            <thead className="bg-[var(--paper-2)]/80 text-[var(--muted)] text-[10px] uppercase border-b border-[var(--line)]">
               <tr>
                 <th className="py-2 px-3">{t.ipCol}</th>
                 <th className="py-2 px-3">{t.reasonCol}</th>
@@ -386,7 +386,7 @@ export const RateLimiterDDoS: React.FC<RateLimiterDDoSProps> = ({
             <tbody className="divide-y divide-zinc-850">
               {config.blockedIpRecords.length === 0 ? (
                 <tr>
-                  <td colSpan={4} className="py-4 text-center text-zinc-500">
+                  <td colSpan={4} className="py-4 text-center text-[var(--muted)]">
                     No IPs currently in quarantine jail.
                   </td>
                 </tr>
@@ -394,14 +394,14 @@ export const RateLimiterDDoS: React.FC<RateLimiterDDoSProps> = ({
                 config.blockedIpRecords.map((rec) => {
                   const remainingSec = Math.max(0, Math.round((rec.blockedUntil - Date.now()) / 1000));
                   return (
-                    <tr key={rec.ip} className="hover:bg-zinc-900/50">
+                    <tr key={rec.ip} className="hover:bg-[var(--paper-2)]/50">
                       <td className="py-2.5 px-3 text-rose-400 font-bold">{rec.ip}</td>
-                      <td className="py-2.5 px-3 text-zinc-300">{rec.reason}</td>
+                      <td className="py-2.5 px-3 text-[var(--ink-2)]">{rec.reason}</td>
                       <td className="py-2.5 px-3 text-amber-400 font-semibold">{remainingSec}s</td>
                       <td className="py-2.5 px-3 text-right">
                         <button
                           onClick={() => handleUnban(rec.ip)}
-                          className="px-2 py-1 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-[11px] transition-colors"
+                          className="px-2 py-1 rounded bg-[var(--paper-2)] hover:bg-[var(--line)] text-[var(--ink)] text-[11px] transition-colors"
                         >
                           {t.unbanBtn}
                         </button>
@@ -416,15 +416,15 @@ export const RateLimiterDDoS: React.FC<RateLimiterDDoSProps> = ({
       </div>
 
       {/* Whitelist Manager */}
-      <div className="bg-zinc-900/80 border border-zinc-800 rounded-xl p-5 font-mono text-xs">
+      <div className="bg-[var(--paper-2)]/80 border border-[var(--line)] rounded-xl p-5 font-mono text-xs">
         <h3 className="font-bold text-white text-sm mb-2">{t.whitelistTitle}</h3>
         <div className="flex flex-wrap gap-2 mb-3">
           {config.whitelistedIps.map((ip) => (
             <span
               key={ip}
-              className="px-2.5 py-1 rounded bg-zinc-950 border border-zinc-750 text-emerald-300 flex items-center gap-1.5"
+              className="px-2.5 py-1 rounded bg-[var(--paper)] border border-zinc-750 text-[var(--accent)] flex items-center gap-1.5"
             >
-              <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+              <CheckCircle2 className="w-3 h-3 text-[var(--accent)]" />
               <span>{ip}</span>
             </span>
           ))}
@@ -436,11 +436,11 @@ export const RateLimiterDDoS: React.FC<RateLimiterDDoSProps> = ({
             value={newWhitelistedIp}
             onChange={(e) => setNewWhitelistedIp(e.target.value)}
             placeholder="e.g. 192.168.1.0/24 or 10.0.0.1"
-            className="flex-1 bg-zinc-950 border border-zinc-800 rounded px-3 py-1.5 text-white focus:outline-none focus:border-emerald-500"
+            className="flex-1 bg-[var(--paper)] border border-[var(--line)] rounded px-3 py-1.5 text-white focus:outline-none focus:border-emerald-500"
           />
           <button
             type="submit"
-            className="px-3 py-1.5 rounded bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition-colors"
+            className="px-3 py-1.5 rounded bg-[var(--accent)] hover:bg-[var(--accent)] text-white font-bold transition-colors"
           >
             {t.addBtn}
           </button>

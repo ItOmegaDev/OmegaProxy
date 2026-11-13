@@ -375,7 +375,7 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
   return (
     <div className="space-y-6">
       {/* Top Header with Live Firebase Firestore Connection Status */}
-      <div className="bg-zinc-900/90 border border-zinc-800 rounded-xl p-5 shadow-lg">
+      <div className="bg-[var(--paper-2)]/90 border border-[var(--line)] rounded-xl p-5 shadow-lg">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="flex items-start sm:items-center gap-3">
             <span className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400">
@@ -384,28 +384,28 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="text-xl font-bold text-white font-mono">{t.title}</h1>
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-medium bg-emerald-950/80 text-emerald-400 border border-emerald-500/30">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-medium bg-[var(--accent-soft)]/80 text-[var(--accent)] border border-[var(--accent)]">
+                  <span className="w-2 h-2 rounded-full bg-[var(--accent)] animate-ping" />
                   {t.connectedBadge}
                 </span>
               </div>
-              <p className="text-sm text-zinc-400 mt-1">{t.subtitle}</p>
+              <p className="text-sm text-[var(--muted)] mt-1">{t.subtitle}</p>
               
               {/* Cloud DB Identity details */}
-              <div className="flex flex-wrap items-center gap-3 text-xs font-mono mt-2 text-zinc-400">
-                <span className="text-zinc-500">{t.project} <span className="text-amber-300 font-bold">{dbStatus.projectId}</span></span>
-                <span className="text-zinc-600">•</span>
-                <span className="text-zinc-500">{t.databaseId} <span className="text-sky-300 font-bold">{dbStatus.databaseId}</span></span>
+              <div className="flex flex-wrap items-center gap-3 text-xs font-mono mt-2 text-[var(--muted)]">
+                <span className="text-[var(--muted)]">{t.project} <span className="text-amber-300 font-bold">{dbStatus.projectId}</span></span>
+                <span className="text-[var(--faint)]">•</span>
+                <span className="text-[var(--muted)]">{t.databaseId} <span className="text-sky-300 font-bold">{dbStatus.databaseId}</span></span>
               </div>
             </div>
           </div>
 
           {/* Tab selector */}
-          <div className="flex flex-wrap items-center bg-zinc-950 p-1 rounded-lg border border-zinc-800 font-mono text-xs">
+          <div className="flex flex-wrap items-center bg-[var(--paper)] p-1 rounded-lg border border-[var(--line)] font-mono text-xs">
             <button
               onClick={() => setActiveTab('firestore')}
               className={`px-3 py-1.5 rounded-md transition-all flex items-center gap-1.5 ${
-                activeTab === 'firestore' ? 'bg-amber-600 text-white font-bold shadow-sm' : 'text-zinc-400 hover:text-white'
+                activeTab === 'firestore' ? 'bg-amber-600 text-white font-bold shadow-sm' : 'text-[var(--muted)] hover:text-white'
               }`}
             >
               <Flame className="w-3.5 h-3.5" />
@@ -414,7 +414,7 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
             <button
               onClick={() => setActiveTab('tables')}
               className={`px-3 py-1.5 rounded-md transition-all flex items-center gap-1.5 ${
-                activeTab === 'tables' ? 'bg-emerald-600 text-white font-bold shadow-sm' : 'text-zinc-400 hover:text-white'
+                activeTab === 'tables' ? 'bg-[var(--accent)] text-white font-bold shadow-sm' : 'text-[var(--muted)] hover:text-white'
               }`}
             >
               <Table className="w-3.5 h-3.5" />
@@ -426,7 +426,7 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
                 if (queryOutput.length === 0) runPresetQuery(activeQuery);
               }}
               className={`px-3 py-1.5 rounded-md transition-all flex items-center gap-1.5 ${
-                activeTab === 'console' ? 'bg-emerald-600 text-white font-bold shadow-sm' : 'text-zinc-400 hover:text-white'
+                activeTab === 'console' ? 'bg-[var(--accent)] text-white font-bold shadow-sm' : 'text-[var(--muted)] hover:text-white'
               }`}
             >
               <Terminal className="w-3.5 h-3.5" />
@@ -435,7 +435,7 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
             <button
               onClick={() => setActiveTab('ddl')}
               className={`px-3 py-1.5 rounded-md transition-all flex items-center gap-1.5 ${
-                activeTab === 'ddl' ? 'bg-emerald-600 text-white font-bold shadow-sm' : 'text-zinc-400 hover:text-white'
+                activeTab === 'ddl' ? 'bg-[var(--accent)] text-white font-bold shadow-sm' : 'text-[var(--muted)] hover:text-white'
               }`}
             >
               <FileCode className="w-3.5 h-3.5" />
@@ -447,12 +447,12 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
 
       {/* Action Notification Banner */}
       {actionNotice && (
-        <div className="p-3 bg-emerald-950/80 border border-emerald-500/40 rounded-lg text-emerald-300 text-xs font-mono flex items-center justify-between animate-fadeIn">
+        <div className="p-3 bg-[var(--accent-soft)]/80 border border-[var(--accent)] rounded-lg text-[var(--accent)] text-xs font-mono flex items-center justify-between animate-fadeIn">
           <div className="flex items-center gap-2">
-            <Check className="w-4 h-4 text-emerald-400" />
+            <Check className="w-4 h-4 text-[var(--accent)]" />
             <span>{actionNotice}</span>
           </div>
-          <button onClick={() => setActionNotice(null)} className="text-zinc-400 hover:text-white">✕</button>
+          <button onClick={() => setActionNotice(null)} className="text-[var(--muted)] hover:text-white">✕</button>
         </div>
       )}
 
@@ -467,7 +467,7 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
                 className={`px-3 py-2 rounded-lg border transition-all flex items-center gap-2 ${
                   selectedCollection === 'tunnels'
                     ? 'bg-amber-950/60 border-amber-500 text-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.15)]'
-                    : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:border-zinc-700'
+                    : 'bg-[var(--paper-2)] border-[var(--line)] text-[var(--muted)] hover:border-[var(--line)]'
                 }`}
               >
                 <Server className="w-3.5 h-3.5" />
@@ -479,7 +479,7 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
                 className={`px-3 py-2 rounded-lg border transition-all flex items-center gap-2 ${
                   selectedCollection === 'traffic_logs'
                     ? 'bg-amber-950/60 border-amber-500 text-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.15)]'
-                    : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:border-zinc-700'
+                    : 'bg-[var(--paper-2)] border-[var(--line)] text-[var(--muted)] hover:border-[var(--line)]'
                 }`}
               >
                 <Activity className="w-3.5 h-3.5" />
@@ -491,7 +491,7 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
                 className={`px-3 py-2 rounded-lg border transition-all flex items-center gap-2 ${
                   selectedCollection === 'users'
                     ? 'bg-amber-950/60 border-amber-500 text-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.15)]'
-                    : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:border-zinc-700'
+                    : 'bg-[var(--paper-2)] border-[var(--line)] text-[var(--muted)] hover:border-[var(--line)]'
                 }`}
               >
                 <Key className="w-3.5 h-3.5" />
@@ -503,7 +503,7 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
                 className={`px-3 py-2 rounded-lg border transition-all flex items-center gap-2 ${
                   selectedCollection === 'rate_limit_rules'
                     ? 'bg-amber-950/60 border-amber-500 text-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.15)]'
-                    : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:border-zinc-700'
+                    : 'bg-[var(--paper-2)] border-[var(--line)] text-[var(--muted)] hover:border-[var(--line)]'
                 }`}
               >
                 <ShieldCheck className="w-3.5 h-3.5" />
@@ -525,18 +525,18 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
               <button
                 onClick={refreshAllData}
                 disabled={isRefreshing}
-                className="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 flex items-center gap-1.5 transition-colors disabled:opacity-50"
+                className="px-3 py-1.5 rounded-lg bg-[var(--paper-2)] hover:bg-[var(--line)] text-[var(--ink)] flex items-center gap-1.5 transition-colors disabled:opacity-50"
               >
-                <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-emerald-400' : ''}`} />
+                <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-[var(--accent)]' : ''}`} />
                 <span>{t.refreshBtn}</span>
               </button>
             </div>
           </div>
 
           {/* Firestore Documents List */}
-          <div className="bg-zinc-900/90 border border-zinc-800 rounded-xl p-5 shadow-sm space-y-4">
-            <div className="flex items-center justify-between text-xs font-mono border-b border-zinc-800 pb-3">
-              <span className="text-zinc-400 flex items-center gap-2">
+          <div className="bg-[var(--paper-2)]/90 border border-[var(--line)] rounded-xl p-5 shadow-sm space-y-4">
+            <div className="flex items-center justify-between text-xs font-mono border-b border-[var(--line)] pb-3">
+              <span className="text-[var(--muted)] flex items-center gap-2">
                 <Flame className="w-4 h-4 text-amber-400" />
                 <span>Collection path: <strong className="text-amber-300">/{selectedCollection}</strong></span>
               </span>
@@ -548,19 +548,19 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
             {/* Document Cards */}
             <div className="grid grid-cols-1 gap-3">
               {collectionDocs.length === 0 ? (
-                <div className="p-8 text-center text-zinc-500 font-mono text-xs">
+                <div className="p-8 text-center text-[var(--muted)] font-mono text-xs">
                   {language === 'ua' ? 'Немає документів у цій колекції. Натисніть "Додати тестовий запис", щоб створити перший документ у Firestore.' : 'No documents found in this collection. Click "Add Test Document" to insert a record into Firestore.'}
                 </div>
               ) : (
                 collectionDocs.map((item, idx) => (
-                  <div key={item.id || idx} className="bg-zinc-950/80 border border-zinc-800/80 rounded-lg p-3 font-mono text-xs hover:border-zinc-700 transition-colors">
+                  <div key={item.id || idx} className="bg-[var(--paper)]/80 border border-[var(--line)]/80 rounded-lg p-3 font-mono text-xs hover:border-[var(--line)] transition-colors">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-2">
-                        <span className="px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 text-[11px] font-bold">
+                        <span className="px-2 py-0.5 rounded bg-[var(--paper-2)] text-[var(--ink-2)] text-[11px] font-bold">
                           ID: {item.id}
                         </span>
                         {item.subdomain && (
-                          <span className="text-emerald-400 font-bold">
+                          <span className="text-[var(--accent)] font-bold">
                             {item.subdomain}.edgeproxy.mesh
                           </span>
                         )}
@@ -570,12 +570,12 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
                           </span>
                         )}
                       </div>
-                      <span className="text-[10px] text-zinc-500">
+                      <span className="text-[10px] text-[var(--muted)]">
                         {item.updated_at || item.created_at || item.timestamp || 'Live Document'}
                       </span>
                     </div>
 
-                    <pre className="bg-zinc-900/60 p-2.5 rounded border border-zinc-800/50 text-emerald-300/90 text-[11px] overflow-x-auto leading-relaxed">
+                    <pre className="bg-[var(--paper-2)]/60 p-2.5 rounded border border-[var(--line)]/50 text-[var(--accent)]/90 text-[11px] overflow-x-auto leading-relaxed">
                       {JSON.stringify(item, null, 2)}
                     </pre>
                   </div>
@@ -596,8 +596,8 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
                 onClick={() => setSelectedTable('tunnels')}
                 className={`px-3 py-2 rounded-lg border transition-all flex items-center gap-2 ${
                   selectedTable === 'tunnels'
-                    ? 'bg-emerald-950/60 border-emerald-500 text-emerald-300 shadow-[0_0_10px_rgba(16,185,129,0.1)]'
-                    : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:border-zinc-700'
+                    ? 'bg-[var(--accent-soft)]/60 border-emerald-500 text-[var(--accent)] shadow-[0_0_10px_rgba(16,185,129,0.1)]'
+                    : 'bg-[var(--paper-2)] border-[var(--line)] text-[var(--muted)] hover:border-[var(--line)]'
                 }`}
               >
                 <Table className="w-3.5 h-3.5" />
@@ -608,8 +608,8 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
                 onClick={() => setSelectedTable('traffic_logs')}
                 className={`px-3 py-2 rounded-lg border transition-all flex items-center gap-2 ${
                   selectedTable === 'traffic_logs'
-                    ? 'bg-emerald-950/60 border-emerald-500 text-emerald-300 shadow-[0_0_10px_rgba(16,185,129,0.1)]'
-                    : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:border-zinc-700'
+                    ? 'bg-[var(--accent-soft)]/60 border-emerald-500 text-[var(--accent)] shadow-[0_0_10px_rgba(16,185,129,0.1)]'
+                    : 'bg-[var(--paper-2)] border-[var(--line)] text-[var(--muted)] hover:border-[var(--line)]'
                 }`}
               >
                 <Table className="w-3.5 h-3.5" />
@@ -620,8 +620,8 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
                 onClick={() => setSelectedTable('users')}
                 className={`px-3 py-2 rounded-lg border transition-all flex items-center gap-2 ${
                   selectedTable === 'users'
-                    ? 'bg-emerald-950/60 border-emerald-500 text-emerald-300 shadow-[0_0_10px_rgba(16,185,129,0.1)]'
-                    : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:border-zinc-700'
+                    ? 'bg-[var(--accent-soft)]/60 border-emerald-500 text-[var(--accent)] shadow-[0_0_10px_rgba(16,185,129,0.1)]'
+                    : 'bg-[var(--paper-2)] border-[var(--line)] text-[var(--muted)] hover:border-[var(--line)]'
                 }`}
               >
                 <Table className="w-3.5 h-3.5" />
@@ -632,22 +632,22 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
             <button
               onClick={refreshAllData}
               disabled={isRefreshing}
-              className="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 flex items-center gap-1.5 transition-colors disabled:opacity-50"
+              className="px-3 py-1.5 rounded-lg bg-[var(--paper-2)] hover:bg-[var(--line)] text-[var(--ink)] flex items-center gap-1.5 transition-colors disabled:opacity-50"
             >
-              <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-emerald-400' : ''}`} />
+              <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-[var(--accent)]' : ''}`} />
               <span>{t.refreshBtn}</span>
             </button>
           </div>
 
           {/* Table Content Container */}
-          <div className="bg-zinc-900/90 border border-zinc-800 rounded-xl p-5 shadow-sm space-y-4">
-            <div className="flex items-center justify-between text-xs font-mono border-b border-zinc-800 pb-3">
-              <span className="text-zinc-400">
+          <div className="bg-[var(--paper-2)]/90 border border-[var(--line)] rounded-xl p-5 shadow-sm space-y-4">
+            <div className="flex items-center justify-between text-xs font-mono border-b border-[var(--line)] pb-3">
+              <span className="text-[var(--muted)]">
                 {selectedTable === 'users' && t.usersTableDesc}
                 {selectedTable === 'tunnels' && t.tunnelsTableDesc}
                 {selectedTable === 'traffic_logs' && t.logsTableDesc}
               </span>
-              <span className="px-2 py-0.5 rounded bg-zinc-800 text-zinc-400 text-[11px]">
+              <span className="px-2 py-0.5 rounded bg-[var(--paper-2)] text-[var(--muted)] text-[11px]">
                 Engine: Firebase Firestore via Virtual Table Mapping
               </span>
             </div>
@@ -657,7 +657,7 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
               {selectedTable === 'tunnels' && (
                 <table className="w-full text-left font-mono text-xs border-collapse">
                   <thead>
-                    <tr className="border-b border-zinc-800 text-zinc-400 bg-zinc-950/60">
+                    <tr className="border-b border-[var(--line)] text-[var(--muted)] bg-[var(--paper)]/60">
                       <th className="p-2.5">id</th>
                       <th className="p-2.5">subdomain</th>
                       <th className="p-2.5">is_active</th>
@@ -668,22 +668,22 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
                   <tbody className="divide-y divide-zinc-800/60">
                     {tunnels.length === 0 ? (
                       <tr>
-                        <td colSpan={5} className="p-6 text-center text-zinc-500 font-mono">
+                        <td colSpan={5} className="p-6 text-center text-[var(--muted)] font-mono">
                           {language === 'ua' ? 'Немає зареєстрованих тунелів. Створіть новий тунель для синхронізації з Firestore.' : 'No registered tunnels. Create a new tunnel to sync with Firestore.'}
                         </td>
                       </tr>
                     ) : (
                       tunnels.map((tun) => (
-                        <tr key={tun.id} className="hover:bg-zinc-800/40 text-zinc-300">
-                          <td className="p-2.5 text-zinc-500">{tun.id}</td>
-                          <td className="p-2.5 text-emerald-400 font-bold">{tun.subdomain}</td>
+                        <tr key={tun.id} className="hover:bg-[var(--paper-2)]/40 text-[var(--ink-2)]">
+                          <td className="p-2.5 text-[var(--muted)]">{tun.id}</td>
+                          <td className="p-2.5 text-[var(--accent)] font-bold">{tun.subdomain}</td>
                           <td className="p-2.5">
-                            <span className={`px-2 py-0.5 rounded text-[10px] ${tun.is_active ? 'bg-emerald-950 text-emerald-300 border border-emerald-500/30' : 'bg-zinc-800 text-zinc-500'}`}>
+                            <span className={`px-2 py-0.5 rounded text-[10px] ${tun.is_active ? 'bg-[var(--accent-soft)] text-[var(--accent)] border border-[var(--accent)]' : 'bg-[var(--paper-2)] text-[var(--muted)]'}`}>
                               {tun.is_active ? 'TRUE' : 'FALSE'}
                             </span>
                           </td>
                           <td className="p-2.5 text-white">{tun.max_rate_limit} RPS</td>
-                          <td className="p-2.5 text-zinc-500">{tun.created_at}</td>
+                          <td className="p-2.5 text-[var(--muted)]">{tun.created_at}</td>
                         </tr>
                       ))
                     )}
@@ -694,7 +694,7 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
               {selectedTable === 'traffic_logs' && (
                 <table className="w-full text-left font-mono text-xs border-collapse">
                   <thead>
-                    <tr className="border-b border-zinc-800 text-zinc-400 bg-zinc-950/60">
+                    <tr className="border-b border-[var(--line)] text-[var(--muted)] bg-[var(--paper)]/60">
                       <th className="p-2.5">id</th>
                       <th className="p-2.5">client_ip</th>
                       <th className="p-2.5">method</th>
@@ -708,25 +708,25 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
                   <tbody className="divide-y divide-zinc-800/60">
                     {logs.length === 0 ? (
                       <tr>
-                        <td colSpan={8} className="p-6 text-center text-zinc-500 font-mono">
+                        <td colSpan={8} className="p-6 text-center text-[var(--muted)] font-mono">
                           {language === 'ua' ? 'Логи трафіку порожні. Надішліть тестовий запит або натисніть "Додати тестовий запис".' : 'Traffic logs are empty. Send a test probe or click "Add Test Document".'}
                         </td>
                       </tr>
                     ) : (
                       logs.map((log) => (
-                        <tr key={log.id} className="hover:bg-zinc-800/40 text-zinc-300">
-                          <td className="p-2.5 text-zinc-500">{log.id}</td>
+                        <tr key={log.id} className="hover:bg-[var(--paper-2)]/40 text-[var(--ink-2)]">
+                          <td className="p-2.5 text-[var(--muted)]">{log.id}</td>
                           <td className="p-2.5 text-sky-400">{log.client_ip}</td>
                           <td className="p-2.5 text-white font-bold">{log.http_method}</td>
-                          <td className="p-2.5 text-zinc-400 truncate max-w-xs">{log.path}</td>
+                          <td className="p-2.5 text-[var(--muted)] truncate max-w-xs">{log.path}</td>
                           <td className="p-2.5">
-                            <span className={`px-1.5 py-0.5 rounded text-[11px] font-bold ${log.status_code === 200 || log.status_code === 201 ? 'text-emerald-400 bg-emerald-950/60' : 'text-rose-400 bg-rose-950/60'}`}>
+                            <span className={`px-1.5 py-0.5 rounded text-[11px] font-bold ${log.status_code === 200 || log.status_code === 201 ? 'text-[var(--accent)] bg-[var(--accent-soft)]/60' : 'text-rose-400 bg-rose-950/60'}`}>
                               {log.status_code}
                             </span>
                           </td>
-                          <td className="p-2.5 text-emerald-400">{log.latency_ms} ms</td>
-                          <td className="p-2.5 text-zinc-400">{log.bytes_sent} B</td>
-                          <td className="p-2.5 text-zinc-500">{log.timestamp}</td>
+                          <td className="p-2.5 text-[var(--accent)]">{log.latency_ms} ms</td>
+                          <td className="p-2.5 text-[var(--muted)]">{log.bytes_sent} B</td>
+                          <td className="p-2.5 text-[var(--muted)]">{log.timestamp}</td>
                         </tr>
                       ))
                     )}
@@ -737,7 +737,7 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
               {selectedTable === 'users' && (
                 <table className="w-full text-left font-mono text-xs border-collapse">
                   <thead>
-                    <tr className="border-b border-zinc-800 text-zinc-400 bg-zinc-950/60">
+                    <tr className="border-b border-[var(--line)] text-[var(--muted)] bg-[var(--paper)]/60">
                       <th className="p-2.5">id (UUID)</th>
                       <th className="p-2.5">email</th>
                       <th className="p-2.5">api_key_hash</th>
@@ -747,17 +747,17 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
                   <tbody className="divide-y divide-zinc-800/60">
                     {users.length === 0 ? (
                       <tr>
-                        <td colSpan={4} className="p-6 text-center text-zinc-500 font-mono">
+                        <td colSpan={4} className="p-6 text-center text-[var(--muted)] font-mono">
                           {language === 'ua' ? 'Немає користувачів у таблиці public.users.' : 'No users in public.users table.'}
                         </td>
                       </tr>
                     ) : (
                       users.map((u) => (
-                        <tr key={u.id} className="hover:bg-zinc-800/40 text-zinc-300">
-                          <td className="p-2.5 text-zinc-500">{u.id}</td>
+                        <tr key={u.id} className="hover:bg-[var(--paper-2)]/40 text-[var(--ink-2)]">
+                          <td className="p-2.5 text-[var(--muted)]">{u.id}</td>
                           <td className="p-2.5 text-white font-bold">{u.email}</td>
                           <td className="p-2.5 text-amber-400 truncate max-w-xs">{u.api_key_hash}</td>
-                          <td className="p-2.5 text-zinc-500">{u.created_at}</td>
+                          <td className="p-2.5 text-[var(--muted)]">{u.created_at}</td>
                         </tr>
                       ))
                     )}
@@ -771,9 +771,9 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
 
       {/* TAB 3: Interactive SQL Console against Firestore */}
       {activeTab === 'console' && (
-        <div className="bg-zinc-900/90 border border-zinc-800 rounded-xl p-5 shadow-sm space-y-4 font-mono text-xs">
+        <div className="bg-[var(--paper-2)]/90 border border-[var(--line)] rounded-xl p-5 shadow-sm space-y-4 font-mono text-xs">
           <div>
-            <span className="text-zinc-400 block mb-2">{t.presetQueriesTitle}</span>
+            <span className="text-[var(--muted)] block mb-2">{t.presetQueriesTitle}</span>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {PRESET_QUERIES.map((q) => (
                 <button
@@ -781,12 +781,12 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
                   onClick={() => runPresetQuery(q.sql)}
                   className={`p-2.5 rounded border text-left transition-all ${
                     activeQuery === q.sql
-                      ? 'bg-emerald-950/60 border-emerald-500 text-emerald-300'
-                      : 'bg-zinc-950 border-zinc-800 text-zinc-400 hover:border-zinc-700'
+                      ? 'bg-[var(--accent-soft)]/60 border-emerald-500 text-[var(--accent)]'
+                      : 'bg-[var(--paper)] border-[var(--line)] text-[var(--muted)] hover:border-[var(--line)]'
                   }`}
                 >
                   <div className="font-bold text-white mb-0.5">{language === 'ua' ? q.nameUa : q.nameEn}</div>
-                  <div className="text-[11px] text-zinc-500 truncate">{q.sql}</div>
+                  <div className="text-[11px] text-[var(--muted)] truncate">{q.sql}</div>
                 </button>
               ))}
             </div>
@@ -794,11 +794,11 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
 
           {/* SQL Input Area */}
           <div className="space-y-2">
-            <label className="text-zinc-400 flex items-center justify-between">
+            <label className="text-[var(--muted)] flex items-center justify-between">
               <span>SQL Query Editor:</span>
               {queryStats && (
-                <span className="text-emerald-400 text-[11px] flex items-center gap-2">
-                  <span className="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-500/30 text-[10px]">
+                <span className="text-[var(--accent)] text-[11px] flex items-center gap-2">
+                  <span className="px-2 py-0.5 rounded bg-[var(--accent-soft)] border border-[var(--accent)] text-[10px]">
                     Source: {queryStats.source || 'Firebase Firestore'}
                   </span>
                   <span>{t.execTime} {queryStats.executionTimeMs}ms • {queryStats.rowCount} {t.rowsCount}</span>
@@ -809,11 +809,11 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
               rows={3}
               value={activeQuery}
               onChange={(e) => setActiveQuery(e.target.value)}
-              className="w-full bg-zinc-950 border border-zinc-700 rounded p-2.5 text-emerald-300 font-mono text-xs focus:border-emerald-500 outline-none"
+              className="w-full bg-[var(--paper)] border border-[var(--line)] rounded p-2.5 text-[var(--accent)] font-mono text-xs focus:border-emerald-500 outline-none"
             />
             <button
               onClick={() => runPresetQuery(activeQuery)}
-              className="py-2 px-4 rounded bg-emerald-600 hover:bg-emerald-500 text-white font-bold flex items-center gap-1.5 transition-colors"
+              className="py-2 px-4 rounded bg-[var(--accent)] hover:bg-[var(--accent)] text-white font-bold flex items-center gap-1.5 transition-colors"
             >
               <Play className="w-3.5 h-3.5" />
               <span>{t.runQueryBtn}</span>
@@ -822,11 +822,11 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
 
           {/* Query Output Result Table */}
           {queryOutput.length > 0 && (
-            <div className="bg-zinc-950 border border-zinc-800 rounded-lg p-3 overflow-x-auto space-y-2">
-              <div className="text-zinc-400 text-[11px]">Query Results:</div>
+            <div className="bg-[var(--paper)] border border-[var(--line)] rounded-lg p-3 overflow-x-auto space-y-2">
+              <div className="text-[var(--muted)] text-[11px]">Query Results:</div>
               <table className="w-full text-left font-mono text-xs border-collapse">
                 <thead>
-                  <tr className="border-b border-zinc-800 text-zinc-400 bg-zinc-900/60">
+                  <tr className="border-b border-[var(--line)] text-[var(--muted)] bg-[var(--paper-2)]/60">
                     {Object.keys(queryOutput[0]).map((key) => (
                       <th key={key} className="p-2">
                         {key}
@@ -836,7 +836,7 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
                 </thead>
                 <tbody className="divide-y divide-zinc-800/60">
                   {queryOutput.map((row, idx) => (
-                    <tr key={idx} className="hover:bg-zinc-800/40 text-zinc-300">
+                    <tr key={idx} className="hover:bg-[var(--paper-2)]/40 text-[var(--ink-2)]">
                       {Object.values(row).map((val: any, vIdx) => (
                         <td key={vIdx} className="p-2">
                           {typeof val === 'boolean' ? (val ? 'TRUE' : 'FALSE') : String(val)}
@@ -853,19 +853,19 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
 
       {/* TAB 4: DDL & Blueprint Specification */}
       {activeTab === 'ddl' && (
-        <div className="bg-zinc-900/90 border border-zinc-800 rounded-xl p-5 shadow-sm space-y-3 font-mono">
+        <div className="bg-[var(--paper-2)]/90 border border-[var(--line)] rounded-xl p-5 shadow-sm space-y-3 font-mono">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-zinc-400">Database Schema Definition (PostgreSQL DDL & Cloud Firestore Rules)</span>
+            <span className="text-xs text-[var(--muted)]">Database Schema Definition (PostgreSQL DDL & Cloud Firestore Rules)</span>
             <button
               onClick={copyDdl}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-mono transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-[var(--paper-2)] hover:bg-[var(--line)] text-[var(--ink)] text-xs font-mono transition-colors"
             >
-              {copiedDdl ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+              {copiedDdl ? <Check className="w-3.5 h-3.5 text-[var(--accent)]" /> : <Copy className="w-3.5 h-3.5" />}
               <span>{copiedDdl ? t.copied : t.copyDdlBtn}</span>
             </button>
           </div>
 
-          <div className="bg-zinc-950 p-4 rounded-lg border border-zinc-800 overflow-x-auto text-xs text-emerald-400 leading-relaxed">
+          <div className="bg-[var(--paper)] p-4 rounded-lg border border-[var(--line)] overflow-x-auto text-xs text-[var(--accent)] leading-relaxed">
             <pre>{SQL_DDL}</pre>
           </div>
         </div>

@@ -133,16 +133,16 @@ export const MeshTopology: React.FC<MeshTopologyProps> = ({
   return (
     <div className="space-y-6">
       {/* Top Header & Quick Metrics Bar */}
-      <div className="bg-zinc-900/80 border border-zinc-800 rounded-xl p-5 shadow-lg">
+      <div className="bg-[var(--paper-2)]/80 border border-[var(--line)] rounded-xl p-5 shadow-lg">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2">
-              <span className="p-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+              <span className="p-1.5 rounded-lg bg-[var(--accent)]/10 border border-[var(--accent)] text-[var(--accent)]">
                 <Layers className="w-5 h-5" />
               </span>
               <h1 className="text-xl font-bold text-white tracking-tight font-mono">{t.title}</h1>
             </div>
-            <p className="text-sm text-zinc-400 mt-1 max-w-2xl">{t.subtitle}</p>
+            <p className="text-sm text-[var(--muted)] mt-1 max-w-2xl">{t.subtitle}</p>
           </div>
 
           {/* Quick NAT test & protocol badge */}
@@ -150,122 +150,122 @@ export const MeshTopology: React.FC<MeshTopologyProps> = ({
             <button
               onClick={handleRunNat}
               disabled={natTestStatus === 'testing'}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-950/60 hover:bg-emerald-900/60 border border-emerald-500/40 text-emerald-300 text-xs font-mono transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--accent-soft)]/60 hover:bg-[var(--accent-soft)]/60 border border-[var(--accent)] text-[var(--accent)] text-xs font-mono transition-colors"
             >
-              <Zap className={`w-3.5 h-3.5 ${natTestStatus === 'testing' ? 'animate-spin' : 'text-emerald-400'}`} />
+              <Zap className={`w-3.5 h-3.5 ${natTestStatus === 'testing' ? 'animate-spin' : 'text-[var(--accent)]'}`} />
               <span>{natTestStatus === 'testing' ? 'Testing STUN/NAT...' : t.runNatTest}</span>
             </button>
           </div>
         </div>
 
         {natTestStatus === 'success' && (
-          <div className="mt-3 py-2 px-3 rounded-lg bg-emerald-950/70 border border-emerald-500/50 text-emerald-300 text-xs font-mono flex items-center gap-2 animate-fadeIn">
-            <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+          <div className="mt-3 py-2 px-3 rounded-lg bg-[var(--accent-soft)]/70 border border-[var(--accent)] text-[var(--accent)] text-xs font-mono flex items-center gap-2 animate-fadeIn">
+            <CheckCircle2 className="w-4 h-4 text-[var(--accent)] flex-shrink-0" />
             <span>{t.natSuccess}</span>
           </div>
         )}
 
         {/* Real-time quick telemetry stats */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mt-4 pt-4 border-t border-zinc-800/80">
-          <div className="bg-zinc-950/60 border border-zinc-800/60 p-3 rounded-lg">
-            <span className="text-[11px] text-zinc-400 uppercase tracking-wider font-mono block">{t.rps}</span>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mt-4 pt-4 border-t border-[var(--line)]/80">
+          <div className="bg-[var(--paper)]/60 border border-[var(--line)]/60 p-3 rounded-lg">
+            <span className="text-[11px] text-[var(--muted)] uppercase tracking-wider font-mono block">{t.rps}</span>
             <div className="flex items-baseline gap-2 mt-1">
-              <span className="text-2xl font-bold font-mono text-emerald-400">{telemetry.currentRps}</span>
-              <span className="text-xs text-zinc-500 font-mono">peak: {telemetry.peakRps}</span>
+              <span className="text-2xl font-bold font-mono text-[var(--accent)]">{telemetry.currentRps}</span>
+              <span className="text-xs text-[var(--muted)] font-mono">peak: {telemetry.peakRps}</span>
             </div>
           </div>
 
-          <div className="bg-zinc-950/60 border border-zinc-800/60 p-3 rounded-lg">
-            <span className="text-[11px] text-zinc-400 uppercase tracking-wider font-mono block">{t.latencyP50}</span>
+          <div className="bg-[var(--paper)]/60 border border-[var(--line)]/60 p-3 rounded-lg">
+            <span className="text-[11px] text-[var(--muted)] uppercase tracking-wider font-mono block">{t.latencyP50}</span>
             <div className="flex items-baseline gap-1.5 mt-1 font-mono">
               <span className="text-xl font-bold text-white">{telemetry.p50LatencyMs}ms</span>
-              <span className="text-xs text-zinc-400">/</span>
+              <span className="text-xs text-[var(--muted)]">/</span>
               <span className="text-xs text-amber-300">{telemetry.p95LatencyMs}ms</span>
-              <span className="text-xs text-zinc-400">/</span>
+              <span className="text-xs text-[var(--muted)]">/</span>
               <span className="text-xs text-rose-400">{telemetry.p99LatencyMs}ms</span>
             </div>
           </div>
 
-          <div className="bg-zinc-950/60 border border-zinc-800/60 p-3 rounded-lg">
-            <span className="text-[11px] text-zinc-400 uppercase tracking-wider font-mono block">{t.bandwidth}</span>
+          <div className="bg-[var(--paper)]/60 border border-[var(--line)]/60 p-3 rounded-lg">
+            <span className="text-[11px] text-[var(--muted)] uppercase tracking-wider font-mono block">{t.bandwidth}</span>
             <div className="text-sm font-bold font-mono text-white mt-1">
               ↓ {formatBandwidth(telemetry.bandwidthInBps)}
-              <span className="text-zinc-500 font-normal ml-1">/ ↑ {formatBandwidth(telemetry.bandwidthOutBps)}</span>
+              <span className="text-[var(--muted)] font-normal ml-1">/ ↑ {formatBandwidth(telemetry.bandwidthOutBps)}</span>
             </div>
           </div>
 
-          <div className="bg-zinc-950/60 border border-zinc-800/60 p-3 rounded-lg">
-            <span className="text-[11px] text-zinc-400 uppercase tracking-wider font-mono block">C10K Concurrency</span>
+          <div className="bg-[var(--paper)]/60 border border-[var(--line)]/60 p-3 rounded-lg">
+            <span className="text-[11px] text-[var(--muted)] uppercase tracking-wider font-mono block">C10K Concurrency</span>
             <div className="flex items-baseline gap-2 mt-1">
               <span className="text-2xl font-bold font-mono text-white">{telemetry.activeConnections}</span>
-              <span className="text-xs text-emerald-400 font-mono">epoll streams</span>
+              <span className="text-xs text-[var(--accent)] font-mono">epoll streams</span>
             </div>
           </div>
 
-          <div className="bg-zinc-950/60 border border-zinc-800/60 p-3 rounded-lg col-span-2 sm:col-span-1">
-            <span className="text-[11px] text-zinc-400 uppercase tracking-wider font-mono block">{t.cpuRam}</span>
+          <div className="bg-[var(--paper)]/60 border border-[var(--line)]/60 p-3 rounded-lg col-span-2 sm:col-span-1">
+            <span className="text-[11px] text-[var(--muted)] uppercase tracking-wider font-mono block">{t.cpuRam}</span>
             <div className="flex items-baseline gap-2 mt-1 font-mono text-xs">
-              <span className="text-emerald-400 font-bold">{telemetry.edgeCpuPercent}% CPU</span>
-              <span className="text-zinc-600">•</span>
-              <span className="text-zinc-300">{telemetry.edgeMemoryMb} MB</span>
+              <span className="text-[var(--accent)] font-bold">{telemetry.edgeCpuPercent}% CPU</span>
+              <span className="text-[var(--faint)]">•</span>
+              <span className="text-[var(--ink-2)]">{telemetry.edgeMemoryMb} MB</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Main Architecture Diagram (2 Blocks Connected by Encrypted Tunnel) */}
-      <div className="relative bg-zinc-950/90 border border-zinc-800 rounded-xl p-6 overflow-hidden">
+      <div className="relative bg-[var(--paper)]/90 border border-[var(--line)] rounded-xl p-6 overflow-hidden">
         {/* Decorative subtle background grid */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:16px_16px]"></div>
 
         <div className="relative max-w-3xl mx-auto space-y-6">
           {/* Block 1: Internet Clients */}
-          <div className="bg-zinc-900/90 border border-zinc-700/80 rounded-xl p-4 shadow-sm text-center relative hover:border-zinc-500 transition-colors">
+          <div className="bg-[var(--paper-2)]/90 border border-[var(--line)]/80 rounded-xl p-4 shadow-sm text-center relative hover:border-[var(--line-strong)] transition-colors">
             <div className="flex items-center justify-center gap-2 mb-1">
               <Globe className="w-5 h-5 text-sky-400" />
               <h3 className="font-bold text-white font-mono text-base">{t.clientTitle}</h3>
             </div>
-            <p className="text-xs text-zinc-400 max-w-xl mx-auto">{t.clientDesc}</p>
+            <p className="text-xs text-[var(--muted)] max-w-xl mx-auto">{t.clientDesc}</p>
             <div className="flex items-center justify-center gap-2 mt-2 font-mono text-[11px]">
-              <span className="px-2 py-0.5 rounded bg-zinc-800 text-sky-300 border border-zinc-700">HTTPS 443</span>
-              <span className="px-2 py-0.5 rounded bg-zinc-800 text-purple-300 border border-zinc-700">HTTP/3 QUIC (UDP 443)</span>
-              <span className="px-2 py-0.5 rounded bg-zinc-800 text-emerald-300 border border-zinc-700">WSS (WebSockets)</span>
+              <span className="px-2 py-0.5 rounded bg-[var(--paper-2)] text-sky-300 border border-[var(--line)]">HTTPS 443</span>
+              <span className="px-2 py-0.5 rounded bg-[var(--paper-2)] text-purple-300 border border-[var(--line)]">HTTP/3 QUIC (UDP 443)</span>
+              <span className="px-2 py-0.5 rounded bg-[var(--paper-2)] text-[var(--accent)] border border-[var(--line)]">WSS (WebSockets)</span>
             </div>
           </div>
 
           {/* Animated Flow Arrow 1 */}
           <div className="flex flex-col items-center justify-center">
             <div className="h-6 w-0.5 bg-gradient-to-b from-sky-500 via-emerald-500 to-emerald-500 animate-pulse"></div>
-            <ArrowDown className="w-5 h-5 text-emerald-400 -mt-1" />
+            <ArrowDown className="w-5 h-5 text-[var(--accent)] -mt-1" />
           </div>
 
           {/* Block 2: VPS / Cloud Gateway (Edge Node) */}
-          <div className="bg-emerald-950/20 border-2 border-emerald-500/50 rounded-xl p-5 shadow-[0_0_25px_rgba(16,185,129,0.08)] relative">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-emerald-500/20 pb-3 mb-4">
+          <div className="bg-[var(--accent-soft)]/20 border-2 border-[var(--accent)] rounded-xl p-5 shadow-[0_0_25px_rgba(16,185,129,0.08)] relative">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--accent)] pb-3 mb-4">
               <div className="flex items-center gap-2.5">
-                <div className="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/40 text-emerald-400">
+                <div className="p-2 rounded-lg bg-[var(--accent)]/10 border border-[var(--accent)] text-[var(--accent)]">
                   <ShieldCheck className="w-6 h-6" />
                 </div>
                 <div>
                   <h3 className="font-bold text-white font-mono text-base flex items-center gap-2">
                     <span>{t.edgeTitle}</span>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-semibold">
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-[var(--accent)]/20 text-[var(--accent)] border border-[var(--accent)] font-semibold">
                       EDGE CORE
                     </span>
                   </h3>
-                  <div className="text-xs text-zinc-400 font-mono flex items-center gap-1.5 mt-0.5">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                  <div className="text-xs text-[var(--muted)] font-mono flex items-center gap-1.5 mt-0.5">
+                    <span className="w-2 h-2 rounded-full bg-[var(--accent)]"></span>
                     <span>{t.edgeLocation}</span>
                   </div>
                 </div>
               </div>
 
               {/* Edge Node Specs */}
-              <div className="flex items-center gap-2 font-mono text-xs text-zinc-300">
-                <span className="bg-zinc-900/80 px-2 py-1 rounded border border-zinc-800">
+              <div className="flex items-center gap-2 font-mono text-xs text-[var(--ink-2)]">
+                <span className="bg-[var(--paper-2)]/80 px-2 py-1 rounded border border-[var(--line)]">
                   Epoll / Async I/O
                 </span>
-                <span className="bg-zinc-900/80 px-2 py-1 rounded border border-zinc-800 text-emerald-400">
+                <span className="bg-[var(--paper-2)]/80 px-2 py-1 rounded border border-[var(--line)] text-[var(--accent)]">
                   Zero-Copy Sockets
                 </span>
               </div>
@@ -275,60 +275,60 @@ export const MeshTopology: React.FC<MeshTopologyProps> = ({
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               <div 
                 onClick={() => onNavigateToTab('traffic')} 
-                className="bg-zinc-900/70 border border-zinc-800 p-3 rounded-lg hover:border-emerald-500/50 cursor-pointer transition-all group"
+                className="bg-[var(--paper-2)]/70 border border-[var(--line)] p-3 rounded-lg hover:border-[var(--accent)] cursor-pointer transition-all group"
               >
                 <div className="text-xs font-bold text-white font-mono flex items-center justify-between mb-1">
                   <span>1. Traffic Router</span>
-                  <ChevronRight className="w-3.5 h-3.5 text-zinc-500 group-hover:text-emerald-400 transition-colors" />
+                  <ChevronRight className="w-3.5 h-3.5 text-[var(--muted)] group-hover:text-[var(--accent)] transition-colors" />
                 </div>
-                <p className="text-[11px] text-zinc-400 leading-relaxed">{t.edgeFeature1}</p>
+                <p className="text-[11px] text-[var(--muted)] leading-relaxed">{t.edgeFeature1}</p>
               </div>
 
               <div 
                 onClick={() => onNavigateToTab('certs')} 
-                className="bg-zinc-900/70 border border-zinc-800 p-3 rounded-lg hover:border-emerald-500/50 cursor-pointer transition-all group"
+                className="bg-[var(--paper-2)]/70 border border-[var(--line)] p-3 rounded-lg hover:border-[var(--accent)] cursor-pointer transition-all group"
               >
                 <div className="text-xs font-bold text-white font-mono flex items-center justify-between mb-1">
                   <span>2. TLS & Let's Encrypt</span>
-                  <ChevronRight className="w-3.5 h-3.5 text-zinc-500 group-hover:text-emerald-400 transition-colors" />
+                  <ChevronRight className="w-3.5 h-3.5 text-[var(--muted)] group-hover:text-[var(--accent)] transition-colors" />
                 </div>
-                <p className="text-[11px] text-zinc-400 leading-relaxed">{t.edgeFeature2}</p>
+                <p className="text-[11px] text-[var(--muted)] leading-relaxed">{t.edgeFeature2}</p>
               </div>
 
               <div 
                 onClick={() => onNavigateToTab('shield')} 
-                className="bg-zinc-900/70 border border-zinc-800 p-3 rounded-lg hover:border-emerald-500/50 cursor-pointer transition-all group"
+                className="bg-[var(--paper-2)]/70 border border-[var(--line)] p-3 rounded-lg hover:border-[var(--accent)] cursor-pointer transition-all group"
               >
                 <div className="text-xs font-bold text-white font-mono flex items-center justify-between mb-1">
                   <span>3. Rate Limiting & Shield</span>
-                  <ChevronRight className="w-3.5 h-3.5 text-zinc-500 group-hover:text-emerald-400 transition-colors" />
+                  <ChevronRight className="w-3.5 h-3.5 text-[var(--muted)] group-hover:text-[var(--accent)] transition-colors" />
                 </div>
-                <p className="text-[11px] text-zinc-400 leading-relaxed">{t.edgeFeature3}</p>
+                <p className="text-[11px] text-[var(--muted)] leading-relaxed">{t.edgeFeature3}</p>
               </div>
             </div>
           </div>
 
           {/* Encrypted Tunnel Connector */}
-          <div className="bg-gradient-to-r from-emerald-950/40 via-emerald-900/30 to-emerald-950/40 border border-emerald-500/40 rounded-xl p-3.5 text-center relative shadow-md">
+          <div className="bg-gradient-to-r from-emerald-950/40 via-emerald-900/30 to-emerald-950/40 border border-[var(--accent)] rounded-xl p-3.5 text-center relative shadow-md">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
               <div className="flex items-center gap-2">
-                <Lock className="w-4 h-4 text-emerald-400" />
+                <Lock className="w-4 h-4 text-[var(--accent)]" />
                 <span className="font-bold text-white text-xs font-mono">{t.tunnelTitle}</span>
-                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300">
+                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[var(--accent)]/20 text-[var(--accent)]">
                   TLS 1.3 / ChaCha20-Poly1305
                 </span>
               </div>
 
               {/* Protocol selector for the tunnel */}
-              <div className="flex items-center gap-1 bg-zinc-900/80 p-0.5 rounded border border-zinc-800 text-[11px] font-mono">
+              <div className="flex items-center gap-1 bg-[var(--paper-2)]/80 p-0.5 rounded border border-[var(--line)] text-[11px] font-mono">
                 {(['quic', 'http2', 'ws', 'tcp'] as ProtocolType[]).map((proto) => (
                   <button
                     key={proto}
                     onClick={() => setSelectedProtocol(proto)}
                     className={`px-2 py-0.5 rounded uppercase font-semibold transition-colors ${
                       selectedProtocol === proto
-                        ? 'bg-emerald-600 text-white'
-                        : 'text-zinc-400 hover:text-white'
+                        ? 'bg-[var(--accent)] text-white'
+                        : 'text-[var(--muted)] hover:text-white'
                     }`}
                   >
                     {proto}
@@ -337,12 +337,12 @@ export const MeshTopology: React.FC<MeshTopologyProps> = ({
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2 pt-2 border-t border-emerald-500/20 text-[11px] font-mono text-zinc-300">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2 pt-2 border-t border-[var(--accent)] text-[11px] font-mono text-[var(--ink-2)]">
               <div className="flex items-center gap-1.5 justify-center sm:justify-start">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]"></span>
                 <span>{t.natTraversal}</span>
               </div>
-              <div className="flex items-center gap-1.5 justify-center sm:justify-end text-emerald-300">
+              <div className="flex items-center gap-1.5 justify-center sm:justify-end text-[var(--accent)]">
                 <Activity className="w-3.5 h-3.5" />
                 <span>RTT: 14.2ms • Jitter: {telemetry.tunnelJitterMs}ms • Loss: {telemetry.packetLossPercent}%</span>
               </div>
@@ -356,8 +356,8 @@ export const MeshTopology: React.FC<MeshTopologyProps> = ({
           </div>
 
           {/* Block 3: Local Developer Machine (Client Agent) */}
-          <div className="bg-zinc-900/90 border-2 border-teal-500/40 rounded-xl p-5 shadow-sm relative">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-800 pb-3 mb-4">
+          <div className="bg-[var(--paper-2)]/90 border-2 border-teal-500/40 rounded-xl p-5 shadow-sm relative">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--line)] pb-3 mb-4">
               <div className="flex items-center gap-2.5">
                 <div className="p-2 rounded-lg bg-teal-500/10 border border-teal-500/40 text-teal-400">
                   <HardDrive className="w-6 h-6" />
@@ -369,61 +369,61 @@ export const MeshTopology: React.FC<MeshTopologyProps> = ({
                       CLIENT AGENT
                     </span>
                   </h3>
-                  <div className="text-xs text-zinc-400 font-mono mt-0.5">{t.localDesc}</div>
+                  <div className="text-xs text-[var(--muted)] font-mono mt-0.5">{t.localDesc}</div>
                 </div>
               </div>
 
               <button
                 onClick={() => onNavigateToTab('cli')}
-                className="flex items-center gap-1.5 px-3 py-1 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-mono transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1 rounded bg-[var(--paper-2)] hover:bg-[var(--line)] text-[var(--ink)] text-xs font-mono transition-colors"
               >
                 <span>CLI Specs</span>
-                <ExternalLink className="w-3 h-3 text-zinc-400" />
+                <ExternalLink className="w-3 h-3 text-[var(--muted)]" />
               </button>
             </div>
 
             {/* Local Features */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
-              <div className="bg-zinc-950/70 border border-zinc-800/80 p-3 rounded-lg">
+              <div className="bg-[var(--paper)]/70 border border-[var(--line)]/80 p-3 rounded-lg">
                 <span className="text-xs font-bold text-teal-300 font-mono block mb-1">Local Proxy CLI</span>
-                <p className="text-[11px] text-zinc-400">{t.localFeature1}</p>
+                <p className="text-[11px] text-[var(--muted)]">{t.localFeature1}</p>
               </div>
-              <div className="bg-zinc-950/70 border border-zinc-800/80 p-3 rounded-lg">
+              <div className="bg-[var(--paper)]/70 border border-[var(--line)]/80 p-3 rounded-lg">
                 <span className="text-xs font-bold text-teal-300 font-mono block mb-1">Auto Port Discovery</span>
-                <p className="text-[11px] text-zinc-400">{t.localFeature2}</p>
+                <p className="text-[11px] text-[var(--muted)]">{t.localFeature2}</p>
               </div>
-              <div className="bg-zinc-950/70 border border-zinc-800/80 p-3 rounded-lg">
+              <div className="bg-[var(--paper)]/70 border border-[var(--line)]/80 p-3 rounded-lg">
                 <span className="text-xs font-bold text-teal-300 font-mono block mb-1">Local REST API</span>
-                <p className="text-[11px] text-zinc-400">{t.localFeature3}</p>
+                <p className="text-[11px] text-[var(--muted)]">{t.localFeature3}</p>
               </div>
             </div>
 
             {/* Currently Active Local Mappings */}
-            <div className="bg-zinc-950/80 border border-zinc-800 rounded-lg p-3">
-              <div className="text-xs font-bold text-zinc-300 font-mono mb-2 flex items-center justify-between">
+            <div className="bg-[var(--paper)]/80 border border-[var(--line)] rounded-lg p-3">
+              <div className="text-xs font-bold text-[var(--ink-2)] font-mono mb-2 flex items-center justify-between">
                 <span>Active Local Port Mappings ({tunnels.length})</span>
                 <button
                   onClick={() => onNavigateToTab('tunnels')}
-                  className="text-xs text-emerald-400 hover:underline"
+                  className="text-xs text-[var(--accent)] hover:underline"
                 >
                   Manage All →
                 </button>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 font-mono text-xs">
                 {tunnels.length === 0 ? (
-                  <div className="col-span-2 text-zinc-500 py-3 text-center">
+                  <div className="col-span-2 text-[var(--muted)] py-3 text-center">
                     {language === 'ua' ? 'Немає активних тунелів. Створіть перший тунель у вкладці Tunnels.' : 'No active tunnels. Create one in the Tunnels tab.'}
                   </div>
                 ) : (
                   tunnels.map((tun) => (
-                    <div key={tun.id} className="flex items-center justify-between p-2 rounded bg-zinc-900 border border-zinc-800">
+                    <div key={tun.id} className="flex items-center justify-between p-2 rounded bg-[var(--paper-2)] border border-[var(--line)]">
                       <div className="flex items-center gap-1.5 truncate">
-                        <span className="w-2 h-2 rounded-full bg-emerald-400 flex-shrink-0"></span>
-                        <span className="text-emerald-300 font-medium truncate">{tun.subdomain}.edgeproxy.mesh</span>
+                        <span className="w-2 h-2 rounded-full bg-[var(--accent)] flex-shrink-0"></span>
+                        <span className="text-[var(--accent)] font-medium truncate">{tun.subdomain}.edgeproxy.mesh</span>
                       </div>
-                      <div className="text-zinc-400 flex items-center gap-1 flex-shrink-0">
+                      <div className="text-[var(--muted)] flex items-center gap-1 flex-shrink-0">
                         <span>→</span>
-                        <span className="text-white bg-zinc-800 px-1.5 py-0.5 rounded text-[11px]">
+                        <span className="text-white bg-[var(--paper-2)] px-1.5 py-0.5 rounded text-[11px]">
                           :{tun.targetPort}
                         </span>
                       </div>
@@ -437,22 +437,22 @@ export const MeshTopology: React.FC<MeshTopologyProps> = ({
       </div>
 
       {/* Interactive 6-Stage Packet Journey Visualizer */}
-      <div className="bg-zinc-900/90 border border-zinc-800 rounded-xl p-6 shadow-sm space-y-5">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-800 pb-4">
+      <div className="bg-[var(--paper-2)]/90 border border-[var(--line)] rounded-xl p-6 shadow-sm space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--line)] pb-4">
           <div>
             <div className="flex items-center gap-2">
-              <span className="p-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+              <span className="p-1.5 rounded-lg bg-[var(--accent)]/10 border border-[var(--accent)] text-[var(--accent)]">
                 <Zap className="w-4 h-4" />
               </span>
               <h2 className="text-base font-bold text-white font-mono">{t.tracerTitle}</h2>
             </div>
-            <p className="text-xs text-zinc-400 mt-1">{t.tracerSubtitle}</p>
+            <p className="text-xs text-[var(--muted)] mt-1">{t.tracerSubtitle}</p>
           </div>
 
           <button
             onClick={handleStartTrace}
             disabled={isTracing}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-mono font-bold transition-all shadow-md disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--accent)] hover:bg-[var(--accent)] text-white text-xs font-mono font-bold transition-all shadow-md disabled:opacity-50"
           >
             <Zap className={`w-3.5 h-3.5 ${isTracing ? 'animate-bounce text-amber-300' : ''}`} />
             <span>{isTracing ? t.tracing : t.runTraceBtn}</span>
@@ -465,21 +465,21 @@ export const MeshTopology: React.FC<MeshTopologyProps> = ({
           <div
             className={`p-3.5 rounded-xl border transition-all ${
               activeTraceStep === 1
-                ? 'bg-emerald-950/80 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] scale-[1.02]'
+                ? 'bg-[var(--accent-soft)]/80 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] scale-[1.02]'
                 : activeTraceStep && activeTraceStep > 1
-                ? 'bg-zinc-900 border-zinc-700 opacity-90'
-                : 'bg-zinc-950/60 border-zinc-800'
+                ? 'bg-[var(--paper-2)] border-[var(--line)] opacity-90'
+                : 'bg-[var(--paper)]/60 border-[var(--line)]'
             }`}
           >
             <div className="flex items-center justify-between mb-1.5">
-              <span className="text-[10px] uppercase font-bold text-zinc-400">Stage 1: Ingress</span>
-              <span className="text-[10px] text-emerald-400 bg-emerald-950/60 px-1.5 py-0.5 rounded border border-emerald-500/30">
+              <span className="text-[10px] uppercase font-bold text-[var(--muted)]">Stage 1: Ingress</span>
+              <span className="text-[10px] text-[var(--accent)] bg-[var(--accent-soft)]/60 px-1.5 py-0.5 rounded border border-[var(--accent)]">
                 0.22 ms
               </span>
             </div>
             <h4 className="font-bold text-white text-xs">Ingress Listener (Netty / Tokio)</h4>
-            <p className="text-[11px] text-zinc-400 mt-1 leading-relaxed">
-              Accepts client socket on :443. Peeks first packet chunk to parse SNI / Host: <span className="text-emerald-300">cloud.edgeproxy.mesh</span>
+            <p className="text-[11px] text-[var(--muted)] mt-1 leading-relaxed">
+              Accepts client socket on :443. Peeks first packet chunk to parse SNI / Host: <span className="text-[var(--accent)]">cloud.edgeproxy.mesh</span>
             </p>
           </div>
 
@@ -487,20 +487,20 @@ export const MeshTopology: React.FC<MeshTopologyProps> = ({
           <div
             className={`p-3.5 rounded-xl border transition-all ${
               activeTraceStep === 2
-                ? 'bg-emerald-950/80 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] scale-[1.02]'
+                ? 'bg-[var(--accent-soft)]/80 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] scale-[1.02]'
                 : activeTraceStep && activeTraceStep > 2
-                ? 'bg-zinc-900 border-zinc-700 opacity-90'
-                : 'bg-zinc-950/60 border-zinc-800'
+                ? 'bg-[var(--paper-2)] border-[var(--line)] opacity-90'
+                : 'bg-[var(--paper)]/60 border-[var(--line)]'
             }`}
           >
             <div className="flex items-center justify-between mb-1.5">
-              <span className="text-[10px] uppercase font-bold text-zinc-400">Stage 2: Security</span>
-              <span className="text-[10px] text-emerald-400 bg-emerald-950/60 px-1.5 py-0.5 rounded border border-emerald-500/30">
+              <span className="text-[10px] uppercase font-bold text-[var(--muted)]">Stage 2: Security</span>
+              <span className="text-[10px] text-[var(--accent)] bg-[var(--accent-soft)]/60 px-1.5 py-0.5 rounded border border-[var(--accent)]">
                 0.35 ms
               </span>
             </div>
             <h4 className="font-bold text-white text-xs">TLS Termination & ACME</h4>
-            <p className="text-[11px] text-zinc-400 mt-1 leading-relaxed">
+            <p className="text-[11px] text-[var(--muted)] mt-1 leading-relaxed">
               Matches wildcard certificate (*.edgeproxy.mesh). Decrypts TLS 1.3 payload using ChaCha20-Poly1305.
             </p>
           </div>
@@ -509,21 +509,21 @@ export const MeshTopology: React.FC<MeshTopologyProps> = ({
           <div
             className={`p-3.5 rounded-xl border transition-all ${
               activeTraceStep === 3
-                ? 'bg-emerald-950/80 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] scale-[1.02]'
+                ? 'bg-[var(--accent-soft)]/80 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] scale-[1.02]'
                 : activeTraceStep && activeTraceStep > 3
-                ? 'bg-zinc-900 border-zinc-700 opacity-90'
-                : 'bg-zinc-950/60 border-zinc-800'
+                ? 'bg-[var(--paper-2)] border-[var(--line)] opacity-90'
+                : 'bg-[var(--paper)]/60 border-[var(--line)]'
             }`}
           >
             <div className="flex items-center justify-between mb-1.5">
-              <span className="text-[10px] uppercase font-bold text-zinc-400">Stage 3: Protection</span>
-              <span className="text-[10px] text-emerald-400 bg-emerald-950/60 px-1.5 py-0.5 rounded border border-emerald-500/30">
+              <span className="text-[10px] uppercase font-bold text-[var(--muted)]">Stage 3: Protection</span>
+              <span className="text-[10px] text-[var(--accent)] bg-[var(--accent-soft)]/60 px-1.5 py-0.5 rounded border border-[var(--accent)]">
                 0.04 ms
               </span>
             </div>
             <h4 className="font-bold text-white text-xs">Rate Limiter & DDoS Shield</h4>
-            <p className="text-[11px] text-zinc-400 mt-1 leading-relaxed">
-              Token Bucket check (in-memory/Redis). IP not jailed. Remaining tokens: 91/100. Status: <span className="text-emerald-400 font-bold">ALLOWED</span>
+            <p className="text-[11px] text-[var(--muted)] mt-1 leading-relaxed">
+              Token Bucket check (in-memory/Redis). IP not jailed. Remaining tokens: 91/100. Status: <span className="text-[var(--accent)] font-bold">ALLOWED</span>
             </p>
           </div>
 
@@ -531,21 +531,21 @@ export const MeshTopology: React.FC<MeshTopologyProps> = ({
           <div
             className={`p-3.5 rounded-xl border transition-all ${
               activeTraceStep === 4
-                ? 'bg-emerald-950/80 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] scale-[1.02]'
+                ? 'bg-[var(--accent-soft)]/80 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] scale-[1.02]'
                 : activeTraceStep && activeTraceStep > 4
-                ? 'bg-zinc-900 border-zinc-700 opacity-90'
-                : 'bg-zinc-950/60 border-zinc-800'
+                ? 'bg-[var(--paper-2)] border-[var(--line)] opacity-90'
+                : 'bg-[var(--paper)]/60 border-[var(--line)]'
             }`}
           >
             <div className="flex items-center justify-between mb-1.5">
-              <span className="text-[10px] uppercase font-bold text-zinc-400">Stage 4: Router</span>
-              <span className="text-[10px] text-emerald-400 bg-emerald-950/60 px-1.5 py-0.5 rounded border border-emerald-500/30">
+              <span className="text-[10px] uppercase font-bold text-[var(--muted)]">Stage 4: Router</span>
+              <span className="text-[10px] text-[var(--accent)] bg-[var(--accent-soft)]/60 px-1.5 py-0.5 rounded border border-[var(--accent)]">
                 0.12 ms
               </span>
             </div>
             <h4 className="font-bold text-white text-xs">Multiplexing Session Router</h4>
-            <p className="text-[11px] text-zinc-400 mt-1 leading-relaxed">
-              Lookups active session for subdomain 'cloud'. Allocates virtual <span className="text-emerald-300 font-bold">Stream ID #101</span>.
+            <p className="text-[11px] text-[var(--muted)] mt-1 leading-relaxed">
+              Lookups active session for subdomain 'cloud'. Allocates virtual <span className="text-[var(--accent)] font-bold">Stream ID #101</span>.
             </p>
           </div>
 
@@ -553,20 +553,20 @@ export const MeshTopology: React.FC<MeshTopologyProps> = ({
           <div
             className={`p-3.5 rounded-xl border transition-all ${
               activeTraceStep === 5
-                ? 'bg-emerald-950/80 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] scale-[1.02]'
+                ? 'bg-[var(--accent-soft)]/80 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] scale-[1.02]'
                 : activeTraceStep && activeTraceStep > 5
-                ? 'bg-zinc-900 border-zinc-700 opacity-90'
-                : 'bg-zinc-950/60 border-zinc-800'
+                ? 'bg-[var(--paper-2)] border-[var(--line)] opacity-90'
+                : 'bg-[var(--paper)]/60 border-[var(--line)]'
             }`}
           >
             <div className="flex items-center justify-between mb-1.5">
-              <span className="text-[10px] uppercase font-bold text-zinc-400">Stage 5: Tunnel Wire</span>
-              <span className="text-[10px] text-emerald-400 bg-emerald-950/60 px-1.5 py-0.5 rounded border border-emerald-500/30">
+              <span className="text-[10px] uppercase font-bold text-[var(--muted)]">Stage 5: Tunnel Wire</span>
+              <span className="text-[10px] text-[var(--accent)] bg-[var(--accent-soft)]/60 px-1.5 py-0.5 rounded border border-[var(--accent)]">
                 14.2 ms
               </span>
             </div>
             <h4 className="font-bold text-white text-xs">QUIC/HTTP2 Tunnel (Framed)</h4>
-            <p className="text-[11px] text-zinc-400 mt-1 leading-relaxed">
+            <p className="text-[11px] text-[var(--muted)] mt-1 leading-relaxed">
               Packs binary frame: [0x00000065][0x02 DATA][Len: 124B]. Transits NAT-bypassed socket over WAN.
             </p>
           </div>
@@ -575,18 +575,18 @@ export const MeshTopology: React.FC<MeshTopologyProps> = ({
           <div
             className={`p-3.5 rounded-xl border transition-all ${
               activeTraceStep === 6
-                ? 'bg-emerald-950/80 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] scale-[1.02]'
-                : 'bg-zinc-950/60 border-zinc-800'
+                ? 'bg-[var(--accent-soft)]/80 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] scale-[1.02]'
+                : 'bg-[var(--paper)]/60 border-[var(--line)]'
             }`}
           >
             <div className="flex items-center justify-between mb-1.5">
-              <span className="text-[10px] uppercase font-bold text-zinc-400">Stage 6: Target</span>
-              <span className="text-[10px] text-emerald-400 bg-emerald-950/60 px-1.5 py-0.5 rounded border border-emerald-500/30">
+              <span className="text-[10px] uppercase font-bold text-[var(--muted)]">Stage 6: Target</span>
+              <span className="text-[10px] text-[var(--accent)] bg-[var(--accent-soft)]/60 px-1.5 py-0.5 rounded border border-[var(--accent)]">
                 3.8 ms
               </span>
             </div>
             <h4 className="font-bold text-white text-xs">Local Demux & Localhost Proxy</h4>
-            <p className="text-[11px] text-zinc-400 mt-1 leading-relaxed">
+            <p className="text-[11px] text-[var(--muted)] mt-1 leading-relaxed">
               Local Agent demuxes Stream #101. Direct forward to <span className="text-white font-bold">127.0.0.1:8080</span>. HTTP 200 OK returned!
             </p>
           </div>
@@ -594,9 +594,9 @@ export const MeshTopology: React.FC<MeshTopologyProps> = ({
 
         {/* Real-time Stage Log */}
         {activeTraceStep !== null && (
-          <div className="bg-zinc-950 border border-zinc-800 rounded-lg p-3 font-mono text-xs text-zinc-300 flex items-center justify-between">
+          <div className="bg-[var(--paper)] border border-[var(--line)] rounded-lg p-3 font-mono text-xs text-[var(--ink-2)] flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span className="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse"></span>
               <span>
                 {activeTraceStep === 1 && 'Ingress Listener: Packet received from 93.175.204.12. SNI parsed.'}
                 {activeTraceStep === 2 && 'TLS Engine: TLS 1.3 handshake terminated. Decrypted HTTP request payload.'}
@@ -606,7 +606,7 @@ export const MeshTopology: React.FC<MeshTopologyProps> = ({
                 {activeTraceStep === 6 && 'Local Agent: Stream #101 delivered to 127.0.0.1:8080. Total trip: 18.7ms (p95).'}
               </span>
             </div>
-            <span className="text-[11px] text-emerald-400 font-bold">
+            <span className="text-[11px] text-[var(--accent)] font-bold">
               {activeTraceStep === 6 ? 'SUCCESS (200 OK)' : `STEP ${activeTraceStep} OF 6`}
             </span>
           </div>

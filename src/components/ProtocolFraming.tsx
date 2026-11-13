@@ -175,62 +175,62 @@ export const ProtocolFraming: React.FC<ProtocolFramingProps> = ({ language }) =>
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-zinc-900/80 border border-zinc-800 rounded-xl p-5 shadow-lg">
+      <div className="bg-[var(--paper-2)]/80 border border-[var(--line)] rounded-xl p-5 shadow-lg">
         <div className="flex items-center gap-2.5">
-          <span className="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+          <span className="p-2 rounded-lg bg-[var(--accent)]/10 border border-[var(--accent)] text-[var(--accent)]">
             <Binary className="w-5 h-5" />
           </span>
           <div>
             <h1 className="text-xl font-bold text-white font-mono">{t.title}</h1>
-            <p className="text-sm text-zinc-400 mt-0.5">{t.subtitle}</p>
+            <p className="text-sm text-[var(--muted)] mt-0.5">{t.subtitle}</p>
           </div>
         </div>
       </div>
 
       {/* Frame Structure Visual Diagram */}
-      <div className="bg-zinc-900/90 border border-zinc-800 rounded-xl p-5 shadow-sm">
+      <div className="bg-[var(--paper-2)]/90 border border-[var(--line)] rounded-xl p-5 shadow-sm">
         <h2 className="text-sm font-bold text-white font-mono flex items-center gap-2 mb-3">
-          <Layers className="w-4 h-4 text-emerald-400" />
+          <Layers className="w-4 h-4 text-[var(--accent)]" />
           <span>{t.frameStructureTitle}</span>
         </h2>
 
         {/* Binary Frame Header Layout */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-2 mb-4 font-mono">
-          <div className="bg-emerald-950/40 border border-emerald-500/50 rounded-lg p-3 text-center">
-            <div className="text-[10px] text-emerald-400 uppercase tracking-wider font-semibold">Stream ID</div>
+          <div className="bg-[var(--accent-soft)]/40 border border-[var(--accent)] rounded-lg p-3 text-center">
+            <div className="text-[10px] text-[var(--accent)] uppercase tracking-wider font-semibold">Stream ID</div>
             <div className="text-sm font-bold text-white mt-1">4 Bytes (u32)</div>
-            <div className="text-[11px] text-zinc-400 mt-1">Offsets 0..3 (Big-Endian)</div>
+            <div className="text-[11px] text-[var(--muted)] mt-1">Offsets 0..3 (Big-Endian)</div>
           </div>
           <div className="bg-sky-950/40 border border-sky-500/50 rounded-lg p-3 text-center">
             <div className="text-[10px] text-sky-400 uppercase tracking-wider font-semibold">Frame Type</div>
             <div className="text-sm font-bold text-white mt-1">1 Byte (u8)</div>
-            <div className="text-[11px] text-zinc-400 mt-1">Offset 4 (0x01..0x04)</div>
+            <div className="text-[11px] text-[var(--muted)] mt-1">Offset 4 (0x01..0x04)</div>
           </div>
           <div className="bg-purple-950/40 border border-purple-500/50 rounded-lg p-3 text-center">
             <div className="text-[10px] text-purple-400 uppercase tracking-wider font-semibold">Payload Length</div>
             <div className="text-sm font-bold text-white mt-1">4 Bytes (u32)</div>
-            <div className="text-[11px] text-zinc-400 mt-1">Offsets 5..8 (N Bytes)</div>
+            <div className="text-[11px] text-[var(--muted)] mt-1">Offsets 5..8 (N Bytes)</div>
           </div>
           <div className="bg-amber-950/40 border border-amber-500/50 rounded-lg p-3 text-center">
             <div className="text-[10px] text-amber-400 uppercase tracking-wider font-semibold">Payload Data</div>
             <div className="text-sm font-bold text-white mt-1">N Bytes (Raw)</div>
-            <div className="text-[11px] text-zinc-400 mt-1">Offsets 9..(9 + N)</div>
+            <div className="text-[11px] text-[var(--muted)] mt-1">Offsets 9..(9 + N)</div>
           </div>
         </div>
 
         {/* Fields breakdown table */}
-        <div className="divide-y divide-zinc-800 border border-zinc-800/80 rounded-lg overflow-hidden font-mono text-xs">
+        <div className="divide-y divide-zinc-800 border border-[var(--line)]/80 rounded-lg overflow-hidden font-mono text-xs">
           {t.frameFields.map((field, idx) => (
-            <div key={idx} className="flex flex-col sm:flex-row sm:items-center justify-between p-2.5 bg-zinc-950/50 hover:bg-zinc-800/40 transition-colors">
+            <div key={idx} className="flex flex-col sm:flex-row sm:items-center justify-between p-2.5 bg-[var(--paper)]/50 hover:bg-[var(--paper-2)]/40 transition-colors">
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                <span className="w-2 h-2 rounded-full bg-[var(--accent)]"></span>
                 <span className="font-bold text-white">{field.field}</span>
-                <span className="text-zinc-500">•</span>
-                <span className="text-emerald-400 bg-emerald-950/60 px-1.5 py-0.5 rounded text-[11px] border border-emerald-500/30">
+                <span className="text-[var(--muted)]">•</span>
+                <span className="text-[var(--accent)] bg-[var(--accent-soft)]/60 px-1.5 py-0.5 rounded text-[11px] border border-[var(--accent)]">
                   {field.size}
                 </span>
               </div>
-              <div className="text-zinc-400 mt-1 sm:mt-0 text-[11px]">{field.desc}</div>
+              <div className="text-[var(--muted)] mt-1 sm:mt-0 text-[11px]">{field.desc}</div>
             </div>
           ))}
         </div>
@@ -239,9 +239,9 @@ export const ProtocolFraming: React.FC<ProtocolFramingProps> = ({ language }) =>
       {/* Frame Types Specs & Interactive Playground */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left: Frame Types Table */}
-        <div className="lg:col-span-5 bg-zinc-900/90 border border-zinc-800 rounded-xl p-5 shadow-sm space-y-3">
+        <div className="lg:col-span-5 bg-[var(--paper-2)]/90 border border-[var(--line)] rounded-xl p-5 shadow-sm space-y-3">
           <h3 className="text-sm font-bold text-white font-mono flex items-center gap-2 mb-3">
-            <Cpu className="w-4 h-4 text-emerald-400" />
+            <Cpu className="w-4 h-4 text-[var(--accent)]" />
             <span>{t.typesTitle}</span>
           </h3>
 
@@ -252,20 +252,20 @@ export const ProtocolFraming: React.FC<ProtocolFramingProps> = ({ language }) =>
                 onClick={() => setCustomType(item.type)}
                 className={`p-3 rounded-lg border cursor-pointer transition-all ${
                   customType === item.type
-                    ? 'bg-zinc-800 border-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.15)]'
-                    : 'bg-zinc-950/70 border-zinc-800 hover:border-zinc-700'
+                    ? 'bg-[var(--paper-2)] border-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.15)]'
+                    : 'bg-[var(--paper)]/70 border-[var(--line)] hover:border-[var(--line)]'
                 }`}
               >
                 <div className="flex items-center justify-between font-mono">
                   <div className="flex items-center gap-2">
-                    <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-emerald-300 text-xs font-bold border border-zinc-700">
+                    <span className="px-1.5 py-0.5 rounded bg-[var(--paper-2)] text-[var(--accent)] text-xs font-bold border border-[var(--line)]">
                       {item.code}
                     </span>
                     <span className="font-bold text-white text-xs">{item.name}</span>
                   </div>
-                  <span className="text-[10px] uppercase font-mono text-zinc-400">{item.type}</span>
+                  <span className="text-[10px] uppercase font-mono text-[var(--muted)]">{item.type}</span>
                 </div>
-                <p className="text-[11px] text-zinc-400 mt-1.5 leading-relaxed">
+                <p className="text-[11px] text-[var(--muted)] mt-1.5 leading-relaxed">
                   {language === 'ua' ? item.descUa : item.descEn}
                 </p>
               </div>
@@ -274,32 +274,32 @@ export const ProtocolFraming: React.FC<ProtocolFramingProps> = ({ language }) =>
         </div>
 
         {/* Right: Interactive Frame Builder & Hex Inspector */}
-        <div className="lg:col-span-7 bg-zinc-900/90 border border-zinc-800 rounded-xl p-5 shadow-sm space-y-4">
+        <div className="lg:col-span-7 bg-[var(--paper-2)]/90 border border-[var(--line)] rounded-xl p-5 shadow-sm space-y-4">
           <h3 className="text-sm font-bold text-white font-mono flex items-center gap-2">
-            <Terminal className="w-4 h-4 text-emerald-400" />
+            <Terminal className="w-4 h-4 text-[var(--accent)]" />
             <span>{t.playgroundTitle}</span>
           </h3>
 
           <form onSubmit={handleEncodeFrame} className="space-y-3 font-mono text-xs">
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-zinc-400 block mb-1">{t.streamIdLabel}</label>
+                <label className="text-[var(--muted)] block mb-1">{t.streamIdLabel}</label>
                 <input
                   type="number"
                   min="0"
                   max="4294967295"
                   value={customStreamId}
                   onChange={(e) => setCustomStreamId(parseInt(e.target.value) || 0)}
-                  className="w-full bg-zinc-950 border border-zinc-700 rounded px-2.5 py-1.5 text-white focus:border-emerald-500 outline-none"
+                  className="w-full bg-[var(--paper)] border border-[var(--line)] rounded px-2.5 py-1.5 text-white focus:border-emerald-500 outline-none"
                 />
               </div>
 
               <div>
-                <label className="text-zinc-400 block mb-1">{t.typeLabel}</label>
+                <label className="text-[var(--muted)] block mb-1">{t.typeLabel}</label>
                 <select
                   value={customType}
                   onChange={(e) => setCustomType(e.target.value as BinaryFrameType)}
-                  className="w-full bg-zinc-950 border border-zinc-700 rounded px-2.5 py-1.5 text-white focus:border-emerald-500 outline-none"
+                  className="w-full bg-[var(--paper)] border border-[var(--line)] rounded px-2.5 py-1.5 text-white focus:border-emerald-500 outline-none"
                 >
                   <option value="SYN">0x01 (SYN / Open)</option>
                   <option value="DATA">0x02 (DATA)</option>
@@ -310,19 +310,19 @@ export const ProtocolFraming: React.FC<ProtocolFramingProps> = ({ language }) =>
             </div>
 
             <div>
-              <label className="text-zinc-400 block mb-1">{t.payloadLabel}</label>
+              <label className="text-[var(--muted)] block mb-1">{t.payloadLabel}</label>
               <textarea
                 rows={3}
                 value={customPayload}
                 onChange={(e) => setCustomPayload(e.target.value)}
-                className="w-full bg-zinc-950 border border-zinc-700 rounded px-2.5 py-1.5 text-emerald-300 font-mono text-xs focus:border-emerald-500 outline-none"
+                className="w-full bg-[var(--paper)] border border-[var(--line)] rounded px-2.5 py-1.5 text-[var(--accent)] font-mono text-xs focus:border-emerald-500 outline-none"
                 placeholder="HTTP/1.1 payload, JSON, or raw body..."
               />
             </div>
 
             <button
               type="submit"
-              className="w-full py-2 rounded bg-emerald-600 hover:bg-emerald-500 text-white font-bold flex items-center justify-center gap-1.5 transition-colors"
+              className="w-full py-2 rounded bg-[var(--accent)] hover:bg-[var(--accent)] text-white font-bold flex items-center justify-center gap-1.5 transition-colors"
             >
               <Send className="w-3.5 h-3.5" />
               <span>{t.encodeBtn}</span>
@@ -331,26 +331,26 @@ export const ProtocolFraming: React.FC<ProtocolFramingProps> = ({ language }) =>
 
           {/* Selected Frame Detailed Hex Dump */}
           {selectedFrame && (
-            <div className="bg-zinc-950 border border-zinc-800 rounded-lg p-3 space-y-2 mt-4 font-mono">
+            <div className="bg-[var(--paper)] border border-[var(--line)] rounded-lg p-3 space-y-2 mt-4 font-mono">
               <div className="flex items-center justify-between text-xs">
-                <span className="text-zinc-400">{t.hexRepresentation}</span>
+                <span className="text-[var(--muted)]">{t.hexRepresentation}</span>
                 <button
                   onClick={copyHexDump}
-                  className="text-zinc-400 hover:text-white flex items-center gap-1 text-[11px]"
+                  className="text-[var(--muted)] hover:text-white flex items-center gap-1 text-[11px]"
                 >
-                  {copiedHex ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                  {copiedHex ? <Check className="w-3 h-3 text-[var(--accent)]" /> : <Copy className="w-3 h-3" />}
                   <span>{copiedHex ? t.copied : t.copyHex}</span>
                 </button>
               </div>
 
               {/* Hex Dump Formatted Display */}
-              <div className="p-2.5 bg-zinc-900/90 rounded border border-zinc-800 text-xs overflow-x-auto text-emerald-400 font-mono select-all">
+              <div className="p-2.5 bg-[var(--paper-2)]/90 rounded border border-[var(--line)] text-xs overflow-x-auto text-[var(--accent)] font-mono select-all">
                 {selectedFrame.hexDump}
               </div>
 
-              <div className="grid grid-cols-3 gap-2 text-[11px] pt-1 text-zinc-400">
+              <div className="grid grid-cols-3 gap-2 text-[11px] pt-1 text-[var(--muted)]">
                 <div>Stream: <span className="text-white font-bold">#{selectedFrame.streamId}</span></div>
-                <div>Type: <span className="text-emerald-300 font-bold">{selectedFrame.frameType} (0x0{selectedFrame.frameTypeCode})</span></div>
+                <div>Type: <span className="text-[var(--accent)] font-bold">{selectedFrame.frameType} (0x0{selectedFrame.frameTypeCode})</span></div>
                 <div>Length: <span className="text-white font-bold">{selectedFrame.payloadLength} bytes</span></div>
               </div>
             </div>
@@ -359,18 +359,18 @@ export const ProtocolFraming: React.FC<ProtocolFramingProps> = ({ language }) =>
       </div>
 
       {/* Stream Multiplexing Visualizer (Single Socket = N Streams) */}
-      <div className="bg-zinc-900/90 border border-zinc-800 rounded-xl p-5 shadow-sm space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-800 pb-3">
+      <div className="bg-[var(--paper-2)]/90 border border-[var(--line)] rounded-xl p-5 shadow-sm space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--line)] pb-3">
           <div>
             <h3 className="text-sm font-bold text-white font-mono flex items-center gap-2">
-              <Zap className="w-4 h-4 text-emerald-400" />
+              <Zap className="w-4 h-4 text-[var(--accent)]" />
               <span>{t.muxSimTitle}</span>
             </h3>
-            <p className="text-xs text-zinc-400 mt-0.5">{t.singleConnNote}</p>
+            <p className="text-xs text-[var(--muted)] mt-0.5">{t.singleConnNote}</p>
           </div>
           <button
             onClick={() => setFrames([])}
-            className="flex items-center gap-1 text-xs text-zinc-400 hover:text-zinc-200 px-2.5 py-1 rounded bg-zinc-800"
+            className="flex items-center gap-1 text-xs text-[var(--muted)] hover:text-[var(--ink)] px-2.5 py-1 rounded bg-[var(--paper-2)]"
           >
             <RefreshCw className="w-3 h-3" />
             <span>{t.resetBtn}</span>
@@ -380,14 +380,14 @@ export const ProtocolFraming: React.FC<ProtocolFramingProps> = ({ language }) =>
         {/* Live Frame Timeline */}
         <div className="space-y-2 max-h-80 overflow-y-auto pr-1">
           {frames.length === 0 ? (
-            <div className="py-8 text-center text-zinc-500 font-mono text-xs">
+            <div className="py-8 text-center text-[var(--muted)] font-mono text-xs">
               {language === 'ua' ? 'Кадри відсутні. Використайте генератор вище для кодування та надсилання нового бінарного кадру.' : 'No binary frames recorded. Use the generator above to encode and transmit a binary frame.'}
             </div>
           ) : (
             frames.map((frame) => {
               const isSelected = selectedFrame?.id === frame.id;
             const typeColor = 
-              frame.frameType === 'SYN' ? 'text-emerald-400 bg-emerald-950/60 border-emerald-500/40' :
+              frame.frameType === 'SYN' ? 'text-[var(--accent)] bg-[var(--accent-soft)]/60 border-[var(--accent)]' :
               frame.frameType === 'DATA' ? 'text-sky-400 bg-sky-950/60 border-sky-500/40' :
               frame.frameType === 'FIN' ? 'text-rose-400 bg-rose-950/60 border-rose-500/40' :
               'text-amber-400 bg-amber-950/60 border-amber-500/40';
@@ -398,8 +398,8 @@ export const ProtocolFraming: React.FC<ProtocolFramingProps> = ({ language }) =>
                 onClick={() => setSelectedFrame(frame)}
                 className={`p-3 rounded-lg border font-mono text-xs cursor-pointer transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-2 ${
                   isSelected
-                    ? 'bg-zinc-800/90 border-emerald-500'
-                    : 'bg-zinc-950/60 border-zinc-800/80 hover:border-zinc-700'
+                    ? 'bg-[var(--paper-2)]/90 border-emerald-500'
+                    : 'bg-[var(--paper)]/60 border-[var(--line)]/80 hover:border-[var(--line)]'
                 }`}
               >
                 <div className="flex items-center gap-3">
@@ -407,18 +407,18 @@ export const ProtocolFraming: React.FC<ProtocolFramingProps> = ({ language }) =>
                     {frame.frameType} 0x0{frame.frameTypeCode}
                   </span>
                   <div className="flex items-center gap-2">
-                    <span className="text-zinc-400">Stream</span>
-                    <span className="text-white font-bold px-1.5 py-0.5 rounded bg-zinc-800 text-[11px]">
+                    <span className="text-[var(--muted)]">Stream</span>
+                    <span className="text-white font-bold px-1.5 py-0.5 rounded bg-[var(--paper-2)] text-[11px]">
                       #{frame.streamId}
                     </span>
                   </div>
-                  <span className="text-zinc-600 hidden sm:inline">•</span>
-                  <span className="text-zinc-400 text-[11px] truncate max-w-xs sm:max-w-md">
+                  <span className="text-[var(--faint)] hidden sm:inline">•</span>
+                  <span className="text-[var(--muted)] text-[11px] truncate max-w-xs sm:max-w-md">
                     {frame.payloadData.replace(/\\r\\n/g, ' ')}
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2 text-[11px] text-zinc-500 flex-shrink-0">
+                <div className="flex items-center gap-2 text-[11px] text-[var(--muted)] flex-shrink-0">
                   <span>{frame.payloadLength} B</span>
                   <span>•</span>
                   <span>{frame.source === 'edge_gateway' ? 'Edge → Agent' : 'Agent → Edge'}</span>

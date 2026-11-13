@@ -183,52 +183,52 @@ WantedBy=multi-user.target
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-zinc-900/80 border border-zinc-800 p-5 rounded-xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[var(--paper-2)]/80 border border-[var(--line)] p-5 rounded-xl">
         <div>
           <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+            <span className="p-1.5 rounded-lg bg-[var(--accent)]/10 border border-[var(--accent)] text-[var(--accent)]">
               <DownloadCloud className="w-5 h-5" />
             </span>
             <h1 className="text-xl font-bold text-white tracking-tight font-mono">{t.title}</h1>
           </div>
-          <p className="text-sm text-zinc-400 mt-1">{t.subtitle}</p>
+          <p className="text-sm text-[var(--muted)] mt-1">{t.subtitle}</p>
         </div>
       </div>
 
       {/* 1-Click Install Script Bar */}
-      <div className="bg-zinc-950 border border-zinc-800 rounded-xl p-5 space-y-3 font-mono text-xs">
+      <div className="bg-[var(--paper)] border border-[var(--line)] rounded-xl p-5 space-y-3 font-mono text-xs">
         <div className="flex items-center justify-between">
-          <span className="text-zinc-300 font-bold">{t.quickInstall}</span>
-          <span className="text-[10px] text-zinc-500">Go / Rust Standalone Binary (No dependencies)</span>
+          <span className="text-[var(--ink-2)] font-bold">{t.quickInstall}</span>
+          <span className="text-[10px] text-[var(--muted)]">Go / Rust Standalone Binary (No dependencies)</span>
         </div>
 
-        <div className="flex items-center justify-between bg-zinc-900 border border-zinc-800 rounded-lg p-3">
-          <code className="text-emerald-400 select-all">
+        <div className="flex items-center justify-between bg-[var(--paper-2)] border border-[var(--line)] rounded-lg p-3">
+          <code className="text-[var(--accent)] select-all">
             curl -sSL https://get.edgeproxy.mesh | bash
           </code>
           <button
             onClick={() => handleCopy('install', 'curl -sSL https://get.edgeproxy.mesh | bash')}
-            className="flex items-center gap-1 px-3 py-1 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-200 transition-colors"
+            className="flex items-center gap-1 px-3 py-1 rounded bg-[var(--paper-2)] hover:bg-[var(--line)] text-[var(--ink)] transition-colors"
           >
-            {copiedKey === 'install' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+            {copiedKey === 'install' ? <Check className="w-3.5 h-3.5 text-[var(--accent)]" /> : <Copy className="w-3.5 h-3.5" />}
             <span>{copiedKey === 'install' ? t.copied : t.copyBtn}</span>
           </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-[11px] text-zinc-400">
-          <div>• macOS: <code className="text-zinc-300">brew install edgeproxy/tap/mesh</code></div>
-          <div>• Windows: <code className="text-zinc-300">winget install EdgeProxy.MeshAgent</code></div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-[11px] text-[var(--muted)]">
+          <div>• macOS: <code className="text-[var(--ink-2)]">brew install edgeproxy/tap/mesh</code></div>
+          <div>• Windows: <code className="text-[var(--ink-2)]">winget install EdgeProxy.MeshAgent</code></div>
         </div>
       </div>
 
       {/* Tab Switcher: CLI vs YAML vs Docker vs Systemd */}
-      <div className="flex items-center gap-2 border-b border-zinc-800 pb-2 font-mono text-xs overflow-x-auto scrollbar-none">
+      <div className="flex items-center gap-2 border-b border-[var(--line)] pb-2 font-mono text-xs overflow-x-auto scrollbar-none">
         <button
           onClick={() => setSelectedTab('cli')}
           className={`px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap ${
             selectedTab === 'cli'
-              ? 'bg-emerald-600 text-white font-bold'
-              : 'text-zinc-400 hover:text-white hover:bg-zinc-850'
+              ? 'bg-[var(--accent)] text-white font-bold'
+              : 'text-[var(--muted)] hover:text-white hover:bg-[var(--paper-2)]'
           }`}
         >
           {t.tabCli}
@@ -238,8 +238,8 @@ WantedBy=multi-user.target
           onClick={() => setSelectedTab('yaml')}
           className={`px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap ${
             selectedTab === 'yaml'
-              ? 'bg-emerald-600 text-white font-bold'
-              : 'text-zinc-400 hover:text-white hover:bg-zinc-850'
+              ? 'bg-[var(--accent)] text-white font-bold'
+              : 'text-[var(--muted)] hover:text-white hover:bg-[var(--paper-2)]'
           }`}
         >
           {t.tabYaml}
@@ -249,8 +249,8 @@ WantedBy=multi-user.target
           onClick={() => setSelectedTab('docker')}
           className={`px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap ${
             selectedTab === 'docker'
-              ? 'bg-emerald-600 text-white font-bold'
-              : 'text-zinc-400 hover:text-white hover:bg-zinc-850'
+              ? 'bg-[var(--accent)] text-white font-bold'
+              : 'text-[var(--muted)] hover:text-white hover:bg-[var(--paper-2)]'
           }`}
         >
           {t.tabDocker}
@@ -260,8 +260,8 @@ WantedBy=multi-user.target
           onClick={() => setSelectedTab('systemd')}
           className={`px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap ${
             selectedTab === 'systemd'
-              ? 'bg-emerald-600 text-white font-bold'
-              : 'text-zinc-400 hover:text-white hover:bg-zinc-850'
+              ? 'bg-[var(--accent)] text-white font-bold'
+              : 'text-[var(--muted)] hover:text-white hover:bg-[var(--paper-2)]'
           }`}
         >
           {t.tabSystemd}
@@ -270,36 +270,36 @@ WantedBy=multi-user.target
 
       {/* Tab Content */}
       {selectedTab === 'cli' && (
-        <div className="bg-zinc-900/90 border border-zinc-800 rounded-xl p-5 space-y-4 font-mono text-xs">
+        <div className="bg-[var(--paper-2)]/90 border border-[var(--line)] rounded-xl p-5 space-y-4 font-mono text-xs">
           <h3 className="font-bold text-white text-sm">{t.builderTitle}</h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
-              <label className="block text-zinc-400 mb-1">{t.portLabel}</label>
+              <label className="block text-[var(--muted)] mb-1">{t.portLabel}</label>
               <input
                 type="number"
                 value={cliPort}
                 onChange={(e) => setCliPort(Number(e.target.value))}
-                className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-500"
+                className="w-full bg-[var(--paper)] border border-[var(--line)] rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-500"
               />
             </div>
 
             <div>
-              <label className="block text-zinc-400 mb-1">{t.subdomainLabel}</label>
+              <label className="block text-[var(--muted)] mb-1">{t.subdomainLabel}</label>
               <input
                 type="text"
                 value={cliSubdomain}
                 onChange={(e) => setCliSubdomain(e.target.value)}
-                className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-500"
+                className="w-full bg-[var(--paper)] border border-[var(--line)] rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-500"
               />
             </div>
 
             <div>
-              <label className="block text-zinc-400 mb-1">{t.protocolLabel}</label>
+              <label className="block text-[var(--muted)] mb-1">{t.protocolLabel}</label>
               <select
                 value={cliProtocol}
                 onChange={(e) => setCliProtocol(e.target.value as ProtocolType)}
-                className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white uppercase focus:outline-none focus:border-emerald-500"
+                className="w-full bg-[var(--paper)] border border-[var(--line)] rounded px-3 py-2 text-white uppercase focus:outline-none focus:border-emerald-500"
               >
                 <option value="quic">QUIC (HTTP/3)</option>
                 <option value="http2">HTTP/2</option>
@@ -310,29 +310,29 @@ WantedBy=multi-user.target
           </div>
 
           <div>
-            <span className="block text-zinc-400 mb-1">{t.generatedCommand}</span>
-            <div className="flex items-center justify-between bg-zinc-950 border border-zinc-800 rounded-lg p-3">
-              <code className="text-emerald-400 break-all">{cliCommand}</code>
+            <span className="block text-[var(--muted)] mb-1">{t.generatedCommand}</span>
+            <div className="flex items-center justify-between bg-[var(--paper)] border border-[var(--line)] rounded-lg p-3">
+              <code className="text-[var(--accent)] break-all">{cliCommand}</code>
               <button
                 onClick={() => handleCopy('cmd', cliCommand)}
-                className="flex items-center gap-1 px-3 py-1 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-200 ml-2 flex-shrink-0 transition-colors"
+                className="flex items-center gap-1 px-3 py-1 rounded bg-[var(--paper-2)] hover:bg-[var(--line)] text-[var(--ink)] ml-2 flex-shrink-0 transition-colors"
               >
-                {copiedKey === 'cmd' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                {copiedKey === 'cmd' ? <Check className="w-3.5 h-3.5 text-[var(--accent)]" /> : <Copy className="w-3.5 h-3.5" />}
                 <span>{copiedKey === 'cmd' ? t.copied : t.copyBtn}</span>
               </button>
             </div>
           </div>
 
           {/* Local REST API Box */}
-          <div className="bg-zinc-950 p-4 rounded-lg border border-zinc-800/80 space-y-2 text-[11px]">
+          <div className="bg-[var(--paper)] p-4 rounded-lg border border-[var(--line)]/80 space-y-2 text-[11px]">
             <span className="font-bold text-teal-300 block">{t.localApiTitle}</span>
-            <p className="text-zinc-400">{t.localApiDesc}</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-zinc-300">
-              <div className="bg-zinc-900 p-2 rounded border border-zinc-800">
-                <span className="text-emerald-400 font-bold">GET</span> /api/tunnels
+            <p className="text-[var(--muted)]">{t.localApiDesc}</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[var(--ink-2)]">
+              <div className="bg-[var(--paper-2)] p-2 rounded border border-[var(--line)]">
+                <span className="text-[var(--accent)] font-bold">GET</span> /api/tunnels
               </div>
-              <div className="bg-zinc-900 p-2 rounded border border-zinc-800">
-                <span className="text-emerald-400 font-bold">GET</span> /api/healthz (latency & streams)
+              <div className="bg-[var(--paper-2)] p-2 rounded border border-[var(--line)]">
+                <span className="text-[var(--accent)] font-bold">GET</span> /api/healthz (latency & streams)
               </div>
             </div>
           </div>
@@ -340,55 +340,55 @@ WantedBy=multi-user.target
       )}
 
       {selectedTab === 'yaml' && (
-        <div className="bg-zinc-900/90 border border-zinc-800 rounded-xl p-5 space-y-3 font-mono text-xs">
+        <div className="bg-[var(--paper-2)]/90 border border-[var(--line)] rounded-xl p-5 space-y-3 font-mono text-xs">
           <div className="flex items-center justify-between">
             <span className="font-bold text-white">/etc/edgeproxy/edgeproxy.yaml</span>
             <button
               onClick={() => handleCopy('yaml', yamlConfig)}
-              className="flex items-center gap-1 px-3 py-1 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-200 transition-colors"
+              className="flex items-center gap-1 px-3 py-1 rounded bg-[var(--paper-2)] hover:bg-[var(--line)] text-[var(--ink)] transition-colors"
             >
-              {copiedKey === 'yaml' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+              {copiedKey === 'yaml' ? <Check className="w-3.5 h-3.5 text-[var(--accent)]" /> : <Copy className="w-3.5 h-3.5" />}
               <span>{copiedKey === 'yaml' ? t.copied : t.copyBtn}</span>
             </button>
           </div>
-          <pre className="bg-zinc-950 border border-zinc-800 p-4 rounded-lg overflow-x-auto text-emerald-300 leading-relaxed max-h-96">
+          <pre className="bg-[var(--paper)] border border-[var(--line)] p-4 rounded-lg overflow-x-auto text-[var(--accent)] leading-relaxed max-h-96">
             {yamlConfig}
           </pre>
         </div>
       )}
 
       {selectedTab === 'docker' && (
-        <div className="bg-zinc-900/90 border border-zinc-800 rounded-xl p-5 space-y-3 font-mono text-xs">
+        <div className="bg-[var(--paper-2)]/90 border border-[var(--line)] rounded-xl p-5 space-y-3 font-mono text-xs">
           <div className="flex items-center justify-between">
             <span className="font-bold text-white">VPS Gateway Docker Deployment</span>
             <button
               onClick={() => handleCopy('docker', dockerCompose)}
-              className="flex items-center gap-1 px-3 py-1 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-200 transition-colors"
+              className="flex items-center gap-1 px-3 py-1 rounded bg-[var(--paper-2)] hover:bg-[var(--line)] text-[var(--ink)] transition-colors"
             >
-              {copiedKey === 'docker' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+              {copiedKey === 'docker' ? <Check className="w-3.5 h-3.5 text-[var(--accent)]" /> : <Copy className="w-3.5 h-3.5" />}
               <span>{copiedKey === 'docker' ? t.copied : t.copyBtn}</span>
             </button>
           </div>
-          <p className="text-zinc-400 text-[11px]">{t.dockerDesc}</p>
-          <pre className="bg-zinc-950 border border-zinc-800 p-4 rounded-lg overflow-x-auto text-sky-300 leading-relaxed max-h-96">
+          <p className="text-[var(--muted)] text-[11px]">{t.dockerDesc}</p>
+          <pre className="bg-[var(--paper)] border border-[var(--line)] p-4 rounded-lg overflow-x-auto text-sky-300 leading-relaxed max-h-96">
             {dockerCompose}
           </pre>
         </div>
       )}
 
       {selectedTab === 'systemd' && (
-        <div className="bg-zinc-900/90 border border-zinc-800 rounded-xl p-5 space-y-3 font-mono text-xs">
+        <div className="bg-[var(--paper-2)]/90 border border-[var(--line)] rounded-xl p-5 space-y-3 font-mono text-xs">
           <div className="flex items-center justify-between">
             <span className="font-bold text-white">/etc/systemd/system/edgeproxy.service</span>
             <button
               onClick={() => handleCopy('systemd', systemdService)}
-              className="flex items-center gap-1 px-3 py-1 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-200 transition-colors"
+              className="flex items-center gap-1 px-3 py-1 rounded bg-[var(--paper-2)] hover:bg-[var(--line)] text-[var(--ink)] transition-colors"
             >
-              {copiedKey === 'systemd' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+              {copiedKey === 'systemd' ? <Check className="w-3.5 h-3.5 text-[var(--accent)]" /> : <Copy className="w-3.5 h-3.5" />}
               <span>{copiedKey === 'systemd' ? t.copied : t.copyBtn}</span>
             </button>
           </div>
-          <pre className="bg-zinc-950 border border-zinc-800 p-4 rounded-lg overflow-x-auto text-amber-300 leading-relaxed max-h-96">
+          <pre className="bg-[var(--paper)] border border-[var(--line)] p-4 rounded-lg overflow-x-auto text-amber-300 leading-relaxed max-h-96">
             {systemdService}
           </pre>
         </div>

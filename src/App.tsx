@@ -31,6 +31,13 @@ import {
 
 export default function App() {
   const [language, setLanguage] = useState<'ua' | 'en'>('ua');
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    try {
+      const v = localStorage.getItem('edgeproxy.theme');
+      if (v === 'light' || v === 'dark') return v;
+    } catch {}
+    return 'light';
+  });
   const [currentTab, setCurrentTab] = useState<string>('topology');
   const [isTuiMode, setIsTuiMode] = useState<boolean>(false);
   const [isAttackActive, setIsAttackActive] = useState<boolean>(false);
@@ -60,6 +67,11 @@ export default function App() {
     tunnelJitterMs: 0,
     packetLossPercent: 0,
   });
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    try { localStorage.setItem('edgeproxy.theme', theme); } catch {}
+  }, [theme]);
 
   const engineRef = useRef<TrafficEngine | null>(null);
   if (!engineRef.current) {
@@ -404,7 +416,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#070a0f] text-zinc-100 flex flex-col font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
+    <div className="min-h-screen bg-[var(--paper)] text-[var(--ink)] flex flex-col font-[var(--sans)] selection:bg-[var(--accent)] selection:text-[var(--accent-ink)]">
       {/* Top Navbar */}
       <Navbar
         currentTab={currentTab}
@@ -416,6 +428,8 @@ export default function App() {
         setLanguage={setLanguage}
         isAttackActive={isAttackActive}
         onToggleAttack={handleToggleAttack}
+        theme={theme}
+        setTheme={setTheme}
       />
 
       {/* Main Content Area */}
@@ -508,13 +522,13 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-zinc-850/80 py-4 px-6 text-center text-xs text-zinc-500 font-mono">
+      <footer className="border-t border-[var(--line)] py-4 px-6 text-center text-xs text-[var(--muted)] font-mono">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <span className={`w-2 h-2 rounded-full ${isWsConnected ? 'bg-emerald-400' : 'bg-amber-400'}`}></span>
+            <span className={`w-2 h-2 rounded-full ${isWsConnected ? 'bg-[var(--accent)]' : 'bg-amber-400'}`}></span>
             <span>EdgeProxy — Go-based network infrastructure (vpn.how)</span>
-            <span className="text-zinc-600">|</span>
-            <span className="text-zinc-400">{isWsConnected ? 'WS Live' : 'Connecting WS...'}</span>
+            <span className="text-[var(--faint)]">|</span>
+            <span className="text-[var(--muted)]">{isWsConnected ? 'WS Live' : 'Connecting WS...'}</span>
           </div>
           <div>
             <span>Multiplexed TCP • TLS • Token Bucket • Observability</span>

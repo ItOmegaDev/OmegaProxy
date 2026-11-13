@@ -51,13 +51,13 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
   };
 
   return (
-    <div className="bg-[#05080c] text-emerald-400 font-mono text-xs rounded-xl border border-emerald-500/50 shadow-2xl p-4 sm:p-6 overflow-hidden select-none">
+    <div className="bg-[var(--paper)] text-[var(--accent)] font-mono text-xs rounded-xl border border-[var(--accent)] shadow-2xl p-4 sm:p-6 overflow-hidden select-none">
       {/* Top Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-emerald-500/40 pb-3 mb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--accent)] pb-3 mb-4">
         <div className="flex items-center gap-2 text-white">
-          <TerminalIcon className="w-4 h-4 text-emerald-400" />
+          <TerminalIcon className="w-4 h-4 text-[var(--accent)]" />
           <span className="font-bold tracking-wider">EDGEPROXY TERMINAL UI (TUI)</span>
-          <span className="text-zinc-500 text-[10px]">v2.4-mesh</span>
+          <span className="text-[var(--muted)] text-[10px]">v2.4-mesh</span>
           {isAttackActive && (
             <span className="bg-rose-950 text-rose-300 border border-rose-600 px-1.5 py-0.2 rounded text-[10px] animate-pulse">
               [ATTACK IN PROGRESS]
@@ -70,7 +70,7 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
           <button
             onClick={() => setActivePane('overview')}
             className={`px-2 py-0.5 rounded transition-colors ${
-              activePane === 'overview' ? 'bg-emerald-500 text-black font-bold' : 'hover:bg-emerald-950/60'
+              activePane === 'overview' ? 'bg-[var(--accent)] text-black font-bold' : 'hover:bg-[var(--accent-soft)]/60'
             }`}
           >
             [1] OVERVIEW
@@ -78,7 +78,7 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
           <button
             onClick={() => setActivePane('tunnels')}
             className={`px-2 py-0.5 rounded transition-colors ${
-              activePane === 'tunnels' ? 'bg-emerald-500 text-black font-bold' : 'hover:bg-emerald-950/60'
+              activePane === 'tunnels' ? 'bg-[var(--accent)] text-black font-bold' : 'hover:bg-[var(--accent-soft)]/60'
             }`}
           >
             [2] TUNNELS
@@ -86,7 +86,7 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
           <button
             onClick={() => setActivePane('logs')}
             className={`px-2 py-0.5 rounded transition-colors ${
-              activePane === 'logs' ? 'bg-emerald-500 text-black font-bold' : 'hover:bg-emerald-950/60'
+              activePane === 'logs' ? 'bg-[var(--accent)] text-black font-bold' : 'hover:bg-[var(--accent-soft)]/60'
             }`}
           >
             [3] LOGS
@@ -94,7 +94,7 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
           <button
             onClick={() => setActivePane('shield')}
             className={`px-2 py-0.5 rounded transition-colors ${
-              activePane === 'shield' ? 'bg-emerald-500 text-black font-bold' : 'hover:bg-emerald-950/60'
+              activePane === 'shield' ? 'bg-[var(--accent)] text-black font-bold' : 'hover:bg-[var(--accent-soft)]/60'
             }`}
           >
             [4] SHIELD
@@ -102,7 +102,7 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
           <button
             onClick={() => setActivePane('certs')}
             className={`px-2 py-0.5 rounded transition-colors ${
-              activePane === 'certs' ? 'bg-emerald-500 text-black font-bold' : 'hover:bg-emerald-950/60'
+              activePane === 'certs' ? 'bg-[var(--accent)] text-black font-bold' : 'hover:bg-[var(--accent-soft)]/60'
             }`}
           >
             [5] CERTS
@@ -110,7 +110,7 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
 
           <button
             onClick={onToggleAttack}
-            className="px-2 py-0.5 rounded bg-zinc-900 hover:bg-rose-900/50 text-rose-300 border border-zinc-750 transition-colors ml-1"
+            className="px-2 py-0.5 rounded bg-[var(--paper-2)] hover:bg-rose-900/50 text-rose-300 border border-zinc-750 transition-colors ml-1"
             title="Press 'A' key"
           >
             [A] ATTACK
@@ -118,7 +118,7 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
 
           <button
             onClick={onExitTui}
-            className="px-2 py-0.5 rounded bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-750 transition-colors ml-1"
+            className="px-2 py-0.5 rounded bg-[var(--paper-2)] hover:bg-[var(--paper-2)] text-[var(--ink-2)] border border-zinc-750 transition-colors ml-1"
             title="Press 'Q' key"
           >
             [Q] EXIT
@@ -127,31 +127,31 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
       </div>
 
       {/* System Gauges Box */}
-      <div className="bg-[#080d14] border border-emerald-900/80 rounded p-3 mb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-[11px]">
+      <div className="bg-[var(--paper)] border border-emerald-900/80 rounded p-3 mb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-[11px]">
         <div>
-          <div className="text-zinc-400">EDGE CPU USAGE</div>
+          <div className="text-[var(--muted)]">EDGE CPU USAGE</div>
           <div className="text-white font-bold">
             {renderProgressBar(telemetry.edgeCpuPercent, 100)} {telemetry.edgeCpuPercent}%
           </div>
         </div>
 
         <div>
-          <div className="text-zinc-400">EDGE RAM MEMORY</div>
+          <div className="text-[var(--muted)]">EDGE RAM MEMORY</div>
           <div className="text-white font-bold">
             {renderProgressBar(telemetry.edgeMemoryMb, 256)} {telemetry.edgeMemoryMb}MB
           </div>
         </div>
 
         <div>
-          <div className="text-zinc-400">THROUGHPUT RPS</div>
+          <div className="text-[var(--muted)]">THROUGHPUT RPS</div>
           <div className="text-white font-bold">
             {renderProgressBar(telemetry.currentRps, telemetry.peakRps || 100)} {telemetry.currentRps} r/s
           </div>
         </div>
 
         <div>
-          <div className="text-zinc-400">TOKEN BUCKET FILL</div>
-          <div className={`font-bold ${config.currentTokens < 15 ? 'text-rose-400' : 'text-emerald-400'}`}>
+          <div className="text-[var(--muted)]">TOKEN BUCKET FILL</div>
+          <div className={`font-bold ${config.currentTokens < 15 ? 'text-rose-400' : 'text-[var(--accent)]'}`}>
             {renderProgressBar(config.currentTokens, config.capacity)}{' '}
             {Math.floor(config.currentTokens)}/{config.capacity}
           </div>
@@ -161,9 +161,9 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
       {/* Pane Content */}
       {activePane === 'overview' && (
         <div className="space-y-4">
-          <div className="border border-emerald-900 rounded p-4 bg-[#080d14]">
-            <div className="text-emerald-300 font-bold mb-2">┌── TOPOLOGY & MESH STATUS ──────────────────────────┐</div>
-            <pre className="text-[11px] text-zinc-300 leading-relaxed overflow-x-auto">
+          <div className="border border-emerald-900 rounded p-4 bg-[var(--paper)]">
+            <div className="text-[var(--accent)] font-bold mb-2">┌── TOPOLOGY & MESH STATUS ──────────────────────────┐</div>
+            <pre className="text-[11px] text-[var(--ink-2)] leading-relaxed overflow-x-auto">
 {`[ Global Internet Clients ] 
       │ 
       ▼ HTTPS:443 / QUIC:443
@@ -184,25 +184,25 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="border border-emerald-900 rounded p-3 bg-[#080d14]">
-              <div className="text-emerald-300 font-bold mb-2">ACTIVE TUNNEL ROUTES</div>
+            <div className="border border-emerald-900 rounded p-3 bg-[var(--paper)]">
+              <div className="text-[var(--accent)] font-bold mb-2">ACTIVE TUNNEL ROUTES</div>
               <div className="space-y-1 text-[11px]">
                 {tunnels.length === 0 ? (
-                  <div className="text-zinc-500 italic">No active tunnels configured</div>
+                  <div className="text-[var(--muted)] italic">No active tunnels configured</div>
                 ) : (
                   tunnels.map((t) => (
-                    <div key={t.id} className="flex justify-between text-zinc-300">
-                      <span className="text-emerald-400">{t.subdomain}.edgeproxy.mesh</span>
-                      <span className="text-zinc-500">→ 127.0.0.1:{t.targetPort} ({t.protocol.toUpperCase()})</span>
+                    <div key={t.id} className="flex justify-between text-[var(--ink-2)]">
+                      <span className="text-[var(--accent)]">{t.subdomain}.edgeproxy.mesh</span>
+                      <span className="text-[var(--muted)]">→ 127.0.0.1:{t.targetPort} ({t.protocol.toUpperCase()})</span>
                     </div>
                   ))
                 )}
               </div>
             </div>
 
-            <div className="border border-emerald-900 rounded p-3 bg-[#080d14]">
-              <div className="text-emerald-300 font-bold mb-2">SECURITY SHIELD TELEMETRY</div>
-              <div className="space-y-1 text-[11px] text-zinc-300">
+            <div className="border border-emerald-900 rounded p-3 bg-[var(--paper)]">
+              <div className="text-[var(--accent)] font-bold mb-2">SECURITY SHIELD TELEMETRY</div>
+              <div className="space-y-1 text-[11px] text-[var(--ink-2)]">
                 <div className="flex justify-between">
                   <span>DDoS Algorithm:</span>
                   <span className="text-white uppercase font-bold">{config.algorithm}</span>
@@ -222,10 +222,10 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
       )}
 
       {activePane === 'tunnels' && (
-        <div className="border border-emerald-900 rounded p-3 bg-[#080d14] overflow-x-auto">
-          <div className="text-emerald-300 font-bold mb-2">TUNNELS INVENTORY TABLE</div>
+        <div className="border border-emerald-900 rounded p-3 bg-[var(--paper)] overflow-x-auto">
+          <div className="text-[var(--accent)] font-bold mb-2">TUNNELS INVENTORY TABLE</div>
           <table className="w-full text-left text-[11px]">
-            <thead className="text-zinc-500 border-b border-emerald-900/60 pb-1">
+            <thead className="text-[var(--muted)] border-b border-emerald-900/60 pb-1">
               <tr>
                 <th className="py-1">SUBDOMAIN</th>
                 <th className="py-1">LOCAL TARGET</th>
@@ -238,19 +238,19 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
             <tbody className="divide-y divide-zinc-900">
               {tunnels.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="py-3 text-center text-zinc-500 italic">
+                  <td colSpan={6} className="py-3 text-center text-[var(--muted)] italic">
                     No active tunnels configured.
                   </td>
                 </tr>
               ) : (
                 tunnels.map((t) => (
-                  <tr key={t.id} className="text-zinc-300">
-                    <td className="py-1 text-emerald-400 font-bold">{t.subdomain}.edgeproxy.mesh</td>
+                  <tr key={t.id} className="text-[var(--ink-2)]">
+                    <td className="py-1 text-[var(--accent)] font-bold">{t.subdomain}.edgeproxy.mesh</td>
                     <td className="py-1">{t.targetHost}:{t.targetPort}</td>
-                    <td className="py-1 uppercase text-zinc-400">{t.protocol}</td>
+                    <td className="py-1 uppercase text-[var(--muted)]">{t.protocol}</td>
                     <td className="py-1 text-white">{t.activeStreams}</td>
                     <td className="py-1 text-amber-400">{t.rateLimit.maxRps} r/s</td>
-                    <td className="py-1 text-emerald-400 uppercase font-semibold">{t.status}</td>
+                    <td className="py-1 text-[var(--accent)] uppercase font-semibold">{t.status}</td>
                   </tr>
                 ))
               )}
@@ -260,25 +260,25 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
       )}
 
       {activePane === 'logs' && (
-        <div className="border border-emerald-900 rounded p-3 bg-[#080d14] space-y-2">
-          <div className="flex items-center justify-between text-emerald-300 font-bold">
+        <div className="border border-emerald-900 rounded p-3 bg-[var(--paper)] space-y-2">
+          <div className="flex items-center justify-between text-[var(--accent)] font-bold">
             <span>LIVE TRAFFIC LOG STREAM</span>
-            <span className="text-zinc-500 text-[10px]">Showing last {requests.length} records</span>
+            <span className="text-[var(--muted)] text-[10px]">Showing last {requests.length} records</span>
           </div>
 
           <div className="max-h-72 overflow-y-auto space-y-1 text-[10px]">
             {requests.length === 0 ? (
-              <div className="py-6 text-center text-zinc-500 italic">
+              <div className="py-6 text-center text-[var(--muted)] italic">
                 No traffic logs yet. Send a test probe to record packets.
               </div>
             ) : (
               requests.slice(0, 25).map((req) => (
-                <div key={req.id} className="flex items-center gap-2 hover:bg-zinc-900/60 p-0.5 rounded">
-                  <span className="text-zinc-500">{new Date(req.timestamp).toLocaleTimeString()}</span>
+                <div key={req.id} className="flex items-center gap-2 hover:bg-[var(--paper-2)]/60 p-0.5 rounded">
+                  <span className="text-[var(--muted)]">{new Date(req.timestamp).toLocaleTimeString()}</span>
                   <span
                     className={`font-bold px-1 rounded ${
                       req.statusCode === 200
-                        ? 'text-emerald-400 bg-emerald-950'
+                        ? 'text-[var(--accent)] bg-[var(--accent-soft)]'
                         : req.statusCode === 429
                         ? 'text-amber-400 bg-amber-950'
                         : 'text-rose-400 bg-rose-950'
@@ -286,10 +286,10 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
                   >
                     [{req.statusCode}]
                   </span>
-                  <span className="text-zinc-400 uppercase font-bold">{req.method}</span>
-                  <span className="text-zinc-200 truncate max-w-xs">{req.host || req.subdomain}{req.path}</span>
-                  <span className="text-zinc-500 ml-auto">({req.durationMs}ms)</span>
-                  <span className="text-zinc-400">{req.clientIp}</span>
+                  <span className="text-[var(--muted)] uppercase font-bold">{req.method}</span>
+                  <span className="text-[var(--ink)] truncate max-w-xs">{req.host || req.subdomain}{req.path}</span>
+                  <span className="text-[var(--muted)] ml-auto">({req.durationMs}ms)</span>
+                  <span className="text-[var(--muted)]">{req.clientIp}</span>
                 </div>
               ))
             )}
@@ -298,14 +298,14 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
       )}
 
       {activePane === 'shield' && (
-        <div className="border border-emerald-900 rounded p-3 bg-[#080d14] space-y-3">
-          <div className="text-emerald-300 font-bold">RATE LIMITER & JAILED IP RECORDS</div>
-          <div className="text-zinc-400 text-[11px]">
+        <div className="border border-emerald-900 rounded p-3 bg-[var(--paper)] space-y-3">
+          <div className="text-[var(--accent)] font-bold">RATE LIMITER & JAILED IP RECORDS</div>
+          <div className="text-[var(--muted)] text-[11px]">
             Algorithm: {config.algorithm.toUpperCase()} | Capacity: {config.capacity} | Refill: {config.refillRate} tokens/sec
           </div>
 
           <table className="w-full text-left text-[11px]">
-            <thead className="text-zinc-500 border-b border-emerald-900 pb-1">
+            <thead className="text-[var(--muted)] border-b border-emerald-900 pb-1">
               <tr>
                 <th className="py-1">JAILED IP</th>
                 <th className="py-1">REASON</th>
@@ -315,13 +315,13 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
             <tbody>
               {config.blockedIpRecords.length === 0 ? (
                 <tr>
-                  <td colSpan={3} className="py-2 text-zinc-500">No IPs currently jailed.</td>
+                  <td colSpan={3} className="py-2 text-[var(--muted)]">No IPs currently jailed.</td>
                 </tr>
               ) : (
                 config.blockedIpRecords.map((r) => (
                   <tr key={r.ip} className="text-rose-400">
                     <td className="py-1 font-bold">{r.ip}</td>
-                    <td className="py-1 text-zinc-300">{r.reason}</td>
+                    <td className="py-1 text-[var(--ink-2)]">{r.reason}</td>
                     <td className="py-1 text-amber-400">
                       {Math.max(0, Math.round((r.blockedUntil - Date.now()) / 1000))}s
                     </td>
@@ -334,21 +334,21 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
       )}
 
       {activePane === 'certs' && (
-        <div className="border border-emerald-900 rounded p-3 bg-[#080d14] space-y-2">
-          <div className="text-emerald-300 font-bold">ACME V2 SSL CERTIFICATES</div>
+        <div className="border border-emerald-900 rounded p-3 bg-[var(--paper)] space-y-2">
+          <div className="text-[var(--accent)] font-bold">ACME V2 SSL CERTIFICATES</div>
           <div className="space-y-2 text-[11px]">
             {certificates.length === 0 ? (
-              <div className="py-4 text-center text-zinc-500 italic">
+              <div className="py-4 text-center text-[var(--muted)] italic">
                 No SSL certificates issued.
               </div>
             ) : (
               certificates.map((c) => (
-                <div key={c.id} className="p-2 border border-zinc-800 rounded bg-zinc-950">
+                <div key={c.id} className="p-2 border border-[var(--line)] rounded bg-[var(--paper)]">
                   <div className="flex justify-between font-bold text-white">
                     <span>{c.domain}</span>
-                    <span className="text-emerald-400">VALID ({c.daysRemaining} days left)</span>
+                    <span className="text-[var(--accent)]">VALID ({c.daysRemaining} days left)</span>
                   </div>
-                  <div className="text-zinc-400 text-[10px]">
+                  <div className="text-[var(--muted)] text-[10px]">
                     Issuer: {c.issuer} • Challenge: {c.challengeType} • OCSP: {c.ocspStapled ? 'ENABLED' : 'DISABLED'}
                   </div>
                 </div>
@@ -359,7 +359,7 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
       )}
 
       {/* Terminal Footer */}
-      <div className="mt-4 pt-3 border-t border-emerald-950 text-zinc-500 text-[10px] flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div className="mt-4 pt-3 border-t border-emerald-950 text-[var(--muted)] text-[10px] flex flex-col sm:flex-row items-center justify-between gap-2">
         <div>Shortcuts: [1] Overview [2] Tunnels [3] Logs [4] Shield [5] Certs [A] Attack [Q] Exit</div>
         <div>EdgeProxy/v2.4 (built with Go/Rust async runtime)</div>
       </div>

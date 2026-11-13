@@ -99,14 +99,14 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({ language }) => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-zinc-900/80 border border-zinc-800 rounded-xl p-5 shadow-lg">
+      <div className="bg-[var(--paper-2)]/80 border border-[var(--line)] rounded-xl p-5 shadow-lg">
         <div className="flex items-center gap-2.5">
-          <span className="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+          <span className="p-2 rounded-lg bg-[var(--accent)]/10 border border-[var(--accent)] text-[var(--accent)]">
             <Layers className="w-5 h-5" />
           </span>
           <div>
             <h1 className="text-xl font-bold text-white font-mono">{t.title}</h1>
-            <p className="text-sm text-zinc-400 mt-0.5">{t.subtitle}</p>
+            <p className="text-sm text-[var(--muted)] mt-0.5">{t.subtitle}</p>
           </div>
         </div>
       </div>
@@ -124,15 +124,15 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({ language }) => {
               }}
               className={`p-3.5 rounded-xl border cursor-pointer font-mono transition-all relative ${
                 isSelected
-                  ? 'bg-zinc-800 border-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.15)]'
-                  : 'bg-zinc-900/70 border-zinc-800 hover:border-zinc-700'
+                  ? 'bg-[var(--paper-2)] border-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.15)]'
+                  : 'bg-[var(--paper-2)]/70 border-[var(--line)] hover:border-[var(--line)]'
               }`}
             >
               <div className="flex items-center justify-between mb-2">
-                <span className="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/40 text-xs font-bold">
+                <span className="px-2 py-0.5 rounded bg-[var(--accent-soft)] text-[var(--accent)] border border-[var(--accent)] text-xs font-bold">
                   Етап {stage.step}
                 </span>
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                <CheckCircle2 className="w-4 h-4 text-[var(--accent)]" />
               </div>
               <h3 className="text-xs font-bold text-white leading-tight">
                 {language === 'ua' ? stage.nameUa : stage.nameEn}
@@ -143,18 +143,18 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({ language }) => {
       </div>
 
       {/* Selected Stage Deep-Dive */}
-      <div className="bg-zinc-900/90 border border-zinc-800 rounded-xl p-6 shadow-sm space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-800 pb-4">
+      <div className="bg-[var(--paper-2)]/90 border border-[var(--line)] rounded-xl p-6 shadow-sm space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--line)] pb-4">
           <div>
             <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono text-xs font-bold">
+              <span className="px-2 py-0.5 rounded bg-[var(--accent)]/20 text-[var(--accent)] font-mono text-xs font-bold">
                 STAGE {selectedStage.step} OF 5
               </span>
               <h2 className="text-lg font-bold text-white font-mono">
                 {language === 'ua' ? selectedStage.nameUa : selectedStage.nameEn}
               </h2>
             </div>
-            <p className="text-xs text-zinc-400 mt-1">
+            <p className="text-xs text-[var(--muted)] mt-1">
               {language === 'ua' ? selectedStage.subtitleUa : selectedStage.subtitleEn}
             </p>
           </div>
@@ -162,7 +162,7 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({ language }) => {
           <button
             onClick={() => handleRunTest(selectedStage)}
             disabled={isRunningTest}
-            className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-mono font-bold transition-colors shadow-sm disabled:opacity-50"
+            className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-[var(--accent)] hover:bg-[var(--accent)] text-white text-xs font-mono font-bold transition-colors shadow-sm disabled:opacity-50"
           >
             <Play className={`w-3.5 h-3.5 ${isRunningTest ? 'animate-spin' : ''}`} />
             <span>{isRunningTest ? t.runningTest : t.runTestBtn}</span>
@@ -171,21 +171,21 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({ language }) => {
 
         {/* Test Console Output */}
         {testOutput && (
-          <div className="bg-zinc-950 border border-emerald-500/50 rounded-lg p-3.5 font-mono text-xs text-emerald-300 whitespace-pre-wrap leading-relaxed animate-fadeIn">
+          <div className="bg-[var(--paper)] border border-[var(--accent)] rounded-lg p-3.5 font-mono text-xs text-[var(--accent)] whitespace-pre-wrap leading-relaxed animate-fadeIn">
             {testOutput}
           </div>
         )}
 
         {/* Key Components Checklist */}
         <div>
-          <h3 className="text-xs font-bold text-zinc-300 font-mono uppercase tracking-wider mb-2">
+          <h3 className="text-xs font-bold text-[var(--ink-2)] font-mono uppercase tracking-wider mb-2">
             {t.keyComponents}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
             {selectedStage.keyComponents.map((comp, idx) => (
-              <div key={idx} className="bg-zinc-950/70 border border-zinc-800 rounded-lg p-2.5 font-mono text-xs flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 flex-shrink-0"></span>
-                <span className="text-zinc-300">{comp}</span>
+              <div key={idx} className="bg-[var(--paper)]/70 border border-[var(--line)] rounded-lg p-2.5 font-mono text-xs flex items-start gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] mt-1.5 flex-shrink-0"></span>
+                <span className="text-[var(--ink-2)]">{comp}</span>
               </div>
             ))}
           </div>
@@ -193,14 +193,14 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({ language }) => {
 
         {/* Benchmarks Metrics */}
         <div>
-          <h3 className="text-xs font-bold text-zinc-300 font-mono uppercase tracking-wider mb-2">
+          <h3 className="text-xs font-bold text-[var(--ink-2)] font-mono uppercase tracking-wider mb-2">
             {t.benchmarksTitle}
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {selectedStage.benchmarks.map((bench, idx) => (
-              <div key={idx} className="bg-zinc-950/80 border border-zinc-800 p-3 rounded-lg font-mono">
-                <span className="text-[11px] text-zinc-500 uppercase block">{bench.label}</span>
-                <span className="text-base font-bold text-emerald-400 mt-0.5 block">{bench.value}</span>
+              <div key={idx} className="bg-[var(--paper)]/80 border border-[var(--line)] p-3 rounded-lg font-mono">
+                <span className="text-[11px] text-[var(--muted)] uppercase block">{bench.label}</span>
+                <span className="text-base font-bold text-[var(--accent)] mt-0.5 block">{bench.value}</span>
               </div>
             ))}
           </div>
@@ -209,79 +209,79 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({ language }) => {
         {/* Code Sample */}
         <div className="space-y-2 font-mono">
           <div className="flex items-center justify-between text-xs">
-            <span className="text-zinc-400 font-bold">{selectedStage.codeSampleTitle}</span>
+            <span className="text-[var(--muted)] font-bold">{selectedStage.codeSampleTitle}</span>
             <button
               onClick={copyCodeSample}
-              className="text-zinc-400 hover:text-white flex items-center gap-1 text-[11px]"
+              className="text-[var(--muted)] hover:text-white flex items-center gap-1 text-[11px]"
             >
-              {copiedCode ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+              {copiedCode ? <Check className="w-3 h-3 text-[var(--accent)]" /> : <Copy className="w-3 h-3" />}
               <span>{copiedCode ? t.copied : t.copyCode}</span>
             </button>
           </div>
-          <div className="bg-zinc-950 p-4 rounded-lg border border-zinc-800 overflow-x-auto text-xs text-emerald-300 leading-relaxed">
+          <div className="bg-[var(--paper)] p-4 rounded-lg border border-[var(--line)] overflow-x-auto text-xs text-[var(--accent)] leading-relaxed">
             <pre>{selectedStage.codeSample}</pre>
           </div>
         </div>
       </div>
 
       {/* Section 6: Recommended Tech Stack Matrix */}
-      <div className="bg-zinc-900/90 border border-zinc-800 rounded-xl p-6 shadow-sm space-y-4">
+      <div className="bg-[var(--paper-2)]/90 border border-[var(--line)] rounded-xl p-6 shadow-sm space-y-4">
         <h2 className="text-base font-bold text-white font-mono flex items-center gap-2">
-          <Cpu className="w-5 h-5 text-emerald-400" />
+          <Cpu className="w-5 h-5 text-[var(--accent)]" />
           <span>{t.techStackTitle}</span>
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-mono text-xs">
-          <div className="bg-zinc-950/70 border border-zinc-800 rounded-xl p-4 space-y-2">
-            <div className="flex items-center gap-2 font-bold text-emerald-400 text-sm">
+          <div className="bg-[var(--paper)]/70 border border-[var(--line)] rounded-xl p-4 space-y-2">
+            <div className="flex items-center gap-2 font-bold text-[var(--accent)] text-sm">
               <Server className="w-4 h-4" />
               <span>1. {t.stackEdgeGateway}</span>
             </div>
-            <p className="text-zinc-400 leading-relaxed">{t.stackEdgeDesc}</p>
+            <p className="text-[var(--muted)] leading-relaxed">{t.stackEdgeDesc}</p>
             <div className="flex flex-wrap gap-1.5 pt-1">
-              <span className="px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 text-[11px]">Tokio Async I/O</span>
-              <span className="px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 text-[11px]">Zero-Copy Sockets</span>
-              <span className="px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 text-[11px]">Hyper HTTP/2</span>
-              <span className="px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 text-[11px]">Quinn (QUIC)</span>
+              <span className="px-2 py-0.5 rounded bg-[var(--paper-2)] text-[var(--ink-2)] text-[11px]">Tokio Async I/O</span>
+              <span className="px-2 py-0.5 rounded bg-[var(--paper-2)] text-[var(--ink-2)] text-[11px]">Zero-Copy Sockets</span>
+              <span className="px-2 py-0.5 rounded bg-[var(--paper-2)] text-[var(--ink-2)] text-[11px]">Hyper HTTP/2</span>
+              <span className="px-2 py-0.5 rounded bg-[var(--paper-2)] text-[var(--ink-2)] text-[11px]">Quinn (QUIC)</span>
             </div>
           </div>
 
-          <div className="bg-zinc-950/70 border border-zinc-800 rounded-xl p-4 space-y-2">
-            <div className="flex items-center gap-2 font-bold text-emerald-400 text-sm">
+          <div className="bg-[var(--paper)]/70 border border-[var(--line)] rounded-xl p-4 space-y-2">
+            <div className="flex items-center gap-2 font-bold text-[var(--accent)] text-sm">
               <Zap className="w-4 h-4" />
               <span>2. {t.stackStorage}</span>
             </div>
-            <p className="text-zinc-400 leading-relaxed">{t.stackStorageDesc}</p>
+            <p className="text-[var(--muted)] leading-relaxed">{t.stackStorageDesc}</p>
             <div className="flex flex-wrap gap-1.5 pt-1">
-              <span className="px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 text-[11px]">Redis Token Bucket</span>
-              <span className="px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 text-[11px]">PostgreSQL 16</span>
-              <span className="px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 text-[11px]">Composite Indices</span>
+              <span className="px-2 py-0.5 rounded bg-[var(--paper-2)] text-[var(--ink-2)] text-[11px]">Redis Token Bucket</span>
+              <span className="px-2 py-0.5 rounded bg-[var(--paper-2)] text-[var(--ink-2)] text-[11px]">PostgreSQL 16</span>
+              <span className="px-2 py-0.5 rounded bg-[var(--paper-2)] text-[var(--ink-2)] text-[11px]">Composite Indices</span>
             </div>
           </div>
 
-          <div className="bg-zinc-950/70 border border-zinc-800 rounded-xl p-4 space-y-2">
-            <div className="flex items-center gap-2 font-bold text-emerald-400 text-sm">
+          <div className="bg-[var(--paper)]/70 border border-[var(--line)] rounded-xl p-4 space-y-2">
+            <div className="flex items-center gap-2 font-bold text-[var(--accent)] text-sm">
               <Terminal className="w-4 h-4" />
               <span>3. {t.stackAgent}</span>
             </div>
-            <p className="text-zinc-400 leading-relaxed">{t.stackAgentDesc}</p>
+            <p className="text-[var(--muted)] leading-relaxed">{t.stackAgentDesc}</p>
             <div className="flex flex-wrap gap-1.5 pt-1">
-              <span className="px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 text-[11px]">Static Binary (8MB)</span>
-              <span className="px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 text-[11px]">Local Demux Proxy</span>
-              <span className="px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 text-[11px]">Systemd & Docker</span>
+              <span className="px-2 py-0.5 rounded bg-[var(--paper-2)] text-[var(--ink-2)] text-[11px]">Static Binary (8MB)</span>
+              <span className="px-2 py-0.5 rounded bg-[var(--paper-2)] text-[var(--ink-2)] text-[11px]">Local Demux Proxy</span>
+              <span className="px-2 py-0.5 rounded bg-[var(--paper-2)] text-[var(--ink-2)] text-[11px]">Systemd & Docker</span>
             </div>
           </div>
 
-          <div className="bg-zinc-950/70 border border-zinc-800 rounded-xl p-4 space-y-2">
-            <div className="flex items-center gap-2 font-bold text-emerald-400 text-sm">
+          <div className="bg-[var(--paper)]/70 border border-[var(--line)] rounded-xl p-4 space-y-2">
+            <div className="flex items-center gap-2 font-bold text-[var(--accent)] text-sm">
               <Layers className="w-4 h-4" />
               <span>4. {t.stackDashboard}</span>
             </div>
-            <p className="text-zinc-400 leading-relaxed">{t.stackDashboardDesc}</p>
+            <p className="text-[var(--muted)] leading-relaxed">{t.stackDashboardDesc}</p>
             <div className="flex flex-wrap gap-1.5 pt-1">
-              <span className="px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 text-[11px]">Next.js / React</span>
-              <span className="px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 text-[11px]">Tailwind CSS</span>
-              <span className="px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 text-[11px]">WebSocket Stream</span>
+              <span className="px-2 py-0.5 rounded bg-[var(--paper-2)] text-[var(--ink-2)] text-[11px]">Next.js / React</span>
+              <span className="px-2 py-0.5 rounded bg-[var(--paper-2)] text-[var(--ink-2)] text-[11px]">Tailwind CSS</span>
+              <span className="px-2 py-0.5 rounded bg-[var(--paper-2)] text-[var(--ink-2)] text-[11px]">WebSocket Stream</span>
             </div>
           </div>
         </div>
