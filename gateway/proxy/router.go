@@ -68,6 +68,8 @@ type Router struct {
 	sessions       map[string]*TunnelSession      // key: subdomain
 	allowedTunnels map[string]AllowedTunnelConfig // synchronized from Control Plane / DB
 	rateLimiter    *limiter.RateLimiterStore
+	tunnelLimiters map[string]*limiter.TokenBucket
+	globalRPS      float64
 	baseDomain     string
 }
 
@@ -76,6 +78,8 @@ func NewRouter(baseDomain string, rps, burst float64) *Router {
 		sessions:       make(map[string]*TunnelSession),
 		allowedTunnels: make(map[string]AllowedTunnelConfig),
 		rateLimiter:    limiter.NewRateLimiterStore(rps, burst),
+		tunnelLimiters: make(map[string]*limiter.TokenBucket),
+		globalRPS:      rps,
 		baseDomain:     baseDomain,
 	}
 }
@@ -87,6 +91,7 @@ func (r *Router) SyncAllowedTunnels(configs []AllowedTunnelConfig) {
 	defer r.mu.Unlock()
 
 	newMap := make(map[string]AllowedTunnelConfig)
+	newLimiters := make(map[string]*limiter.TokenBucket)
 	skipped := 0
 	for _, cfg := range configs {
 		if !ValidSubdomain(cfg.Subdomain) || !validTokenHash(cfg.AuthTokenHash) {
@@ -94,8 +99,14 @@ func (r *Router) SyncAllowedTunnels(configs []AllowedTunnelConfig) {
 			continue
 		}
 		newMap[cfg.Subdomain] = cfg
+		rps := cfg.MaxRPS
+		if rps <= 0 {
+			rps = r.globalRPS
+		}
+		newLimiters[cfg.Subdomain] = limiter.NewTokenBucket(rps*1.5, rps)
 	}
 	r.allowedTunnels = newMap
+	r.tunnelLimiters = newLimiters
 	log.Printf("[ROUTER-SYNC] Synchronized %d authorized tunnels (skipped %d invalid)", len(newMap), skipped)
 }
 
@@ -290,6 +301,15 @@ func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 
 	if !exists {
 		http.Error(w, fmt.Sprintf("HTTP 502: Tunnel '%s.%s' is currently offline or unreachable", subdomain, baseDomain), http.StatusBadGateway)
+		return
+	}
+
+	// Per-tunnel rate limit (in addition to the global per-IP limit).
+	r.mu.RLock()
+	tl, hasTL := r.tunnelLimiters[subdomain]
+	r.mu.RUnlock()
+	if hasTL && tl != nil && !tl.Allow() {
+		http.Error(w, "HTTP 429: Tunnel rate limit exceeded", http.StatusTooManyRequests)
 		return
 	}
 

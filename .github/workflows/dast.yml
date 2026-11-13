@@ -1,0 +1,46 @@
+name: DAST
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 3 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  zap-baseline:
+    name: OWASP ZAP baseline scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+          cache: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - name: Install
+        run: npm ci --no-audit --no-fund
+      - name: Build
+        run: |
+          go build ./gateway/... ./agent/...
+          npm run build
+      - name: Start gateway
+        run: |
+          export DAST_INTERNAL_SECRET="$(openssl rand -hex 32)"
+          echo "DAST_INTERNAL_SECRET=$DAST_INTERNAL_SECRET" >> $GITHUB_ENV
+          ./bin/edgeproxy-gateway -http-port 8080 -tls-port 8443 -tunnel-port 4242 -internal-addr 127.0.0.1:8081 -domain edgeproxy.mesh -internal-secret "$DAST_INTERNAL_SECRET" &
+          sleep 2
+      - name: Start control plane
+        run: |
+          HOST=127.0.0.1 PORT=3000 EDGEPROXY_INTERNAL_SECRET="$DAST_INTERNAL_SECRET" GATEWAY_INTERNAL_URL=http://127.0.0.1:8081 GATEWAY_PUBLIC_URL=http://127.0.0.1:8080 node dist/server.cjs &
+          sleep 3
+      - name: ZAP baseline
+        uses: zaproxy/action-baseline@v0.12.0
+        with:
+          target: "http://127.0.0.1:8080"
+          rules_file_name: ""
+          cmd_options: "-a"
