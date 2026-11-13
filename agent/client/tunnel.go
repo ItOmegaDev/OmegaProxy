@@ -1,12 +1,15 @@
 package client
 
 import (
+	"crypto/tls"
+	"crypto/x509"
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
 	"io"
 	"log"
 	"net"
+	"os"
 	"sync"
 	"time"
 
@@ -43,6 +46,12 @@ type TunnelClient struct {
 	mu          sync.Mutex
 	running     bool
 
+	// TLS settings for the tunnel wire (opt-in).
+	useTLS             bool
+	tlsServerName      string
+	tlsCAFile          string
+	insecureSkipVerify bool
+
 	// Flow control credit map: streamID -> channel of ACK pulses
 	ackChans   map[uint32]chan struct{}
 	ackChansMu sync.RWMutex
@@ -62,11 +71,53 @@ func NewTunnelClient(gatewayAddr, subdomain, domain string, localPort int, token
 	}
 }
 
-// Start opens an encrypted multiplexed connection to the Gateway and listens for virtual streams
-func (c *TunnelClient) Start() error {
-	log.Printf("[AGENT] Connecting to Edge Gateway at %s...", c.gatewayAddr)
+// ConfigureTLS enables TLS on the tunnel wire. Must be called before Start.
+func (c *TunnelClient) ConfigureTLS(useTLS bool, serverName, caFile string, insecure bool) {
+	c.useTLS = useTLS
+	c.tlsServerName = serverName
+	c.tlsCAFile = caFile
+	c.insecureSkipVerify = insecure
+}
 
-	conn, err := net.DialTimeout("tcp", c.gatewayAddr, 5*time.Second)
+// buildTLSConfig constructs the client TLS configuration for the tunnel.
+func (c *TunnelClient) buildTLSConfig() (*tls.Config, error) {
+	cfg := &tls.Config{MinVersion: tls.VersionTLS12}
+	if c.tlsServerName != "" {
+		cfg.ServerName = c.tlsServerName
+	} else if host, _, err := net.SplitHostPort(c.gatewayAddr); err == nil {
+		cfg.ServerName = host
+	}
+	if c.tlsCAFile != "" {
+		pemBytes, err := os.ReadFile(c.tlsCAFile)
+		if err != nil {
+			return nil, fmt.Errorf("read CA bundle: %w", err)
+		}
+		pool := x509.NewCertPool()
+		if !pool.AppendCertsFromPEM(pemBytes) {
+			return nil, fmt.Errorf("failed to parse CA bundle")
+		}
+		cfg.RootCAs = pool
+	}
+	cfg.InsecureSkipVerify = c.insecureSkipVerify
+	return cfg, nil
+}
+
+// Start opens a (optionally TLS) multiplexed connection to the Gateway and listens for virtual streams
+func (c *TunnelClient) Start() error {
+	log.Printf("[AGENT] Connecting to Edge Gateway at %s (tls=%t)...", c.gatewayAddr, c.useTLS)
+
+	var conn net.Conn
+	var err error
+	if c.useTLS {
+		tlsCfg, err := c.buildTLSConfig()
+		if err != nil {
+			return fmt.Errorf("tunnel TLS config: %w", err)
+		}
+		dialer := &net.Dialer{Timeout: 5 * time.Second}
+		conn, err = tls.DialWithDialer(dialer, "tcp", c.gatewayAddr, tlsCfg)
+	} else {
+		conn, err = net.DialTimeout("tcp", c.gatewayAddr, 5*time.Second)
+	}
 	if err != nil {
 		return fmt.Errorf("failed connecting to gateway: %w", err)
 	}

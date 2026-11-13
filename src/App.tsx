@@ -512,12 +512,12 @@ export default function App() {
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <span className={`w-2 h-2 rounded-full ${isWsConnected ? 'bg-emerald-400' : 'bg-amber-400'}`}></span>
-            <span>EdgeProxy &amp; Traffic Mesh — Production Core</span>
+            <span>EdgeProxy — Go-based network infrastructure (vpn.how)</span>
             <span className="text-zinc-600">|</span>
             <span className="text-zinc-400">{isWsConnected ? 'WS Live' : 'Connecting WS...'}</span>
           </div>
           <div>
-            <span>Multiplexed TCP • Token Bucket • Self-signed TLS</span>
+            <span>Multiplexed TCP • TLS • Token Bucket • Observability</span>
           </div>
         </div>
       </footer>

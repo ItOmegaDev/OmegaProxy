@@ -23,6 +23,15 @@ func NewStreamDemuxer(targetAddr string) *StreamDemuxer {
 		targetAddr: targetAddr,
 		client: &http.Client{
 			Timeout: 10 * time.Second,
+			Transport: &http.Transport{
+				MaxIdleConns:          32,
+				MaxIdleConnsPerHost:   8,
+				IdleConnTimeout:       90 * time.Second,
+				DisableCompression:    false,
+				ForceAttemptHTTP2:     true,
+				TLSHandshakeTimeout:   5 * time.Second,
+				ExpectContinueTimeout: 1 * time.Second,
+			},
 			// Never follow redirects: a local service must not be able to
 			// redirect the agent into an arbitrary destination.
 			CheckRedirect: func(_ *http.Request, _ []*http.Request) error {

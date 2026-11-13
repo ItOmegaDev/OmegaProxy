@@ -1,6 +1,8 @@
 ![EdgeProxy banner](assets/banner.png)
 
-# EdgeProxy & Traffic Mesh
+# EdgeProxy
+
+**Go-based network infrastructure software** · vpn.how
 
 A self-hosted edge reverse proxy with a binary multiplexing tunnel, a Go CLI agent, a Node.js control plane and a React dashboard. Built as a reference implementation for high-throughput ingress, tunnel authorization and live telemetry.
 
@@ -159,6 +161,17 @@ npm run build
 
 CI (`.github/workflows/ci.yml`) runs Go build/vet/race tests, TypeScript checks, unit tests, the production build and a gitleaks secret scan.
 
+### Benchmarks and fuzzing
+
+```bash
+# Go micro-benchmarks (framing, routing, authorization)
+cd gateway && go test ./... -bench=. -benchmem
+
+# Fuzz the wire protocol parser and subdomain validator
+cd gateway && go test ./protocol/ -fuzz=FuzzReadFrame -fuzztime=30s
+cd gateway && go test ./proxy/ -fuzz=FuzzValidSubdomain -fuzztime=30s
+```
+
 ## Security notes
 
 The following controls are implemented:
@@ -176,10 +189,10 @@ See [`SECURITY.md`](SECURITY.md) for the threat model and deployment checklist.
 ## Limitations
 
 - **TLS is self-signed.** The gateway generates ECDSA certificates for the edge mesh; they are not trusted by browsers. Do not present this as public ACME/Let's Encrypt.
-- **The tunnel wire (`:4242`) is plain TCP.** Run it on a trusted network, or wrap it with WireGuard/mTLS. The agent token authenticates the tunnel but does not encrypt it.
+- **The tunnel wire (`:4242`) supports optional TLS.** Enable it with `-tunnel-tls` on the gateway (and `-tunnel-tls` on the agent). By default it is plain TCP for backwards compatibility; run it on a trusted network or enable TLS/mTLS for production. The agent token authenticates the tunnel but, when TLS is off, does not encrypt it.
 - **Single-admin authorization.** There is no user login or per-tenant RBAC; the control plane is an admin surface.
 - **The PostgreSQL schema in `db/` is optional reference material.** The running control plane uses Firestore (or memory).
-- **No fuzzing/DAST yet.** CI covers unit tests, type checks and a secret scan.
+- **Fuzzing is available locally** (`go test -fuzz=...`); CI runs unit tests, type checks and a secret scan. DAST is not yet wired into CI.
 
 ## License
 

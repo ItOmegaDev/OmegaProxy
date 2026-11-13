@@ -25,6 +25,15 @@ build-dashboard:
 
 test: test-go test-node lint
 
+bench:
+	@echo "==> Running Go benchmarks..."
+	cd gateway && go test ./... -bench=. -benchmem -run=^$
+
+fuzz:
+	@echo "==> Fuzzing protocol and proxy (30s each)..."
+	cd gateway && go test ./protocol/ -fuzz=FuzzReadFrame -fuzztime=30s
+	cd gateway && go test ./proxy/ -fuzz=FuzzValidSubdomain -fuzztime=30s
+
 test-go:
 	@echo "==> Running Go tests and vet..."
 	go vet ./gateway/... ./agent/...

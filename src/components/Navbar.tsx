@@ -44,7 +44,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const t = {
     ua: {
       appName: 'EdgeProxy',
-      badge: 'Traffic Mesh',
+      badge: 'vpn.how',
       edgeStatus: 'Edge Node: Local',
       tunnelQuic: 'TCP Тунель: Активний',
       rtt: 'RTT',
@@ -55,7 +55,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       navRoadmap: 'План Розробки',
       navTunnels: 'Тунелі',
       navTraffic: 'Live Трафік',
-      navShield: 'DDoS & Ліміти',
+      navShield: 'Rate Limiter',
       navCerts: 'SSL / ACME',
       navCLI: 'CLI Агент',
       terminalMode: 'TUI Режим',
@@ -64,7 +64,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     },
     en: {
       appName: 'EdgeProxy',
-      badge: 'Traffic Mesh',
+      badge: 'vpn.how',
       edgeStatus: 'Edge Node: Local',
       tunnelQuic: 'TCP Tunnel: Active',
       rtt: 'RTT',
@@ -75,7 +75,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       navRoadmap: 'Dev Roadmap',
       navTunnels: 'Tunnels',
       navTraffic: 'Live Traffic',
-      navShield: 'DDoS & Shield',
+      navShield: 'Rate Limiter',
       navCerts: 'SSL / ACME',
       navCLI: 'CLI & Deploy',
       terminalMode: 'TUI Mode',

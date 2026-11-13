@@ -52,7 +52,7 @@ Data at rest lives in Firestore and is accessed only through the Firebase Admin 
 ## Known limitations
 
 - The gateway issues **self-signed** certificates and has no public ACME client.
-- The tunnel protocol is **plain TCP**; the token authenticates but does not encrypt.
+- The tunnel protocol is plain TCP by default; TLS (and optional mTLS) can be enabled with `-tunnel-tls`. When TLS is off, the token authenticates but does not encrypt.
 - There is a single admin credential; no multi-user login, MFA or per-tenant authorization.
 - No DAST/fuzzing or external audit has been performed yet.
 

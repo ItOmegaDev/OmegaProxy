@@ -20,6 +20,10 @@ func main() {
 	token := flag.String("token", "", "EdgeProxy auth token (strictly required)")
 	domain := flag.String("domain", "edgeproxy.mesh", "Base domain shown in the public URL")
 	autoDiscover := flag.Bool("auto", true, "Auto-discover active listening ports if port is closed")
+	tunnelTLS := flag.Bool("tunnel-tls", false, "Use TLS for the tunnel connection to the gateway")
+	tunnelCA := flag.String("tunnel-ca", "", "CA bundle to verify the gateway tunnel certificate")
+	tunnelServerName := flag.String("tunnel-server-name", "", "Override TLS server name for the tunnel connection")
+	insecureSkipVerify := flag.Bool("insecure-skip-verify", false, "Skip TLS verification (NOT recommended)")
 	flag.Parse()
 
 	// Strict token enforcement: flag is strictly mandatory
@@ -57,6 +61,10 @@ func main() {
 	}
 
 	agent := client.NewTunnelClient(*gatewayAddr, *subdomain, *domain, *port, authToken)
+	agent.ConfigureTLS(*tunnelTLS, *tunnelServerName, *tunnelCA, *insecureSkipVerify)
+	if *insecureSkipVerify {
+		log.Println("[WARN] TLS verification disabled for tunnel connection; not recommended for production")
+	}
 
 	// Graceful termination handling
 	sigChan := make(chan os.Signal, 1)

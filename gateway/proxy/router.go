@@ -234,7 +234,7 @@ func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 
 	clientIP, _, _ := net.SplitHostPort(req.RemoteAddr)
 	if !r.rateLimiter.Check(clientIP) {
-		http.Error(w, "HTTP 429: Rate Limit Exceeded (DDoS Shield Activated)", http.StatusTooManyRequests)
+		http.Error(w, "HTTP 429: Rate Limit Exceeded", http.StatusTooManyRequests)
 		return
 	}
 

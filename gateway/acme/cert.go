@@ -45,6 +45,13 @@ type CertManager struct {
 	certDir      string
 }
 
+// BaseDomain returns the configured base domain.
+func (m *CertManager) BaseDomain() string {
+	m.mu.RLock()
+	defer m.mu.RUnlock()
+	return m.baseDomain
+}
+
 // NewCertManager initializes the certificate manager and preloads/generates base certificates
 func NewCertManager(baseDomain string, certDir string) *CertManager {
 	if certDir == "" {
