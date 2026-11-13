@@ -241,6 +241,10 @@ See [`SECURITY.md`](SECURITY.md) for the threat model and deployment checklist.
 
 ---
 
+Made by **ItOmegaDev** · https://github.com/ItOmegaDev/EdgeProxy
+
+---
+
 ## Українською
 
 EdgeProxy — self-hosted edge reverse proxy: Go-шлюз обробляє публічний трафік, Go-агент тунелює локальні сервіси, Node.js/React відповідають за керування та телеметрію.

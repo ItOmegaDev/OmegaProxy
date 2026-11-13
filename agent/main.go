@@ -59,6 +59,7 @@ func main() {
 
 	fmt.Println("================================================================")
 	fmt.Println("  EdgeProxy Local Agent (CLI v1.0.0-PROD) - Zero-Config Tunnel  ")
+	fmt.Println("  Made by ItOmegaDev")
 	fmt.Println("================================================================")
 	fmt.Printf("  Target Port     : http://127.0.0.1:%d\n", *port)
 	fmt.Printf("  Assigned Domain : https://%s.%s\n", *subdomain, *domain)

@@ -532,6 +532,7 @@ export default function App() {
           </div>
           <div>
             <span>Multiplexed TCP • TLS • Token Bucket • Observability</span>
+            <span className="text-[var(--faint)]">Made by ItOmegaDev</span>
           </div>
         </div>
       </footer>

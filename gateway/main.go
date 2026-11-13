@@ -63,6 +63,7 @@ func main() {
 
 	log.Printf("==========================================================")
 	log.Printf("  EdgeProxy Gateway - Go network infrastructure (vpn.how)")
+	log.Printf("  Made by ItOmegaDev")
 	log.Printf("  Base Domain: *.%s", *baseDomain)
 	log.Printf("  Ingress Ports: HTTP :%d | HTTPS :%d | Tunnel :%d (tls=%t)", *httpPort, *tlsPort, *tunnelPort, *tunnelTLS)
 	log.Printf("  Shield: TokenBucket %.0f RPS / %.0f Burst", *rateLimitRps, *burstCapacity)
