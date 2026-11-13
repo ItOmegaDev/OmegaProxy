@@ -58,6 +58,7 @@ type TunnelSession struct {
 	CreatedAt       time.Time
 	BytesIn         uint64
 	BytesOut        uint64
+	TelemetryMu     sync.Mutex
 	LatestTelemetry *AgentTelemetry
 }
 
@@ -167,16 +168,24 @@ func (r *Router) RegisterSession(subdomain string, conn net.Conn) *TunnelSession
 	return session
 }
 
-// UnregisterSession removes a disconnected agent
-func (r *Router) UnregisterSession(subdomain string) {
+// UnregisterSession removes a disconnected agent, but only if the session
+// being unregistered is still the active one for the subdomain. This prevents
+// a stale handler from deleting a newer session that replaced it.
+func (r *Router) UnregisterSession(subdomain string, session *TunnelSession) {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
-	if sess, exists := r.sessions[subdomain]; exists {
-		sess.Conn.Close()
-		delete(r.sessions, subdomain)
-		log.Printf("[ROUTER] Unregistered tunnel session for %s", subdomain)
+	current, exists := r.sessions[subdomain]
+	if !exists || current == nil {
+		return
 	}
+	if session != nil && current != session {
+		log.Printf("[ROUTER] Ignoring unregister for stale session %s on %s", session.ID, subdomain)
+		return
+	}
+	current.Conn.Close()
+	delete(r.sessions, subdomain)
+	log.Printf("[ROUTER] Unregistered tunnel session for %s", subdomain)
 }
 
 // RecordTelemetry stores real agent metrics received via FrameMetrics
@@ -192,7 +201,9 @@ func (r *Router) RecordTelemetry(subdomain string, data []byte) {
 	r.mu.RUnlock()
 
 	if exists && sess != nil {
+		sess.TelemetryMu.Lock()
 		sess.LatestTelemetry = &telem
+		sess.TelemetryMu.Unlock()
 		atomic.StoreUint64(&sess.BytesIn, telem.BytesReceived)
 		atomic.StoreUint64(&sess.BytesOut, telem.BytesSent)
 		log.Printf("[AGENT-TELEMETRY] Subdomain %s: %d reqs, avg lat %.2f ms, active streams: %d",
@@ -214,8 +225,11 @@ func (r *Router) GetActiveSessionsSnapshot() []map[string]interface{} {
 			"bytesIn":   atomic.LoadUint64(&sess.BytesIn),
 			"bytesOut":  atomic.LoadUint64(&sess.BytesOut),
 		}
-		if sess.LatestTelemetry != nil {
-			entry["telemetry"] = sess.LatestTelemetry
+		sess.TelemetryMu.Lock()
+		telem := sess.LatestTelemetry
+		sess.TelemetryMu.Unlock()
+		if telem != nil {
+			entry["telemetry"] = telem
 		}
 		out = append(out, entry)
 	}
@@ -293,9 +307,26 @@ func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		session.StreamsMu.Unlock()
 	}()
 
-	// 100% RFC-compliant serialization using standard Go req.Write(&reqBuf)
-	var reqBuf bytes.Buffer
-	if err := req.Write(&reqBuf); err != nil {
+	// Read the full request body (capped) so we can forward it with a
+	// correct Content-Length and stream it in chunks below.
+	var bodyBytes []byte
+	if req.Body != nil {
+		req.Body = http.MaxBytesReader(w, req.Body, 64<<20)
+		b, err := io.ReadAll(req.Body)
+		if err != nil {
+			http.Error(w, "HTTP 400: Failed reading request body", http.StatusBadRequest)
+			return
+		}
+		bodyBytes = b
+		req.Body = io.NopCloser(bytes.NewReader(bodyBytes))
+		req.ContentLength = int64(len(bodyBytes))
+		req.TransferEncoding = nil
+	}
+
+	// Serialize request headers (without body) for the SYN frame.
+	req.Body = nil
+	var headerBuf bytes.Buffer
+	if err := req.Write(&headerBuf); err != nil {
 		http.Error(w, "HTTP 500: Failed serializing HTTP request", http.StatusInternalServerError)
 		return
 	}
@@ -303,7 +334,7 @@ func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	synFrame := &protocol.Frame{
 		StreamID: streamID,
 		Type:     protocol.FrameSyn,
-		Payload:  reqBuf.Bytes(),
+		Payload:  headerBuf.Bytes(),
 	}
 
 	session.WriterLock.Lock()
@@ -315,15 +346,65 @@ func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	// Stream request body (if any) as DATA frames followed by FIN.
+	if len(bodyBytes) > 0 {
+		reader := bytes.NewReader(bodyBytes)
+		buf := make([]byte, 32768)
+		for {
+			n, rerr := reader.Read(buf)
+			if n > 0 {
+				session.WriterLock.Lock()
+				_, werr := session.Conn.Write((&protocol.Frame{
+					StreamID: streamID,
+					Type:     protocol.FrameData,
+					Payload:  append([]byte(nil), buf[:n]...),
+				}).Encode())
+				session.WriterLock.Unlock()
+				if werr != nil {
+					http.Error(w, "HTTP 504: Failed writing request body", http.StatusGatewayTimeout)
+					return
+				}
+			}
+			if rerr == io.EOF {
+				break
+			}
+			if rerr != nil {
+				http.Error(w, "HTTP 400: Failed reading request body", http.StatusBadRequest)
+				return
+			}
+		}
+	}
+	// Signal end of request.
+	session.WriterLock.Lock()
+	session.Conn.Write((&protocol.Frame{
+		StreamID: streamID,
+		Type:     protocol.FrameFin,
+	}).Encode())
+	session.WriterLock.Unlock()
+
 	// Wait for first response chunk from agent
 	select {
 	case payload, ok := <-respChan:
-		if !ok || len(payload) == 0 {
+		if !ok {
 			http.Error(w, "HTTP 502: Bad Gateway (Empty response from agent)", http.StatusBadGateway)
 			return
 		}
+		if len(payload) == 0 {
+			// Wait for next chunk
+			select {
+			case p2, ok2 := <-respChan:
+				if !ok2 || len(p2) == 0 {
+					http.Error(w, "HTTP 502: Bad Gateway (Empty response from agent)", http.StatusBadGateway)
+					return
+				}
+				payload = p2
+			case <-time.After(15 * time.Second):
+				http.Error(w, "HTTP 504: Gateway Timeout (Local Agent did not respond)", http.StatusGatewayTimeout)
+				return
+			}
+		}
 
-		// Send FrameAck to release backpressure window credit to agent
+		// Send FrameAck
 		session.WriterLock.Lock()
 		session.Conn.Write((&protocol.Frame{
 			StreamID: streamID,
@@ -331,40 +412,43 @@ func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		}).Encode())
 		session.WriterLock.Unlock()
 
-		// Parse HTTP headers
-		respReader := bufio.NewReader(bytes.NewReader(payload))
-		resp, pErr := http.ReadResponse(respReader, req)
-		if pErr != nil {
-			w.WriteHeader(http.StatusOK)
-			w.Write(payload)
-		} else {
-			for k, vv := range resp.Header {
-				for _, v := range vv {
-					w.Header().Add(k, v)
-				}
+		// Stream all response bytes through a pipe so http.ReadResponse can
+		// parse headers correctly regardless of frame boundaries.
+		pr, pw := io.Pipe()
+		go func(first []byte) {
+			if len(first) > 0 {
+				pw.Write(first)
 			}
-			w.WriteHeader(resp.StatusCode)
-			io.Copy(w, resp.Body)
-			if f, ok := w.(http.Flusher); ok {
-				f.Flush()
+			for chunk := range respChan {
+				if len(chunk) > 0 {
+					pw.Write(chunk)
+				}
+				session.WriterLock.Lock()
+				session.Conn.Write((&protocol.Frame{
+					StreamID: streamID,
+					Type:     protocol.FrameAck,
+				}).Encode())
+				session.WriterLock.Unlock()
+			}
+			pw.Close()
+		}(payload)
+
+		resp, pErr := http.ReadResponse(bufio.NewReader(pr), req)
+		if pErr != nil {
+			pr.Close()
+			http.Error(w, "HTTP 502: Bad Gateway", http.StatusBadGateway)
+			return
+		}
+		for k, vv := range resp.Header {
+			for _, v := range vv {
+				w.Header().Add(k, v)
 			}
 		}
-
-		// Stream subsequent data chunks with windowed FrameAck backpressure
-		for chunk := range respChan {
-			if len(chunk) > 0 {
-				w.Write(chunk)
-				if f, ok := w.(http.Flusher); ok {
-					f.Flush()
-				}
-			}
-			// Acknowledge chunk consumption immediately to maintain window credit without deadlock
-			session.WriterLock.Lock()
-			session.Conn.Write((&protocol.Frame{
-				StreamID: streamID,
-				Type:     protocol.FrameAck,
-			}).Encode())
-			session.WriterLock.Unlock()
+		w.WriteHeader(resp.StatusCode)
+		io.Copy(w, resp.Body)
+		resp.Body.Close()
+		if f, ok := w.(http.Flusher); ok {
+			f.Flush()
 		}
 
 	case <-time.After(15 * time.Second):

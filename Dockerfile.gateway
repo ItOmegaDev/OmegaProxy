@@ -5,7 +5,8 @@ WORKDIR /app
 COPY gateway/ ./gateway/
 
 WORKDIR /app/gateway
-RUN GOWORK=off CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" -o /bin/edgeproxy-gateway .
+ARG BUILD_TAGS=""
+RUN GOWORK=off CGO_ENABLED=0 GOOS=linux go build -tags "${BUILD_TAGS}" -trimpath -ldflags="-s -w" -o /bin/edgeproxy-gateway .
 
 # Minimal runtime image, non-root, unprivileged ports only.
 FROM alpine:3.20

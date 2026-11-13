@@ -18,6 +18,7 @@ services:
       - "0.0.0.0:8081"
       - -cert-dir
       - /app/certs
+      - -tunnel-tls
       - -domain
       - ${BASE_DOMAIN:-edgeproxy.mesh}
       - -rps

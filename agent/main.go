@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 	"time"
 
@@ -17,7 +18,8 @@ func main() {
 	gatewayAddr := flag.String("gateway", "gateway.edgeproxy.mesh:4242", "Edge Gateway TCP control plane address")
 	subdomain := flag.String("subdomain", "", "Requested custom subdomain (e.g. 'myapi')")
 	port := flag.Int("port", 3000, "Target local port to expose (e.g. 3000, 8080)")
-	token := flag.String("token", "", "EdgeProxy auth token (strictly required)")
+	token := flag.String("token", "", "EdgeProxy auth token (strictly required; or EDGEPROXY_TOKEN env / EDGEPROXY_TOKEN_FILE)")
+	tokenFile := flag.String("token-file", "", "Path to file containing the agent token")
 	domain := flag.String("domain", "edgeproxy.mesh", "Base domain shown in the public URL")
 	autoDiscover := flag.Bool("auto", true, "Auto-discover active listening ports if port is closed")
 	tunnelTLS := flag.Bool("tunnel-tls", false, "Use TLS for the tunnel connection to the gateway")
@@ -26,11 +28,30 @@ func main() {
 	insecureSkipVerify := flag.Bool("insecure-skip-verify", false, "Skip TLS verification (NOT recommended)")
 	flag.Parse()
 
-	// Strict token enforcement: flag is strictly mandatory
-	if *token == "" {
-		log.Fatal("[FATAL] Missing required auth token. Pass -token <token>.")
-	}
+	// Resolve token from flag, env, or file (avoid leaking via process args).
 	authToken := *token
+	if authToken == "" {
+		authToken = strings.TrimSpace(os.Getenv("EDGEPROXY_TOKEN"))
+	}
+	if authToken == "" && *tokenFile != "" {
+		data, err := os.ReadFile(*tokenFile)
+		if err != nil {
+			log.Fatalf("[FATAL] Cannot read token file: %v", err)
+		}
+		authToken = strings.TrimSpace(string(data))
+	}
+	if authToken == "" && os.Getenv("EDGEPROXY_TOKEN_FILE") != "" {
+		data, err := os.ReadFile(os.Getenv("EDGEPROXY_TOKEN_FILE"))
+		if err != nil {
+			log.Fatalf("[FATAL] Cannot read token file: %v", err)
+		}
+		authToken = strings.TrimSpace(string(data))
+	}
+
+	// Strict token enforcement
+	if authToken == "" {
+		log.Fatal("[FATAL] Missing required auth token. Pass -token, EDGEPROXY_TOKEN, or -token-file.")
+	}
 
 	if *subdomain == "" {
 		*subdomain = fmt.Sprintf("dev-%d", time.Now().Unix()%10000)

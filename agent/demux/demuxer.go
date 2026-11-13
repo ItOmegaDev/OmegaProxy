@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
+	"io"
 	"log"
 	"net"
 	"net/http"
@@ -43,12 +44,20 @@ func NewStreamDemuxer(targetAddr string) *StreamDemuxer {
 
 // ForwardRequest takes raw HTTP request bytes from the tunnel wire, sends to local service, and returns raw HTTP response
 func (d *StreamDemuxer) ForwardRequest(rawReq []byte) ([]byte, error) {
-	reqReader := bufio.NewReader(bytes.NewReader(rawReq))
-	req, err := http.ReadRequest(reqReader)
+	return d.ForwardRequestFromReader(bytes.NewReader(rawReq))
+}
+
+// ForwardRequestFromReader reads an HTTP request from r (supports streaming bodies),
+// forwards it to the local service and returns the raw HTTP response.
+func (d *StreamDemuxer) ForwardRequestFromReader(r io.Reader) ([]byte, error) {
+	req, err := http.ReadRequest(bufio.NewReader(r))
 	if err != nil {
 		return nil, fmt.Errorf("failed parsing raw HTTP request: %w", err)
 	}
+	return d.forward(req)
+}
 
+func (d *StreamDemuxer) forward(req *http.Request) ([]byte, error) {
 	// Rewrite URL to target local port
 	req.URL.Scheme = "http"
 	req.URL.Host = d.targetAddr

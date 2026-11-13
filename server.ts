@@ -580,9 +580,11 @@ app.post("/api/tunnels", async (req, res) => {
     return res.status(400).json({ error: "localPort must be an integer between 1 and 65535" });
   }
 
-  const allowedProtocols = new Set(["quic", "http2", "websocket", "tcp"]);
+  // The data plane implements a single multiplexed TCP tunnel transport.
+  // Other protocols are not implemented and must not be offered.
+  const allowedProtocols = new Set(["tcp"]);
   if (protocol !== undefined && !allowedProtocols.has(String(protocol))) {
-    return res.status(400).json({ error: "Unsupported protocol" });
+    return res.status(400).json({ error: "Unsupported protocol (only 'tcp' is implemented)" });
   }
 
   const rps = maxRps === undefined ? 100 : Number(maxRps);
@@ -607,7 +609,7 @@ app.post("/api/tunnels", async (req, res) => {
     name: typeof name === "string" && name.trim() ? name.trim().slice(0, 128) : `Tunnel ${cleanSub}`,
     subdomain: cleanSub,
     localPort: port,
-    protocol: (protocol || "quic") as TunnelRecord["protocol"],
+    protocol: (protocol || "tcp") as TunnelRecord["protocol"],
     status: "offline",
     tlsStatus: certificates.some((c) => c.domain.includes(cleanSub) || c.wildcard) ? "active" : "failed",
     authEnabled: Boolean(authEnabled),

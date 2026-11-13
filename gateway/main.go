@@ -324,7 +324,7 @@ func handleAgentConnection(router *proxy.Router, conn net.Conn) {
 	_ = conn.SetDeadline(time.Time{})
 
 	session := router.RegisterSession(handshake.Subdomain, conn)
-	defer router.UnregisterSession(handshake.Subdomain)
+	defer router.UnregisterSession(handshake.Subdomain, session)
 
 	session.WriterLock.Lock()
 	_, _ = session.Conn.Write((&protocol.Frame{
@@ -363,7 +363,10 @@ func handleAgentConnection(router *proxy.Router, conn net.Conn) {
 				case ch <- f.Payload:
 				default:
 				}
-				close(ch)
+				func() {
+					defer func() { recover() }()
+					close(ch)
+				}()
 			}
 
 		case protocol.FrameData:
@@ -378,6 +381,19 @@ func handleAgentConnection(router *proxy.Router, conn net.Conn) {
 					log.Printf("[AGENT-BACKPRESSURE] Stream %d channel saturated, backpressure active", f.StreamID)
 				}
 			}
+
+		case protocol.FrameRst:
+			session.StreamsMu.Lock()
+			ch, exists := session.Streams[f.StreamID]
+			delete(session.Streams, f.StreamID)
+			session.StreamsMu.Unlock()
+			if exists && ch != nil {
+				func() {
+					defer func() { recover() }()
+					close(ch)
+				}()
+			}
+			log.Printf("[AGENT-RST] Stream %d reset: %s", f.StreamID, string(f.Payload))
 		}
 	}
 }

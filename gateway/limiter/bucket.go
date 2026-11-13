@@ -12,17 +12,20 @@ type TokenBucket struct {
 	tokens       float64
 	refillRate   float64 // tokens per second
 	lastRefill   time.Time
+	lastSeen     time.Time
 	violationCnt int
 	jailedUntil  time.Time
 }
 
 // NewTokenBucket creates a bucket with specified max capacity and refill rate (tokens/sec)
 func NewTokenBucket(capacity float64, refillRate float64) *TokenBucket {
+	now := time.Now()
 	return &TokenBucket{
 		capacity:   capacity,
 		tokens:     capacity,
 		refillRate: refillRate,
-		lastRefill: time.Now(),
+		lastRefill: now,
+		lastSeen:   now,
 	}
 }
 
@@ -32,6 +35,7 @@ func (tb *TokenBucket) Allow() bool {
 	defer tb.mu.Unlock()
 
 	now := time.Now()
+	tb.lastSeen = now
 
 	// Check if IP is actively jailed
 	if now.Before(tb.jailedUntil) {
@@ -64,6 +68,9 @@ func (tb *TokenBucket) Allow() bool {
 }
 
 // RateLimiterStore manages per-IP TokenBuckets
+const maxBuckets = 100000
+const bucketIdleTTL = 10 * time.Minute
+
 type RateLimiterStore struct {
 	mu      sync.RWMutex
 	buckets map[string]*TokenBucket
@@ -86,6 +93,19 @@ func (s *RateLimiterStore) Check(clientIP string) bool {
 
 	if !exists {
 		s.mu.Lock()
+		// Evict stale buckets when the store grows too large to prevent
+		// unbounded memory growth under distributed/many-IP load.
+		if len(s.buckets) >= maxBuckets {
+			cutoff := time.Now().Add(-bucketIdleTTL)
+			for ip, bucket := range s.buckets {
+				bucket.mu.Lock()
+				idle := bucket.lastSeen.Before(cutoff)
+				bucket.mu.Unlock()
+				if idle {
+					delete(s.buckets, ip)
+				}
+			}
+		}
 		b = NewTokenBucket(s.burst, s.rps)
 		s.buckets[clientIP] = b
 		s.mu.Unlock()
