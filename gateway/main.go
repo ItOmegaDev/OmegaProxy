@@ -48,6 +48,10 @@ func main() {
 	tunnelKey := flag.String("tunnel-key", "", "Path to PEM private key for the tunnel listener")
 	tunnelCA := flag.String("tunnel-ca", "", "Path to CA bundle to verify agent client certificates (optional, enables mTLS)")
 	tunnelMaxConns := flag.Int("tunnel-max-conns", 1024, "Maximum concurrent agent tunnel connections")
+	acmeEnabled := flag.Bool("acme", false, "Use Let's Encrypt (ACME) for public HTTPS certificates")
+	acmeDomains := flag.String("acme-domains", "", "Comma-separated domains for ACME (required with -acme)")
+	acmeEmail := flag.String("acme-email", "", "Contact email for ACME registration")
+	acmeCache := flag.String("acme-cache", "./acme-cache", "Directory for ACME certificate cache")
 	flag.Parse()
 
 	if *internalSecret != "" && len(*internalSecret) < 24 {
@@ -161,10 +165,19 @@ func main() {
 		}
 	}()
 
-	// Public HTTP server.
+	// Optional ACME (Let's Encrypt) support. Compiled in only with -tags acme
+	// (requires golang.org/x/crypto). Default builds use self-signed certs.
+	httpHandler, acmeTLSConfig, acmeActive, err := tryACME(*acmeEnabled, *acmeDomains, *acmeEmail, *acmeCache, router)
+	if err != nil {
+		log.Fatalf("[FATAL] ACME: %v", err)
+	}
+	if acmeActive {
+		log.Printf("[ACME] Enabled for domains: %s", *acmeDomains)
+	}
+
 	httpServer := &http.Server{
 		Addr:              fmt.Sprintf(":%d", *httpPort),
-		Handler:           router,
+		Handler:           httpHandler,
 		ReadHeaderTimeout: 10 * time.Second,
 		ReadTimeout:       30 * time.Second,
 		WriteTimeout:      60 * time.Second,
@@ -180,10 +193,14 @@ func main() {
 	}()
 
 	// HTTPS server with SNI-based TLS termination.
+	tlsConfig := certMgr.TLSConfig()
+	if acmeActive && acmeTLSConfig != nil {
+		tlsConfig = acmeTLSConfig
+	}
 	tlsServer := &http.Server{
 		Addr:              fmt.Sprintf(":%d", *tlsPort),
 		Handler:           router,
-		TLSConfig:         certMgr.TLSConfig(),
+		TLSConfig:         tlsConfig,
 		ReadHeaderTimeout: 10 * time.Second,
 		ReadTimeout:       30 * time.Second,
 		WriteTimeout:      60 * time.Second,
@@ -192,7 +209,11 @@ func main() {
 	}
 
 	go func() {
-		log.Printf("[HTTPS-INGRESS] Starting TLS termination on :%d (self-signed SNI)", *tlsPort)
+		if acmeActive {
+			log.Printf("[HTTPS-INGRESS] Starting TLS termination on :%d (ACME)", *tlsPort)
+		} else {
+			log.Printf("[HTTPS-INGRESS] Starting TLS termination on :%d (self-signed SNI)", *tlsPort)
+		}
 		if err := tlsServer.ListenAndServeTLS("", ""); err != nil && !errors.Is(err, http.ErrServerClosed) {
 			log.Printf("[WARN] HTTPS server error (port %d may require elevated privileges): %v", *tlsPort, err)
 		}

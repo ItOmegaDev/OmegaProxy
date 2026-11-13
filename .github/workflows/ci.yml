@@ -28,6 +28,10 @@ jobs:
         run: go vet ./gateway/... ./agent/...
       - name: Test
         run: go test -race ./gateway/... ./agent/...
+      - name: Fuzz (short)
+        run: |
+          go test ./gateway/protocol/ -fuzz=FuzzReadFrame -fuzztime=30s
+          go test ./gateway/proxy/ -fuzz=FuzzValidSubdomain -fuzztime=30s
 
   node:
     name: TypeScript, unit tests and build

@@ -167,6 +167,10 @@ docker compose up -d --build
 -tunnel-key         PEM private key for the tunnel listener (optional)
 -tunnel-ca          CA bundle to verify agent client certs (enables mTLS)
 -tunnel-max-conns   Max concurrent agent connections (default 1024)
+-acme              Enable Let's Encrypt (requires -tags acme build)
+-acme-domains      Comma-separated domains for ACME
+-acme-email        Contact email for ACME registration
+-acme-cache        ACME certificate cache dir (default ./acme-cache)
 ```
 
 ## Observability
@@ -214,7 +218,7 @@ See [`SECURITY.md`](SECURITY.md) for the threat model and deployment checklist.
 
 ## Limitations
 
-- **TLS is self-signed.** The gateway generates ECDSA certificates for the edge mesh; they are not trusted by browsers. Do not present this as public ACME/Let's Encrypt.
+- **TLS is self-signed by default.** The gateway generates ECDSA certificates for the edge mesh; they are not trusted by browsers. For publicly trusted certs, build with `-tags acme` and run with `-acme -acme-domains ...` (Let's Encrypt). Do not present the default as public ACME/Let's Encrypt.
 - **The tunnel wire (`:4242`) supports optional TLS.** Enable it with `-tunnel-tls` on the gateway (and `-tunnel-tls` on the agent). By default it is plain TCP for backwards compatibility; run it on a trusted network or enable TLS/mTLS for production. The agent token authenticates the tunnel but, when TLS is off, does not encrypt it.
 - **Single-admin authorization.** There is no user login or per-tenant RBAC; the control plane is an admin surface.
 - **The PostgreSQL schema in `db/` is optional reference material.** The running control plane uses Firestore (or memory).

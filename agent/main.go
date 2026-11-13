@@ -77,7 +77,20 @@ func main() {
 		os.Exit(0)
 	}()
 
-	if err := agent.Start(); err != nil {
-		log.Fatalf("[FATAL] Agent failed: %v", err)
+	backoff := time.Second
+	for {
+		err := agent.Start()
+		if err == nil {
+			// Clean stop requested.
+			return
+		}
+		if !agent.IsRunning() {
+			log.Fatalf("[FATAL] Agent stopped: %v", err)
+		}
+		log.Printf("[AGENT] Disconnected: %v; reconnecting in %s", err, backoff)
+		time.Sleep(backoff)
+		if backoff < 30*time.Second {
+			backoff *= 2
+		}
 	}
 }

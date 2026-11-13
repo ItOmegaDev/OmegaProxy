@@ -121,8 +121,10 @@ func (c *TunnelClient) Start() error {
 	if err != nil {
 		return fmt.Errorf("failed connecting to gateway: %w", err)
 	}
+	c.mu.Lock()
 	c.conn = conn
 	c.running = true
+	c.mu.Unlock()
 
 	// Handshake: send SYN frame with JSON handshake payload containing subdomain + auth token
 	handshakePayload, err := json.Marshal(map[string]string{
@@ -169,7 +171,10 @@ func (c *TunnelClient) Start() error {
 			if c.running {
 				log.Printf("[AGENT] Connection lost: %v", err)
 			}
-			break
+			if c.running {
+				return fmt.Errorf("connection lost: %w", err)
+			}
+			return nil
 		}
 
 		switch frameType {
@@ -292,8 +297,16 @@ func (c *TunnelClient) heartbeatLoop() {
 	}
 }
 
+func (c *TunnelClient) IsRunning() bool {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	return c.running
+}
+
 func (c *TunnelClient) Stop() {
+	c.mu.Lock()
 	c.running = false
+	c.mu.Unlock()
 	if c.conn != nil {
 		c.conn.Close()
 	}
