@@ -202,6 +202,17 @@ cd gateway && go test ./protocol/ -fuzz=FuzzReadFrame -fuzztime=30s
 cd gateway && go test ./proxy/ -fuzz=FuzzValidSubdomain -fuzztime=30s
 ```
 
+#### Reference results (Go 1.22, AMD64, 12 cores)
+
+| Benchmark | ns/op | MB/s | B/op | allocs/op |
+| --- | --- | --- | --- | --- |
+| `ReadFrame` (1 KB payload) | 594 | 1739 | 1136 | 4 |
+| `Encode` (1 KB payload) | 460 | 2245 | 1152 | 1 |
+| `ValidSubdomain` | 4.6 | — | 0 | 0 |
+| `VerifyAuthorization` | 419 | — | 192 | 3 |
+
+These are micro-benchmarks of the hot path; end-to-end RPS/p99 depend on network, local service and hardware.
+
 ## Security notes
 
 The following controls are implemented:
