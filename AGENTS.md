@@ -1,11 +1,11 @@
-# EdgeProxy — public ingress (highest risk)
+# OmegaProxy — public ingress (highest risk)
 
 Inherits all global rules from `~/.config/opencode/AGENTS.md`, including **§8 Public ingress specifics**.
 Project threat model and full findings: `./SECURITY.md` and `/home/omega/Dev/SECURITY.md`.
 
 ## Stack
 
-Go gateway + Bun/TypeScript dashboard + Docker + Firebase.
+Go gateway + Node.js/TypeScript dashboard + Docker + Firebase.
 
 ## What matters
 
