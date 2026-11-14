@@ -174,7 +174,7 @@ func (m *CertManager) IssueOrRenew(domain string, wildcard bool) (*CertificateMe
 		SerialNumber: serialNumber,
 		Subject: pkix.Name{
 			CommonName:   domain,
-			Organization: []string{"EdgeProxy Self-Signed CA"},
+			Organization: []string{"OmegaProxy Self-Signed CA"},
 		},
 		NotBefore:             now.Add(-1 * time.Hour),
 		NotAfter:              validTo,
@@ -226,7 +226,7 @@ func (m *CertManager) IssueOrRenew(domain string, wildcard bool) (*CertificateMe
 		ID:            fmt.Sprintf("cert-%d", now.UnixNano()),
 		Domain:        domain,
 		Wildcard:      wildcard,
-		Issuer:        "EdgeProxy Self-Signed CA (not publicly trusted)",
+		Issuer:        "OmegaProxy Self-Signed CA (not publicly trusted)",
 		Status:        "valid",
 		ValidFrom:     now.Format("2006-01-02"),
 		ValidTo:       validTo.Format("2006-01-02"),

@@ -1,4 +1,4 @@
-# EdgeProxy Gateway (Go Core)
+# OmegaProxy Gateway (Go Core)
 
 High-Performance Distributed Edge Router with 9-byte framed binary multiplexing, automatic Let's Encrypt TLS termination, and sliding-window Token Bucket rate limiting.
 

@@ -37,7 +37,7 @@ func main() {
 	httpPort := flag.Int("http-port", 80, "Public HTTP ingress port")
 	tlsPort := flag.Int("tls-port", 443, "Public HTTPS ingress port with SNI TLS termination")
 	tunnelPort := flag.Int("tunnel-port", 4242, "Tunnel port for local agents")
-	baseDomain := flag.String("domain", "edgeproxy.mesh", "Base wildcard domain for tunnels")
+	baseDomain := flag.String("domain", "omegaproxy.mesh", "Base wildcard domain for tunnels")
 	rateLimitRps := flag.Float64("rps", 100.0, "Per-IP allowed RPS before rate limiting")
 	burstCapacity := flag.Float64("burst", 150.0, "Maximum burst capacity for token bucket")
 	internalAddr := flag.String("internal-addr", envOrDefault("EDGEPROXY_INTERNAL_ADDR", "127.0.0.1:8081"), "Private control-plane IPC address")
@@ -62,7 +62,7 @@ func main() {
 	}
 
 	log.Printf("==========================================================")
-	log.Printf("  EdgeProxy Gateway - Go network infrastructure (vpn.how)")
+	log.Printf("  OmegaProxy Gateway - Go network infrastructure (vpn.how)")
 	log.Printf("  Made by ItOmegaDev")
 	log.Printf("  Base Domain: *.%s", *baseDomain)
 	log.Printf("  Ingress Ports: HTTP :%d | HTTPS :%d | Tunnel :%d (tls=%t)", *httpPort, *tlsPort, *tunnelPort, *tunnelTLS)
@@ -224,7 +224,7 @@ func main() {
 	signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
 	<-sigChan
 
-	log.Println("[SHUTDOWN] Gracefully shutting down EdgeProxy Gateway...")
+	log.Println("[SHUTDOWN] Gracefully shutting down OmegaProxy Gateway...")
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 	_ = httpServer.Shutdown(ctx)
@@ -409,7 +409,7 @@ func envOrDefault(name, fallback string) string {
 func internalAuth(secret string, next http.Handler) http.Handler {
 	expected := sha256.Sum256([]byte(secret))
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		presented := r.Header.Get("X-EdgeProxy-Internal")
+		presented := r.Header.Get("X-OmegaProxy-Internal")
 		actual := sha256.Sum256([]byte(presented))
 		if presented == "" || subtle.ConstantTimeCompare(expected[:], actual[:]) != 1 {
 			http.Error(w, "unauthorized", http.StatusUnauthorized)

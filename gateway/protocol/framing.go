@@ -10,7 +10,7 @@ import (
 // Frame header size: 4 bytes (StreamID) + 1 byte (Type) + 4 bytes (Length) = 9 bytes
 const HeaderSize = 9
 
-// Frame types for EdgeProxy multiplexing
+// Frame types for OmegaProxy multiplexing
 const (
 	FrameSyn     byte = 0x01 // Stream open request
 	FrameData    byte = 0x02 // Data payload

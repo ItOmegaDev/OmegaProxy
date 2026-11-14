@@ -28,7 +28,7 @@ export const CoreCodeExplorer: React.FC<CoreCodeExplorerProps> = ({ language }) 
 
   const t = {
     ua: {
-      title: 'Ядро EdgeProxy: Go Gateway, CLI Agent та База Даних',
+      title: 'Ядро OmegaProxy: Go Gateway, CLI Agent та База Даних',
       subtitle: 'Повноцінна реалізація високонавантаженого проксі на Go та реляційної схеми PostgreSQL 16',
       copyCode: 'Копіювати код',
       copied: 'Скопійовано!',
@@ -40,7 +40,7 @@ export const CoreCodeExplorer: React.FC<CoreCodeExplorerProps> = ({ language }) 
       refresh: 'Оновити',
     },
     en: {
-      title: 'EdgeProxy Core Engine: Go Gateway, CLI Agent & Database',
+      title: 'OmegaProxy Core Engine: Go Gateway, CLI Agent & Database',
       subtitle: 'Production-ready Go High-Load Proxy and PostgreSQL 16 relational data architecture',
       copyCode: 'Copy Source',
       copied: 'Copied!',

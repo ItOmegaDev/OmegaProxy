@@ -1,4 +1,4 @@
-// API and WebSocket Client Service for EdgeProxy Full-Stack Architecture
+// API and WebSocket Client Service for OmegaProxy Full-Stack Architecture
 
 export interface BackendTunnel {
   id: string;
@@ -45,7 +45,7 @@ export function setStoredApiKey(key: string): void {
  */
 function apiFetch(input: RequestInfo | URL, init: RequestInit = {}): Promise<Response> {
   const headers = new Headers(init.headers);
-  headers.set('X-EdgeProxy-CSRF', '1');
+  headers.set('X-OmegaProxy-CSRF', '1');
   const key = getStoredApiKey();
   if (key) headers.set('Authorization', `Bearer ${key}`);
   return fetch(input, { ...init, headers });

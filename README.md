@@ -1,12 +1,12 @@
-![EdgeProxy banner](assets/banner.png)
+![OmegaProxy banner](assets/banner.png)
 
-# EdgeProxy
+# OmegaProxy
 
 **Go-based network infrastructure software** · vpn.how
 
 A self-hosted edge reverse proxy with a binary multiplexing tunnel, a Go CLI agent, a Node.js control plane and a React dashboard. Built as a reference implementation for high-throughput ingress, tunnel authorization and live telemetry.
 
-![EdgeProxy screenshot](assets/screenshot.png)
+![OmegaProxy screenshot](assets/screenshot.png)
 
 > **Status:** reference / self-hosted implementation. It is not a multi-tenant SaaS and has not been through an external security audit. Read [Limitations](#limitations) before exposing it to the internet.
 
@@ -50,8 +50,8 @@ docker-compose.yml
 ## Quick start (local)
 
 ```bash
-git clone git@github.com:ItOmegaDev/EdgeProxy.git
-cd EdgeProxy
+git clone git@github.com:ItOmegaDev/OmegaProxy.git
+cd OmegaProxy
 
 cp .env.example .env
 # Local loopback use: EDGEPROXY_API_KEY may stay empty.
@@ -71,7 +71,7 @@ Run the gateway and control plane in separate terminals:
 ./bin/edgeproxy-gateway \
   -http-port 8080 -tls-port 8443 -tunnel-port 4242 \
   -internal-addr 127.0.0.1:8081 \
-  -domain edgeproxy.mesh
+  -domain omegaproxy.mesh
 
 # Terminal 2 — control plane + dashboard
 npm run dev
@@ -95,7 +95,7 @@ curl -X POST http://127.0.0.1:3000/api/tunnels \
   -subdomain demo \
   -port 3000 \
   -token 'edg_tok_...' \
-  -domain edgeproxy.mesh
+  -domain omegaproxy.mesh
 ```
 
 Only the SHA-256 hash of the agent token is stored in the database and sent to the gateway. If a token is lost, rotate it:
@@ -126,7 +126,7 @@ All settings are environment variables; see [`.env.example`](.env.example).
 ### Authentication model
 
 - **With `EDGEPROXY_API_KEY`:** every `/api/*` route except `/api/health` requires `Authorization: Bearer <key>`. WebSocket clients pass the key as the second `Sec-WebSocket-Protocol` value.
-- **Without a key:** the API is accepted only from loopback; mutations additionally require `X-EdgeProxy-CSRF: 1`. A non-loopback `HOST` without a key aborts startup.
+- **Without a key:** the API is accepted only from loopback; mutations additionally require `X-OmegaProxy-CSRF: 1`. A non-loopback `HOST` without a key aborts startup.
 - Browser origins are checked against the request host (plus `EDGEPROXY_ALLOWED_ORIGINS`).
 - From the dashboard console, persist a key for the session with:
 
@@ -157,7 +157,7 @@ docker compose up -d --build
 -http-port          Public HTTP ingress port (default 80)
 -tls-port           Public HTTPS ingress port with SNI TLS (default 443)
 -tunnel-port        Agent tunnel port (default 4242)
--domain             Base wildcard domain (default edgeproxy.mesh)
+-domain             Base wildcard domain (default omegaproxy.mesh)
 -rps / -burst       Per-IP token bucket (default 100 / 150)
 -internal-addr      Private IPC address (default 127.0.0.1:8081)
 -internal-secret    Shared secret for private IPC (required to enable it)
@@ -241,13 +241,13 @@ See [`SECURITY.md`](SECURITY.md) for the threat model and deployment checklist.
 
 ---
 
-Made by **ItOmegaDev** · https://github.com/ItOmegaDev/EdgeProxy
+Made by **ItOmegaDev** · https://github.com/ItOmegaDev/OmegaProxy
 
 ---
 
 ## Українською
 
-EdgeProxy — self-hosted edge reverse proxy: Go-шлюз обробляє публічний трафік, Go-агент тунелює локальні сервіси, Node.js/React відповідають за керування та телеметрію.
+OmegaProxy — self-hosted edge reverse proxy: Go-шлюз обробляє публічний трафік, Go-агент тунелює локальні сервіси, Node.js/React відповідають за керування та телеметрію.
 
 Швидкий старт:
 

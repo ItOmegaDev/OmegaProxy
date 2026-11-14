@@ -40,7 +40,7 @@ func TestIssueOrRenewIsLabelledSelfSigned(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	if meta.Issuer != "EdgeProxy Self-Signed CA (not publicly trusted)" {
+	if meta.Issuer != "OmegaProxy Self-Signed CA (not publicly trusted)" {
 		t.Fatalf("unexpected issuer: %q", meta.Issuer)
 	}
 	if meta.ChallengeType != "SELF-SIGNED" {

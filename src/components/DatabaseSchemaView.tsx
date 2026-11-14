@@ -28,7 +28,7 @@ interface DatabaseSchemaViewProps {
   language: 'ua' | 'en';
 }
 
-const SQL_DDL = `-- PostgreSQL & Firestore Schema for EdgeProxy & Traffic Mesh
+const SQL_DDL = `-- PostgreSQL & Firestore Schema for OmegaProxy & Traffic Mesh
 -- 1. Users Collection / Table
 CREATE TABLE users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -218,7 +218,7 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
       if (backendUsers && Array.isArray(backendUsers)) {
         setUsers(backendUsers.map((u, i) => ({
           id: u.id || `usr-${i + 1}`,
-          email: u.email || 'admin@edgeproxy.mesh',
+          email: u.email || 'admin@omegaproxy.mesh',
           api_key_hash: u.api_key || 'sha256$719...3b1',
           created_at: u.created_at || new Date().toISOString(),
         })));
@@ -297,7 +297,7 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
         const randUser = `user-${Math.floor(Math.random() * 1000)}`;
         await api.insertFirestoreDoc('users', {
           id: `usr-${randUser}`,
-          email: `${randUser}@edgeproxy.mesh`,
+          email: `${randUser}@omegaproxy.mesh`,
           api_key: `live_sk_${Math.random().toString(36).substring(2, 12)}`,
           plan_tier: 'enterprise',
           max_tunnels: 50,
@@ -561,7 +561,7 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
                         </span>
                         {item.subdomain && (
                           <span className="text-[var(--accent)] font-bold">
-                            {item.subdomain}.edgeproxy.mesh
+                            {item.subdomain}.omegaproxy.mesh
                           </span>
                         )}
                         {item.email && (

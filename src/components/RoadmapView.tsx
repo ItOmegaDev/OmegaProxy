@@ -30,7 +30,7 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({ language }) => {
   const t = {
     ua: {
       title: 'Покроковий План Розробки та Технологічний Стек',
-      subtitle: '5 інженерних етапів реалізації EdgeProxy з бенчмарками, перевірочними тестами та специфікацією коду',
+      subtitle: '5 інженерних етапів реалізації OmegaProxy з бенчмарками, перевірочними тестами та специфікацією коду',
       stagesTitle: 'Етапи Реалізації (Roadmap 1 - 5)',
       techStackTitle: 'Рекомендований Технологічний Стек (Розділ 6)',
       keyComponents: 'Ключові архітектурні компоненти:',
@@ -51,7 +51,7 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({ language }) => {
     },
     en: {
       title: 'Engineering Implementation Roadmap & Tech Stack',
-      subtitle: '5 core developmental milestones for EdgeProxy with runnable benchmarks, verification suites & code samples',
+      subtitle: '5 core developmental milestones for OmegaProxy with runnable benchmarks, verification suites & code samples',
       stagesTitle: 'Development Roadmap (Stages 1 - 5)',
       techStackTitle: 'Recommended Technology Stack (Section 6)',
       keyComponents: 'Core Architectural Components:',

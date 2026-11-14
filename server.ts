@@ -429,7 +429,7 @@ async function gatewayFetch(pathname: string, init: RequestInit = {}, timeoutMs 
     throw new Error("Gateway internal IPC is not configured");
   }
   const headers = new Headers(init.headers);
-  headers.set("X-EdgeProxy-Internal", GATEWAY_INTERNAL_SECRET);
+  headers.set("X-OmegaProxy-Internal", GATEWAY_INTERNAL_SECRET);
   if (init.body && !headers.has("Content-Type")) {
     headers.set("Content-Type", "application/json");
   }

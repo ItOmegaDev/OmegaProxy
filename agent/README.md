@@ -1,4 +1,4 @@
-# EdgeProxy Local Agent (Go CLI)
+# OmegaProxy Local Agent (Go CLI)
 
 Lightweight standalone CLI client providing NAT traversal, local port auto-discovery, and multiplexed bi-directional stream forwarding.
 

@@ -198,7 +198,7 @@ export class TrafficEngine {
       },
       responseHeaders: {
         'Content-Type': path.endsWith('.css') ? 'text/css' : path.endsWith('.js') ? 'application/javascript' : 'application/json',
-        'X-Edge-Router': 'EdgeProxy/v2.4-mesh',
+        'X-Edge-Router': 'OmegaProxy/v2.4-mesh',
         'X-RateLimit-Limit': String(this.config.capacity),
         'X-RateLimit-Remaining': String(Math.floor(this.config.currentTokens)),
         'X-RateLimit-Reset': '1',

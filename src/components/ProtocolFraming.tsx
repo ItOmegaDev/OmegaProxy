@@ -63,7 +63,7 @@ export const ProtocolFraming: React.FC<ProtocolFramingProps> = ({ language }) =>
   // Playground input state
   const [customStreamId, setCustomStreamId] = useState<number>(103);
   const [customType, setCustomType] = useState<BinaryFrameType>('DATA');
-  const [customPayload, setCustomPayload] = useState<string>('GET /api/v1/metrics HTTP/1.1\\r\\nHost: api-mesh.edgeproxy.mesh\\r\\n');
+  const [customPayload, setCustomPayload] = useState<string>('GET /api/v1/metrics HTTP/1.1\\r\\nHost: api-mesh.omegaproxy.mesh\\r\\n');
 
   const t = {
     ua: {

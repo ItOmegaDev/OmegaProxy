@@ -56,7 +56,7 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--accent)] pb-3 mb-4">
         <div className="flex items-center gap-2 text-white">
           <TerminalIcon className="w-4 h-4 text-[var(--accent)]" />
-          <span className="font-bold tracking-wider">EDGEPROXY TERMINAL UI (TUI)</span>
+          <span className="font-bold tracking-wider">OMEGAPROXY TERMINAL UI (TUI)</span>
           <span className="text-[var(--muted)] text-[10px]">v2.4-mesh</span>
           {isAttackActive && (
             <span className="bg-rose-950 text-rose-300 border border-rose-600 px-1.5 py-0.2 rounded text-[10px] ">
@@ -192,7 +192,7 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
                 ) : (
                   tunnels.map((t) => (
                     <div key={t.id} className="flex justify-between text-[var(--ink-2)]">
-                      <span className="text-[var(--accent)]">{t.subdomain}.edgeproxy.mesh</span>
+                      <span className="text-[var(--accent)]">{t.subdomain}.omegaproxy.mesh</span>
                       <span className="text-[var(--muted)]">→ 127.0.0.1:{t.targetPort} ({t.protocol.toUpperCase()})</span>
                     </div>
                   ))
@@ -245,7 +245,7 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
               ) : (
                 tunnels.map((t) => (
                   <tr key={t.id} className="text-[var(--ink-2)]">
-                    <td className="py-1 text-[var(--accent)] font-bold">{t.subdomain}.edgeproxy.mesh</td>
+                    <td className="py-1 text-[var(--accent)] font-bold">{t.subdomain}.omegaproxy.mesh</td>
                     <td className="py-1">{t.targetHost}:{t.targetPort}</td>
                     <td className="py-1 uppercase text-[var(--muted)]">{t.protocol}</td>
                     <td className="py-1 text-white">{t.activeStreams}</td>
@@ -361,7 +361,7 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
       {/* Terminal Footer */}
       <div className="mt-4 pt-3 border-t border-emerald-950 text-[var(--muted)] text-[10px] flex flex-col sm:flex-row items-center justify-between gap-2">
         <div>Shortcuts: [1] Overview [2] Tunnels [3] Logs [4] Shield [5] Certs [A] Attack [Q] Exit</div>
-        <div>EdgeProxy/v2.4 (built with Go/Rust async runtime)</div>
+        <div>OmegaProxy/v2.4 (built with Go/Rust async runtime)</div>
       </div>
     </div>
   );

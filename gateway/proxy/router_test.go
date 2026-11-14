@@ -120,7 +120,7 @@ func TestServeHTTPRootAndUnknownHost(t *testing.T) {
 	if rootRec.Code != http.StatusOK {
 		t.Fatalf("expected root 200, got %d", rootRec.Code)
 	}
-	if !strings.Contains(rootRec.Body.String(), `"service":"EdgeProxy Gateway"`) {
+	if !strings.Contains(rootRec.Body.String(), `"service":"OmegaProxy Gateway"`) {
 		t.Fatalf("unexpected root body: %s", rootRec.Body.String())
 	}
 

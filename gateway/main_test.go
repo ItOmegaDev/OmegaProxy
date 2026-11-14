@@ -26,7 +26,7 @@ func TestInternalAuth(t *testing.T) {
 		t.Run(test.name, func(t *testing.T) {
 			req := httptest.NewRequest(http.MethodGet, "/internal/certs", nil)
 			if test.header != "" {
-				req.Header.Set("X-EdgeProxy-Internal", test.header)
+				req.Header.Set("X-OmegaProxy-Internal", test.header)
 			}
 			rec := httptest.NewRecorder()
 			handler.ServeHTTP(rec, req)

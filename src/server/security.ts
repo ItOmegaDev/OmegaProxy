@@ -1,7 +1,7 @@
 import crypto from "crypto";
 
 /**
- * Shared security primitives for the EdgeProxy control plane.
+ * Shared security primitives for the OmegaProxy control plane.
  *
  * Rules:
  * - Tokens are generated with a CSPRNG and never derived from user input.

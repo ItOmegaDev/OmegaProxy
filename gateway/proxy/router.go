@@ -286,7 +286,7 @@ func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		r.mu.RLock()
 		activeCount := len(r.sessions)
 		r.mu.RUnlock()
-		fmt.Fprintf(w, `{"service":"EdgeProxy Gateway","status":"online","tunnels_active":%d,"base_domain":"%s"}`, activeCount, baseDomain)
+		fmt.Fprintf(w, `{"service":"OmegaProxy Gateway","status":"online","tunnels_active":%d,"base_domain":"%s"}`, activeCount, baseDomain)
 		return
 	}
 

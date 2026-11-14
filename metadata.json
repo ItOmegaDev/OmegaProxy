@@ -1,6 +1,8 @@
 {
-  "name": "EdgeProxy & Traffic Mesh",
-  "description": "High-Performance Edge Router and Tunneling Reverse Proxy for local servers, auto-SSL, and DDoS shield",
+  "name": "OmegaProxy",
+  "description": "Go-based network infrastructure: reverse proxy, tunnel, dashboard",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

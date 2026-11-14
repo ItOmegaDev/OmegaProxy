@@ -134,7 +134,7 @@ export default function App() {
           subdomain: l.subdomain,
           clientIp: l.clientIp,
           countryCode: 'UA',
-          userAgent: 'Mozilla/5.0 (EdgeProxy Agent)',
+          userAgent: 'Mozilla/5.0 (OmegaProxy Agent)',
           statusCode: l.statusCode,
           durationMs: l.latencyMs,
           edgeProcessingMs: 1.2,
@@ -144,8 +144,8 @@ export default function App() {
           protocol: 'http2',
           tlsCipher: 'TLS_AES_256_GCM_SHA384',
           decision: l.blockedByShield ? 'rate_limited' : 'allowed',
-          requestHeaders: { 'Host': `${l.subdomain}.edgeproxy.mesh`, 'User-Agent': 'EdgeProxy-Client/1.0' },
-          responseHeaders: { 'Server': 'EdgeProxy-Mesh' },
+          requestHeaders: { 'Host': `${l.subdomain}.edgeproxy.mesh`, 'User-Agent': 'OmegaProxy-Client/1.0' },
+          responseHeaders: { 'Server': 'OmegaProxy-Mesh' },
         }));
         setRequests(mapped);
       }
@@ -176,7 +176,7 @@ export default function App() {
             subdomain: l.subdomain,
             clientIp: l.clientIp,
             countryCode: 'UA',
-            userAgent: 'Mozilla/5.0 (EdgeProxy Agent)',
+            userAgent: 'Mozilla/5.0 (OmegaProxy Agent)',
             statusCode: l.statusCode,
             durationMs: l.latencyMs,
             edgeProcessingMs: 1.2,
@@ -187,7 +187,7 @@ export default function App() {
             tlsCipher: 'TLS_AES_256_GCM_SHA384',
             decision: l.blockedByShield ? 'rate_limited' : 'allowed',
             requestHeaders: { 'Host': `${l.subdomain}.edgeproxy.mesh` },
-            responseHeaders: { 'Server': 'EdgeProxy-Mesh' },
+            responseHeaders: { 'Server': 'OmegaProxy-Mesh' },
           };
           setRequests((prev) => [newReq, ...prev.slice(0, 100)]);
           setTelemetry((prev) => ({
@@ -526,7 +526,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <span className={`w-2 h-2 rounded-full ${isWsConnected ? 'bg-[var(--accent)]' : 'bg-[var(--warn)]'}`}></span>
-            <span>EdgeProxy — Go-based network infrastructure (vpn.how)</span>
+            <span>OmegaProxy — Go-based network infrastructure (vpn.how)</span>
             <span className="text-[var(--faint)]">|</span>
             <span className="text-[var(--muted)]">{isWsConnected ? 'WS Live' : 'Connecting WS...'}</span>
           </div>

@@ -33,7 +33,7 @@ export const ClientAgentSetup: React.FC<ClientAgentSetupProps> = ({ language }) 
       title: 'Встановлення CLI Агента та Розгортання Edge Node',
       subtitle: 'Готові до виконання команди, конфігураційні файли та Docker Compose для вашого VPS і локальної машини',
       tabCli: 'CLI Команди (Локально)',
-      tabYaml: 'Конфіг edgeproxy.yaml',
+      tabYaml: "Конфіг omegaproxy.yaml",
       tabDocker: 'Docker Compose (Edge Gateway)',
       tabSystemd: 'Linux Systemd Daemon',
       quickInstall: 'Швидке встановлення CLI агента (Linux / macOS / Windows):',
@@ -52,7 +52,7 @@ export const ClientAgentSetup: React.FC<ClientAgentSetupProps> = ({ language }) 
       title: 'Client Agent Setup & Edge Node Deployment',
       subtitle: 'Ready-to-run commands, configuration manifests, and Docker Compose for VPS Gateway and local dev machine',
       tabCli: 'CLI Commands (Local)',
-      tabYaml: 'Config edgeproxy.yaml',
+      tabYaml: "Config omegaproxy.yaml",
       tabDocker: 'Docker Compose (VPS Gateway)',
       tabSystemd: 'Linux Systemd Daemon',
       quickInstall: 'Quick Install CLI Agent (Linux / macOS / Windows):',
@@ -75,13 +75,13 @@ export const ClientAgentSetup: React.FC<ClientAgentSetupProps> = ({ language }) 
     setTimeout(() => setCopiedKey(null), 2000);
   };
 
-  const cliCommand = `edgeproxy tunnel ${cliPort} --subdomain ${cliSubdomain} --protocol ${cliProtocol} --edge-server vps.edgeproxy.mesh:443`;
+  const cliCommand = `omegaproxy tunnel ${cliPort} --subdomain ${cliSubdomain} --protocol ${cliProtocol} --edge-server edge.omegaproxy.mesh:443`;
 
-  const yamlConfig = `# edgeproxy.yaml - Client Agent Configuration
+  const yamlConfig = `# omegaproxy.yaml - Client Agent Configuration
 version: "2.4"
 
 edge_gateway:
-  host: "vps.edgeproxy.mesh"
+  host: "edge.omegaproxy.mesh"
   port: 443
   tls: true
   protocol: "${cliProtocol}"
@@ -125,24 +125,24 @@ telemetry:
 version: '3.8'
 
 services:
-  edgeproxy-gateway:
-    image: ghcr.io/edgeproxy/gateway:latest
-    container_name: edgeproxy_edge_node
+  omegaproxy-gateway:
+    image: ghcr.io/omegaproxy/gateway:latest
+    container_name: omegaproxy_edge_node
     restart: unless-stopped
     ports:
       - "80:80"       # HTTP-01 ACME Challenge
       - "443:443/tcp" # HTTPS TLS Termination & HTTP/2
       - "443:443/udp" # HTTP/3 QUIC Ingress
     environment:
-      - EDGE_DOMAIN=edgeproxy.mesh
-      - ACME_EMAIL=admin@edgeproxy.mesh
+      - EDGE_DOMAIN=omegaproxy.mesh
+      - ACME_EMAIL=admin@omegaproxy.mesh
       - REDIS_URL=redis://redis:6379
       - TOKEN_BUCKET_CAPACITY=100
       - TOKEN_BUCKET_REFILL_RATE=35
       - ENABLE_L7_FLOOD_SHIELD=true
     volumes:
-      - ./certs:/etc/edgeproxy/certs
-      - ./config:/etc/edgeproxy/config
+      - ./certs:/etc/omegaproxy/certs
+      - ./config:/etc/omegaproxy/config
     depends_on:
       - redis
     ulimits:
@@ -152,7 +152,7 @@ services:
 
   redis:
     image: redis:7-alpine
-    container_name: edgeproxy_redis
+    container_name: omegaproxy_redis
     restart: unless-stopped
     command: redis-server --appendonly yes --maxmemory 128mb --maxmemory-policy allkeys-lru
     volumes:
@@ -162,16 +162,16 @@ volumes:
   redis-data:
 `;
 
-  const systemdService = `# /etc/systemd/system/edgeproxy.service
+  const systemdService = `# /etc/systemd/system/omegaproxy.service
 [Unit]
-Description=EdgeProxy Client Agent Tunnel Daemon
+Description=OmegaProxy Client Agent Tunnel Daemon
 After=network.target network-online.target
 Wants=network-online.target
 
 [Service]
 Type=simple
 User=root
-ExecStart=/usr/local/bin/edgeproxy daemon --config /etc/edgeproxy/edgeproxy.yaml
+ExecStart=/usr/local/bin/omegaproxy daemon --config /etc/omegaproxy/omegaproxy.yaml
 Restart=always
 RestartSec=5s
 LimitNOFILE=65536
@@ -204,10 +204,10 @@ WantedBy=multi-user.target
 
         <div className="flex items-center justify-between bg-[var(--paper-2)] border border-[var(--line)] rounded-lg p-3">
           <code className="text-[var(--accent)] select-all">
-            curl -sSL https://get.edgeproxy.mesh | bash
+            curl -sSL https://get.omegaproxy.mesh | bash
           </code>
           <button
-            onClick={() => handleCopy('install', 'curl -sSL https://get.edgeproxy.mesh | bash')}
+            onClick={() => handleCopy('install', 'curl -sSL https://get.omegaproxy.mesh | bash')}
             className="flex items-center gap-1 px-3 py-1 rounded bg-[var(--paper-2)] hover:bg-[var(--line)] text-[var(--ink)] transition-colors"
           >
             {copiedKey === 'install' ? <Check className="w-3.5 h-3.5 text-[var(--accent)]" /> : <Copy className="w-3.5 h-3.5" />}
@@ -216,8 +216,8 @@ WantedBy=multi-user.target
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-[11px] text-[var(--muted)]">
-          <div>• macOS: <code className="text-[var(--ink-2)]">brew install edgeproxy/tap/mesh</code></div>
-          <div>• Windows: <code className="text-[var(--ink-2)]">winget install EdgeProxy.MeshAgent</code></div>
+          <div>• macOS: <code className="text-[var(--ink-2)]">brew install omegaproxy/tap/mesh</code></div>
+          <div>• Windows: <code className="text-[var(--ink-2)]">winget install OmegaProxy.MeshAgent</code></div>
         </div>
       </div>
 
@@ -342,7 +342,7 @@ WantedBy=multi-user.target
       {selectedTab === 'yaml' && (
         <div className="bg-[var(--paper-2)]/90 border border-[var(--line)] rounded-xl p-5 space-y-3 font-mono text-xs">
           <div className="flex items-center justify-between">
-            <span className="font-bold text-white">/etc/edgeproxy/edgeproxy.yaml</span>
+            <span className="font-bold text-white">/etc/omegaproxy/omegaproxy.yaml</span>
             <button
               onClick={() => handleCopy('yaml', yamlConfig)}
               className="flex items-center gap-1 px-3 py-1 rounded bg-[var(--paper-2)] hover:bg-[var(--line)] text-[var(--ink)] transition-colors"
@@ -379,7 +379,7 @@ WantedBy=multi-user.target
       {selectedTab === 'systemd' && (
         <div className="bg-[var(--paper-2)]/90 border border-[var(--line)] rounded-xl p-5 space-y-3 font-mono text-xs">
           <div className="flex items-center justify-between">
-            <span className="font-bold text-white">/etc/systemd/system/edgeproxy.service</span>
+            <span className="font-bold text-white">/etc/systemd/system/omegaproxy.service</span>
             <button
               onClick={() => handleCopy('systemd', systemdService)}
               className="flex items-center gap-1 px-3 py-1 rounded bg-[var(--paper-2)] hover:bg-[var(--line)] text-[var(--ink)] transition-colors"

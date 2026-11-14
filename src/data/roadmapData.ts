@@ -213,11 +213,11 @@ import (
 
 func main() {
     port := flag.Int("port", 3000, "Local port to expose")
-    subdomain := flag.String("subdomain", "myapp", "Subdomain on edgeproxy.mesh")
+    subdomain := flag.String("subdomain", "myapp", "Subdomain on omegaproxy.mesh")
     flag.Parse()
 
-    fmt.Printf("🚀 Connecting localhost:%d -> https://%s.edgeproxy.mesh\\n", *port, *subdomain)
-    client := tunnel.NewClient("vps.edgeproxy.mesh:443", *subdomain, *port)
+    fmt.Printf("🚀 Connecting localhost:%d -> https://%s.omegaproxy.mesh\\n", *port, *subdomain)
+    client := tunnel.NewClient("vps.omegaproxy.mesh:443", *subdomain, *port)
     client.RunMultiplexLoop()
 }`,
     benchmarks: [

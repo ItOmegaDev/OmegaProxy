@@ -15,12 +15,12 @@ import (
 )
 
 func main() {
-	gatewayAddr := flag.String("gateway", "gateway.edgeproxy.mesh:4242", "Edge Gateway TCP control plane address")
+	gatewayAddr := flag.String("gateway", "gateway.omegaproxy.mesh:4242", "Edge Gateway TCP control plane address")
 	subdomain := flag.String("subdomain", "", "Requested custom subdomain (e.g. 'myapi')")
 	port := flag.Int("port", 3000, "Target local port to expose (e.g. 3000, 8080)")
-	token := flag.String("token", "", "EdgeProxy auth token (strictly required; or EDGEPROXY_TOKEN env / EDGEPROXY_TOKEN_FILE)")
+	token := flag.String("token", "", "OmegaProxy auth token (strictly required; or EDGEPROXY_TOKEN env / EDGEPROXY_TOKEN_FILE)")
 	tokenFile := flag.String("token-file", "", "Path to file containing the agent token")
-	domain := flag.String("domain", "edgeproxy.mesh", "Base domain shown in the public URL")
+	domain := flag.String("domain", "omegaproxy.mesh", "Base domain shown in the public URL")
 	autoDiscover := flag.Bool("auto", true, "Auto-discover active listening ports if port is closed")
 	tunnelTLS := flag.Bool("tunnel-tls", false, "Use TLS for the tunnel connection to the gateway")
 	tunnelCA := flag.String("tunnel-ca", "", "CA bundle to verify the gateway tunnel certificate")
@@ -58,7 +58,7 @@ func main() {
 	}
 
 	fmt.Println("================================================================")
-	fmt.Println("  EdgeProxy Local Agent (CLI v1.0.0-PROD) - Zero-Config Tunnel  ")
+	fmt.Println("  OmegaProxy Local Agent (CLI v1.0.0-PROD) - Zero-Config Tunnel  ")
 	fmt.Println("  Made by ItOmegaDev")
 	fmt.Println("================================================================")
 	fmt.Printf("  Target Port     : http://127.0.0.1:%d\n", *port)

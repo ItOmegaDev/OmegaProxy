@@ -32,7 +32,7 @@ func main() {
 	httpPort := flag.Int("http-port", 80, "Public HTTP ingress port")
 	tlsPort := flag.Int("tls-port", 443, "Public HTTPS ingress port with real TLS termination")
 	tunnelPort := flag.Int("tunnel-port", 4242, "Control plane tunnel port for local agents")
-	baseDomain := flag.String("domain", "edgeproxy.mesh", "Base wildcard domain for tunnels")
+	baseDomain := flag.String("domain", "omegaproxy.mesh", "Base wildcard domain for tunnels")
 	rateLimitRps := flag.Float64("rps", 100.0, "Per-IP allowed RPS before burst shield")
 	burstCapacity := flag.Float64("burst", 150.0, "Maximum burst capacity for token bucket")
 	controlPlaneURL := flag.String("control-plane", "http://127.0.0.1:3000", "Deprecated: control plane pushes tunnel state via IPC")
@@ -42,7 +42,7 @@ func main() {
 	flag.Parse()
 
 	log.Printf("==========================================================")
-	log.Printf("  EdgeProxy Gateway (v1.0.0-PROD) - High-Load Edge Router ")
+	log.Printf("  OmegaProxy Gateway (v1.0.0-PROD) - High-Load Edge Router ")
 	log.Printf("  Base Domain: *.%s", *baseDomain)
 	log.Printf("  Ingress Ports: HTTP :%d | HTTPS :%d | Tunnel :%d", *httpPort, *tlsPort, *tunnelPort)
 	log.Printf("  Shield: TokenBucket %.0f RPS / %.0f Burst with Auto-Jail", *rateLimitRps, *burstCapacity)
@@ -109,7 +109,7 @@ func main() {
 	signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
 	<-sigChan
 
-	log.Println("[SHUTDOWN] Gracefully shutting down EdgeProxy Gateway...")
+	log.Println("[SHUTDOWN] Gracefully shutting down OmegaProxy Gateway...")
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	_ = httpServer.Shutdown(ctx)
@@ -530,7 +530,7 @@ func (m *CertManager) IssueOrRenew(domain string, wildcard bool) (*CertificateMe
 
 	tmpl := x509.Certificate{
 		SerialNumber:          serial,
-		Subject:               pkix.Name{CommonName: domain, Organization: []string{"EdgeProxy ACME CA"}},
+		Subject:               pkix.Name{CommonName: domain, Organization: []string{"OmegaProxy ACME CA"}},
 		NotBefore:             now.Add(-1 * time.Hour),
 		NotAfter:              validTo,
 		KeyUsage:              x509.KeyUsageKeyEncipherment | x509.KeyUsageDigitalSignature,
@@ -562,7 +562,7 @@ func (m *CertManager) IssueOrRenew(domain string, wildcard bool) (*CertificateMe
 		ID:            fmt.Sprintf("cert-%d", now.UnixNano()),
 		Domain:        domain,
 		Wildcard:      wildcard,
-		Issuer:        "EdgeProxy Self-Signed CA (not publicly trusted)",
+		Issuer:        "OmegaProxy Self-Signed CA (not publicly trusted)",
 		Status:        "valid",
 		ValidFrom:     now.Format("2006-01-02"),
 		ValidTo:       validTo.Format("2006-01-02"),
@@ -753,10 +753,10 @@ import (
 )
 
 func main() {
-	gatewayAddr := flag.String("gateway", "gateway.edgeproxy.mesh:4242", "Edge Gateway TCP wire address")
+	gatewayAddr := flag.String("gateway", "gateway.omegaproxy.mesh:4242", "Edge Gateway TCP wire address")
 	subdomain := flag.String("subdomain", "", "Requested custom subdomain")
 	port := flag.Int("port", 3000, "Target local port to expose")
-	token := flag.String("token", "", "EdgeProxy auth token (strictly required)")
+	token := flag.String("token", "", "OmegaProxy auth token (strictly required)")
 	flag.Parse()
 
 	if *token == "" {
@@ -1166,7 +1166,7 @@ func (d *StreamDemuxer) ForwardRequest(rawHTTP []byte) ([]byte, error) {
 }`,
 
   'db/01_schema.sql': `-- ==========================================================
--- EdgeProxy Relational Database Schema (PostgreSQL 16)
+-- OmegaProxy Relational Database Schema (PostgreSQL 16)
 -- High-throughput, partitioned schema with RBAC and quotas
 -- ==========================================================
 
@@ -1222,7 +1222,7 @@ CREATE INDEX idx_traffic_blocked_ip ON traffic_logs (client_ip, recorded_at DESC
   'db/03_seed.sql': `-- Bootstrap Seed Migration
 -- Store only a SHA-256 hash; never commit a real API key.
 INSERT INTO users (id, email, api_key_hash, plan_tier, max_tunnels, max_rps)
-VALUES ('00000000-0000-0000-0000-000000000001', 'admin@edgeproxy.mesh', 'REPLACE_WITH_SHA256_HEX_OF_API_KEY', 'enterprise', 50, 1000)
+VALUES ('00000000-0000-0000-0000-000000000001', 'admin@omegaproxy.mesh', 'REPLACE_WITH_SHA256_HEX_OF_API_KEY', 'enterprise', 50, 1000)
 ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO tunnels (id, user_id, subdomain, target_port, protocol, status)
