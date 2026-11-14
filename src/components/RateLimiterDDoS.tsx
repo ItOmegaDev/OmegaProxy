@@ -168,21 +168,21 @@ export const RateLimiterDDoS: React.FC<RateLimiterDDoSProps> = ({
               <div
                 className={`w-full rounded-b-xl transition-all duration-300 relative ${
                   tokenPercent < 20
-                    ? 'bg-gradient-to-t from-rose-600/80 to-rose-400/80'
+                    ? ' from-rose-600/80 to-rose-400/80'
                     : tokenPercent < 50
-                    ? 'bg-gradient-to-t from-amber-600/80 to-amber-400/80'
-                    : 'bg-gradient-to-t from-emerald-600/80 to-emerald-400/80'
+                    ? ' from-amber-600/80 to-amber-400/80'
+                    : ' from-emerald-600/80 to-emerald-400/80'
                 }`}
                 style={{ height: `${tokenPercent}%` }}
               >
                 {/* Surface wave */}
-                <div className="absolute top-0 left-0 right-0 h-1 bg-white/40 animate-pulse"></div>
+                <div className="absolute top-0 left-0 right-0 h-1 bg-white/40 "></div>
               </div>
             </div>
 
             <div className="flex items-center justify-between text-xs font-mono text-[var(--muted)] mt-3 pt-2 border-t border-[var(--line)]">
               <div className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse"></span>
+                <span className="w-2 h-2 rounded-full bg-[var(--accent)] "></span>
                 <span>Refill: +{config.refillRate} tokens/s</span>
               </div>
               <div>
@@ -276,7 +276,7 @@ export const RateLimiterDDoS: React.FC<RateLimiterDDoSProps> = ({
             <div className="space-y-1.5">
               <div className="flex justify-between text-[var(--ink-2)]">
                 <span>{t.anomalyLabel}</span>
-                <span className="text-amber-400 font-bold">{config.anomalyThresholdRps} RPS burst</span>
+                <span className="text-[var(--warn)] font-bold">{config.anomalyThresholdRps} RPS burst</span>
               </div>
               <input
                 type="range"
@@ -332,7 +332,7 @@ export const RateLimiterDDoS: React.FC<RateLimiterDDoSProps> = ({
 
               <button
                 onClick={() => onTriggerBurst(100)}
-                className="py-2.5 px-3 rounded-lg bg-amber-950/60 hover:bg-amber-900/60 border border-amber-500/40 text-amber-300 transition-colors"
+                className="py-2.5 px-3 rounded-lg bg-[var(--warn)]/20 hover:bg-[var(--warn)]/20 border border-[var(--warn)] text-[var(--warn)] transition-colors"
               >
                 {t.burstBtn}
               </button>
@@ -341,7 +341,7 @@ export const RateLimiterDDoS: React.FC<RateLimiterDDoSProps> = ({
                 onClick={onToggleAttack}
                 className={`py-2.5 px-3 rounded-lg font-bold transition-all ${
                   isAttackActive
-                    ? 'bg-rose-600 text-white animate-pulse shadow-lg shadow-rose-900/50'
+                    ? 'bg-rose-600 text-white  shadow-lg shadow-rose-900/50'
                     : 'bg-rose-950/60 hover:bg-rose-900/60 border border-rose-500/40 text-rose-300'
                 }`}
               >
@@ -397,7 +397,7 @@ export const RateLimiterDDoS: React.FC<RateLimiterDDoSProps> = ({
                     <tr key={rec.ip} className="hover:bg-[var(--paper-2)]/50">
                       <td className="py-2.5 px-3 text-rose-400 font-bold">{rec.ip}</td>
                       <td className="py-2.5 px-3 text-[var(--ink-2)]">{rec.reason}</td>
-                      <td className="py-2.5 px-3 text-amber-400 font-semibold">{remainingSec}s</td>
+                      <td className="py-2.5 px-3 text-[var(--warn)] font-semibold">{remainingSec}s</td>
                       <td className="py-2.5 px-3 text-right">
                         <button
                           onClick={() => handleUnban(rec.ip)}

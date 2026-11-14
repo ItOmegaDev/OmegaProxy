@@ -206,13 +206,13 @@ export const ProtocolFraming: React.FC<ProtocolFramingProps> = ({ language }) =>
             <div className="text-sm font-bold text-white mt-1">1 Byte (u8)</div>
             <div className="text-[11px] text-[var(--muted)] mt-1">Offset 4 (0x01..0x04)</div>
           </div>
-          <div className="bg-purple-950/40 border border-purple-500/50 rounded-lg p-3 text-center">
-            <div className="text-[10px] text-purple-400 uppercase tracking-wider font-semibold">Payload Length</div>
+          <div className="bg-[var(--accent)]/20 border border-purple-500/50 rounded-lg p-3 text-center">
+            <div className="text-[10px] text-[var(--accent)] uppercase tracking-wider font-semibold">Payload Length</div>
             <div className="text-sm font-bold text-white mt-1">4 Bytes (u32)</div>
             <div className="text-[11px] text-[var(--muted)] mt-1">Offsets 5..8 (N Bytes)</div>
           </div>
-          <div className="bg-amber-950/40 border border-amber-500/50 rounded-lg p-3 text-center">
-            <div className="text-[10px] text-amber-400 uppercase tracking-wider font-semibold">Payload Data</div>
+          <div className="bg-[var(--warn)]/20 border border-[var(--warn)] rounded-lg p-3 text-center">
+            <div className="text-[10px] text-[var(--warn)] uppercase tracking-wider font-semibold">Payload Data</div>
             <div className="text-sm font-bold text-white mt-1">N Bytes (Raw)</div>
             <div className="text-[11px] text-[var(--muted)] mt-1">Offsets 9..(9 + N)</div>
           </div>
@@ -252,7 +252,7 @@ export const ProtocolFraming: React.FC<ProtocolFramingProps> = ({ language }) =>
                 onClick={() => setCustomType(item.type)}
                 className={`p-3 rounded-lg border cursor-pointer transition-all ${
                   customType === item.type
-                    ? 'bg-[var(--paper-2)] border-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.15)]'
+                    ? 'bg-[var(--paper-2)] border-emerald-500 '
                     : 'bg-[var(--paper)]/70 border-[var(--line)] hover:border-[var(--line)]'
                 }`}
               >
@@ -390,7 +390,7 @@ export const ProtocolFraming: React.FC<ProtocolFramingProps> = ({ language }) =>
               frame.frameType === 'SYN' ? 'text-[var(--accent)] bg-[var(--accent-soft)]/60 border-[var(--accent)]' :
               frame.frameType === 'DATA' ? 'text-sky-400 bg-sky-950/60 border-sky-500/40' :
               frame.frameType === 'FIN' ? 'text-rose-400 bg-rose-950/60 border-rose-500/40' :
-              'text-amber-400 bg-amber-950/60 border-amber-500/40';
+              'text-[var(--warn)] bg-[var(--warn)]/20 border-[var(--warn)]';
 
             return (
               <div

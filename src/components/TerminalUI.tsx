@@ -59,7 +59,7 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
           <span className="font-bold tracking-wider">EDGEPROXY TERMINAL UI (TUI)</span>
           <span className="text-[var(--muted)] text-[10px]">v2.4-mesh</span>
           {isAttackActive && (
-            <span className="bg-rose-950 text-rose-300 border border-rose-600 px-1.5 py-0.2 rounded text-[10px] animate-pulse">
+            <span className="bg-rose-950 text-rose-300 border border-rose-600 px-1.5 py-0.2 rounded text-[10px] ">
               [ATTACK IN PROGRESS]
             </span>
           )}
@@ -213,7 +213,7 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
                 </div>
                 <div className="flex justify-between">
                   <span>Dropped Requests:</span>
-                  <span className="text-amber-400 font-bold">{telemetry.droppedRequestsCount} packets</span>
+                  <span className="text-[var(--warn)] font-bold">{telemetry.droppedRequestsCount} packets</span>
                 </div>
               </div>
             </div>
@@ -249,7 +249,7 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
                     <td className="py-1">{t.targetHost}:{t.targetPort}</td>
                     <td className="py-1 uppercase text-[var(--muted)]">{t.protocol}</td>
                     <td className="py-1 text-white">{t.activeStreams}</td>
-                    <td className="py-1 text-amber-400">{t.rateLimit.maxRps} r/s</td>
+                    <td className="py-1 text-[var(--warn)]">{t.rateLimit.maxRps} r/s</td>
                     <td className="py-1 text-[var(--accent)] uppercase font-semibold">{t.status}</td>
                   </tr>
                 ))
@@ -280,7 +280,7 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
                       req.statusCode === 200
                         ? 'text-[var(--accent)] bg-[var(--accent-soft)]'
                         : req.statusCode === 429
-                        ? 'text-amber-400 bg-amber-950'
+                        ? 'text-[var(--warn)] bg-[var(--warn)]'
                         : 'text-rose-400 bg-rose-950'
                     }`}
                   >
@@ -322,7 +322,7 @@ export const TerminalUI: React.FC<TerminalUIProps> = ({
                   <tr key={r.ip} className="text-rose-400">
                     <td className="py-1 font-bold">{r.ip}</td>
                     <td className="py-1 text-[var(--ink-2)]">{r.reason}</td>
-                    <td className="py-1 text-amber-400">
+                    <td className="py-1 text-[var(--warn)]">
                       {Math.max(0, Math.round((r.blockedUntil - Date.now()) / 1000))}s
                     </td>
                   </tr>

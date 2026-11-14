@@ -107,10 +107,10 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Left branding */}
         <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-start">
           <div className="flex items-center gap-2.5">
-            <div className="relative flex items-center justify-center w-9 h-9 rounded-lg bg-[var(--accent-soft)]/80 border border-[var(--accent)] shadow-[0_0_15px_rgba(16,185,129,0.15)] text-[var(--accent)]">
-              <Radio className="w-5 h-5 animate-pulse" />
+            <div className="relative flex items-center justify-center w-9 h-9 rounded-lg bg-[var(--accent-soft)]/80 border border-[var(--accent)]  text-[var(--accent)]">
+              <Radio className="w-5 h-5 " />
               <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--accent)] opacity-75"></span>
+                <span className=" absolute inline-flex h-full w-full rounded-full bg-[var(--accent)] opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--accent)]"></span>
               </span>
             </div>
@@ -141,7 +141,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={onToggleAttack}
               className={`text-xs px-2.5 py-1.5 rounded flex items-center gap-1 font-mono transition-colors ${
                 isAttackActive 
-                  ? 'bg-rose-600/90 text-white animate-pulse' 
+                  ? 'bg-rose-600/90 text-white ' 
                   : 'bg-[var(--paper-2)] text-[var(--ink-2)] hover:bg-[var(--line)]'
               }`}
             >
@@ -165,7 +165,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 }}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium whitespace-nowrap transition-all ${
                   isActive
-                    ? 'bg-[var(--accent)]/20 text-[var(--accent)] border border-[var(--accent)] shadow-[0_0_10px_rgba(16,185,129,0.1)]'
+                    ? 'bg-[var(--accent)]/20 text-[var(--accent)] border border-[var(--accent)] '
                     : 'text-[var(--muted)] hover:text-[var(--ink)] hover:bg-[var(--paper-2)]/60'
                 }`}
               >
@@ -184,7 +184,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             title="Simulate L7 DDoS / SYN Flood Attack to test Rate Limiter & Shield"
             className={`hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-mono font-medium transition-all ${
               isAttackActive
-                ? 'bg-rose-500/20 border border-rose-500 text-rose-300 shadow-[0_0_12px_rgba(244,63,94,0.3)] animate-pulse'
+                ? 'bg-rose-500/20 border border-rose-500 text-rose-300  '
                 : 'bg-[var(--paper-2)] border border-[var(--line)] text-[var(--ink-2)] hover:border-rose-500/50 hover:text-rose-300'
             }`}
           >
@@ -197,7 +197,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => setIsTuiMode(!isTuiMode)}
             className={`flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-mono transition-all border ${
               isTuiMode
-                ? 'bg-amber-500/20 border-amber-500 text-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.2)]'
+                ? 'bg-[var(--warn)]/20 border-[var(--warn)] text-[var(--warn)] '
                 : 'bg-[var(--paper-2)] border-[var(--line)] text-[var(--muted)] hover:text-[var(--ink)] hover:border-[var(--line-strong)]'
             }`}
           >

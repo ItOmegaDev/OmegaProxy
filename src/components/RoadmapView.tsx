@@ -124,7 +124,7 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({ language }) => {
               }}
               className={`p-3.5 rounded-xl border cursor-pointer font-mono transition-all relative ${
                 isSelected
-                  ? 'bg-[var(--paper-2)] border-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.15)]'
+                  ? 'bg-[var(--paper-2)] border-emerald-500 '
                   : 'bg-[var(--paper-2)]/70 border-[var(--line)] hover:border-[var(--line)]'
               }`}
             >

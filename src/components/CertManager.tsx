@@ -196,7 +196,7 @@ export const CertManager: React.FC<CertManagerProps> = ({
               <div className="flex items-start justify-between">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[var(--accent)] shadow-[0_0_8px_rgba(16,185,129,0.7)]"></span>
+                    <span className="w-2.5 h-2.5 rounded-full bg-[var(--accent)] "></span>
                     <h3 className="font-bold text-white text-sm tracking-wide">{cert.domain}</h3>
                   </div>
                   <div className="text-[11px] text-[var(--muted)] mt-1">Issuer: {cert.issuer}</div>

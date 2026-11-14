@@ -388,7 +388,7 @@ WantedBy=multi-user.target
               <span>{copiedKey === 'systemd' ? t.copied : t.copyBtn}</span>
             </button>
           </div>
-          <pre className="bg-[var(--paper)] border border-[var(--line)] p-4 rounded-lg overflow-x-auto text-amber-300 leading-relaxed max-h-96">
+          <pre className="bg-[var(--paper)] border border-[var(--line)] p-4 rounded-lg overflow-x-auto text-[var(--warn)] leading-relaxed max-h-96">
             {systemdService}
           </pre>
         </div>

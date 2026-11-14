@@ -99,7 +99,7 @@ export const TrafficInspector: React.FC<TrafficInspectorProps> = ({
 
   const getStatusColor = (code: number, decision: string) => {
     if (decision === 'blocked_ddos' || code === 403) return 'bg-rose-950/80 text-rose-400 border-rose-800';
-    if (decision === 'rate_limited' || code === 429) return 'bg-amber-950/80 text-amber-300 border-amber-800';
+    if (decision === 'rate_limited' || code === 429) return 'bg-[var(--warn)]/20 text-[var(--warn)] border-[var(--warn)]';
     if (code >= 200 && code < 300) return 'bg-[var(--accent-soft)]/80 text-[var(--accent)] border-emerald-800';
     if (code >= 300 && code < 400) return 'bg-sky-950/80 text-sky-300 border-sky-800';
     return 'bg-[var(--paper-2)] text-[var(--ink-2)] border-[var(--line)]';
@@ -112,7 +112,7 @@ export const TrafficInspector: React.FC<TrafficInspectorProps> = ({
       case 'POST':
         return 'text-[var(--accent)] bg-[var(--accent-soft)]/60 border-emerald-800';
       case 'PUT':
-        return 'text-amber-400 bg-amber-950/60 border-amber-800';
+        return 'text-[var(--warn)] bg-[var(--warn)]/20 border-[var(--warn)]';
       case 'DELETE':
         return 'text-rose-400 bg-rose-950/60 border-rose-800';
       default:
@@ -139,7 +139,7 @@ export const TrafficInspector: React.FC<TrafficInspectorProps> = ({
             onClick={() => setIsLivePaused(!isLivePaused)}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-mono font-medium transition-colors ${
               isLivePaused
-                ? 'bg-amber-500/20 border-amber-500 text-amber-300'
+                ? 'bg-[var(--warn)]/20 border-[var(--warn)] text-[var(--warn)]'
                 : 'bg-[var(--paper-2)] border-[var(--line)] text-[var(--ink-2)] hover:text-white'
             }`}
           >
@@ -264,7 +264,7 @@ export const TrafficInspector: React.FC<TrafficInspectorProps> = ({
                         <span
                           className={`font-semibold ${
                             req.durationMs > 40
-                              ? 'text-amber-400'
+                              ? 'text-[var(--warn)]'
                               : req.durationMs > 80
                               ? 'text-rose-400'
                               : 'text-[var(--accent)]'

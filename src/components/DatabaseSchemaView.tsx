@@ -378,14 +378,14 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
       <div className="bg-[var(--paper-2)]/90 border border-[var(--line)] rounded-xl p-5 shadow-lg">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="flex items-start sm:items-center gap-3">
-            <span className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400">
+            <span className="p-2.5 rounded-lg bg-[var(--warn)]/20 border border-[var(--warn)] text-[var(--warn)]">
               <Flame className="w-6 h-6" />
             </span>
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="text-xl font-bold text-white font-mono">{t.title}</h1>
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-medium bg-[var(--accent-soft)]/80 text-[var(--accent)] border border-[var(--accent)]">
-                  <span className="w-2 h-2 rounded-full bg-[var(--accent)] animate-ping" />
+                  <span className="w-2 h-2 rounded-full bg-[var(--accent)] " />
                   {t.connectedBadge}
                 </span>
               </div>
@@ -393,7 +393,7 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
               
               {/* Cloud DB Identity details */}
               <div className="flex flex-wrap items-center gap-3 text-xs font-mono mt-2 text-[var(--muted)]">
-                <span className="text-[var(--muted)]">{t.project} <span className="text-amber-300 font-bold">{dbStatus.projectId}</span></span>
+                <span className="text-[var(--muted)]">{t.project} <span className="text-[var(--warn)] font-bold">{dbStatus.projectId}</span></span>
                 <span className="text-[var(--faint)]">•</span>
                 <span className="text-[var(--muted)]">{t.databaseId} <span className="text-sky-300 font-bold">{dbStatus.databaseId}</span></span>
               </div>
@@ -405,7 +405,7 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
             <button
               onClick={() => setActiveTab('firestore')}
               className={`px-3 py-1.5 rounded-md transition-all flex items-center gap-1.5 ${
-                activeTab === 'firestore' ? 'bg-amber-600 text-white font-bold shadow-sm' : 'text-[var(--muted)] hover:text-white'
+                activeTab === 'firestore' ? 'bg-[var(--warn)] text-white font-bold shadow-sm' : 'text-[var(--muted)] hover:text-white'
               }`}
             >
               <Flame className="w-3.5 h-3.5" />
@@ -466,7 +466,7 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
                 onClick={() => setSelectedCollection('tunnels')}
                 className={`px-3 py-2 rounded-lg border transition-all flex items-center gap-2 ${
                   selectedCollection === 'tunnels'
-                    ? 'bg-amber-950/60 border-amber-500 text-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.15)]'
+                    ? 'bg-[var(--warn)]/20 border-[var(--warn)] text-[var(--warn)] '
                     : 'bg-[var(--paper-2)] border-[var(--line)] text-[var(--muted)] hover:border-[var(--line)]'
                 }`}
               >
@@ -478,7 +478,7 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
                 onClick={() => setSelectedCollection('traffic_logs')}
                 className={`px-3 py-2 rounded-lg border transition-all flex items-center gap-2 ${
                   selectedCollection === 'traffic_logs'
-                    ? 'bg-amber-950/60 border-amber-500 text-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.15)]'
+                    ? 'bg-[var(--warn)]/20 border-[var(--warn)] text-[var(--warn)] '
                     : 'bg-[var(--paper-2)] border-[var(--line)] text-[var(--muted)] hover:border-[var(--line)]'
                 }`}
               >
@@ -490,7 +490,7 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
                 onClick={() => setSelectedCollection('users')}
                 className={`px-3 py-2 rounded-lg border transition-all flex items-center gap-2 ${
                   selectedCollection === 'users'
-                    ? 'bg-amber-950/60 border-amber-500 text-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.15)]'
+                    ? 'bg-[var(--warn)]/20 border-[var(--warn)] text-[var(--warn)] '
                     : 'bg-[var(--paper-2)] border-[var(--line)] text-[var(--muted)] hover:border-[var(--line)]'
                 }`}
               >
@@ -502,7 +502,7 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
                 onClick={() => setSelectedCollection('rate_limit_rules')}
                 className={`px-3 py-2 rounded-lg border transition-all flex items-center gap-2 ${
                   selectedCollection === 'rate_limit_rules'
-                    ? 'bg-amber-950/60 border-amber-500 text-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.15)]'
+                    ? 'bg-[var(--warn)]/20 border-[var(--warn)] text-[var(--warn)] '
                     : 'bg-[var(--paper-2)] border-[var(--line)] text-[var(--muted)] hover:border-[var(--line)]'
                 }`}
               >
@@ -516,7 +516,7 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
               <button
                 onClick={handleSeedRecord}
                 disabled={isSeeding}
-                className="px-3 py-1.5 rounded-lg bg-amber-600/90 hover:bg-amber-500 text-white flex items-center gap-1.5 font-bold transition-colors disabled:opacity-50"
+                className="px-3 py-1.5 rounded-lg bg-[var(--warn)]/20 hover:bg-[var(--warn)] text-white flex items-center gap-1.5 font-bold transition-colors disabled:opacity-50"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>{t.seedBtn}</span>
@@ -537,10 +537,10 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
           <div className="bg-[var(--paper-2)]/90 border border-[var(--line)] rounded-xl p-5 shadow-sm space-y-4">
             <div className="flex items-center justify-between text-xs font-mono border-b border-[var(--line)] pb-3">
               <span className="text-[var(--muted)] flex items-center gap-2">
-                <Flame className="w-4 h-4 text-amber-400" />
-                <span>Collection path: <strong className="text-amber-300">/{selectedCollection}</strong></span>
+                <Flame className="w-4 h-4 text-[var(--warn)]" />
+                <span>Collection path: <strong className="text-[var(--warn)]">/{selectedCollection}</strong></span>
               </span>
-              <span className="px-2 py-0.5 rounded bg-amber-950/50 border border-amber-500/30 text-amber-300 text-[11px]">
+              <span className="px-2 py-0.5 rounded bg-[var(--warn)]/20 border border-[var(--warn)] text-[var(--warn)] text-[11px]">
                 Storage Engine: Cloud Firestore ABAC
               </span>
             </div>
@@ -596,7 +596,7 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
                 onClick={() => setSelectedTable('tunnels')}
                 className={`px-3 py-2 rounded-lg border transition-all flex items-center gap-2 ${
                   selectedTable === 'tunnels'
-                    ? 'bg-[var(--accent-soft)]/60 border-emerald-500 text-[var(--accent)] shadow-[0_0_10px_rgba(16,185,129,0.1)]'
+                    ? 'bg-[var(--accent-soft)]/60 border-emerald-500 text-[var(--accent)] '
                     : 'bg-[var(--paper-2)] border-[var(--line)] text-[var(--muted)] hover:border-[var(--line)]'
                 }`}
               >
@@ -608,7 +608,7 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
                 onClick={() => setSelectedTable('traffic_logs')}
                 className={`px-3 py-2 rounded-lg border transition-all flex items-center gap-2 ${
                   selectedTable === 'traffic_logs'
-                    ? 'bg-[var(--accent-soft)]/60 border-emerald-500 text-[var(--accent)] shadow-[0_0_10px_rgba(16,185,129,0.1)]'
+                    ? 'bg-[var(--accent-soft)]/60 border-emerald-500 text-[var(--accent)] '
                     : 'bg-[var(--paper-2)] border-[var(--line)] text-[var(--muted)] hover:border-[var(--line)]'
                 }`}
               >
@@ -620,7 +620,7 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
                 onClick={() => setSelectedTable('users')}
                 className={`px-3 py-2 rounded-lg border transition-all flex items-center gap-2 ${
                   selectedTable === 'users'
-                    ? 'bg-[var(--accent-soft)]/60 border-emerald-500 text-[var(--accent)] shadow-[0_0_10px_rgba(16,185,129,0.1)]'
+                    ? 'bg-[var(--accent-soft)]/60 border-emerald-500 text-[var(--accent)] '
                     : 'bg-[var(--paper-2)] border-[var(--line)] text-[var(--muted)] hover:border-[var(--line)]'
                 }`}
               >
@@ -756,7 +756,7 @@ export const DatabaseSchemaView: React.FC<DatabaseSchemaViewProps> = ({ language
                         <tr key={u.id} className="hover:bg-[var(--paper-2)]/40 text-[var(--ink-2)]">
                           <td className="p-2.5 text-[var(--muted)]">{u.id}</td>
                           <td className="p-2.5 text-white font-bold">{u.email}</td>
-                          <td className="p-2.5 text-amber-400 truncate max-w-xs">{u.api_key_hash}</td>
+                          <td className="p-2.5 text-[var(--warn)] truncate max-w-xs">{u.api_key_hash}</td>
                           <td className="p-2.5 text-[var(--muted)]">{u.created_at}</td>
                         </tr>
                       ))

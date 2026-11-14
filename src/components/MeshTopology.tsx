@@ -180,7 +180,7 @@ export const MeshTopology: React.FC<MeshTopologyProps> = ({
             <div className="flex items-baseline gap-1.5 mt-1 font-mono">
               <span className="text-xl font-bold text-white">{telemetry.p50LatencyMs}ms</span>
               <span className="text-xs text-[var(--muted)]">/</span>
-              <span className="text-xs text-amber-300">{telemetry.p95LatencyMs}ms</span>
+              <span className="text-xs text-[var(--warn)]">{telemetry.p95LatencyMs}ms</span>
               <span className="text-xs text-[var(--muted)]">/</span>
               <span className="text-xs text-rose-400">{telemetry.p99LatencyMs}ms</span>
             </div>
@@ -228,19 +228,19 @@ export const MeshTopology: React.FC<MeshTopologyProps> = ({
             <p className="text-xs text-[var(--muted)] max-w-xl mx-auto">{t.clientDesc}</p>
             <div className="flex items-center justify-center gap-2 mt-2 font-mono text-[11px]">
               <span className="px-2 py-0.5 rounded bg-[var(--paper-2)] text-sky-300 border border-[var(--line)]">HTTPS 443</span>
-              <span className="px-2 py-0.5 rounded bg-[var(--paper-2)] text-purple-300 border border-[var(--line)]">HTTP/3 QUIC (UDP 443)</span>
+              <span className="px-2 py-0.5 rounded bg-[var(--paper-2)] text-[var(--accent)] border border-[var(--line)]">HTTP/3 QUIC (UDP 443)</span>
               <span className="px-2 py-0.5 rounded bg-[var(--paper-2)] text-[var(--accent)] border border-[var(--line)]">WSS (WebSockets)</span>
             </div>
           </div>
 
           {/* Animated Flow Arrow 1 */}
           <div className="flex flex-col items-center justify-center">
-            <div className="h-6 w-0.5 bg-gradient-to-b from-sky-500 via-emerald-500 to-emerald-500 animate-pulse"></div>
+            <div className="h-6 w-0.5  from-sky-500 via-emerald-500 to-emerald-500 "></div>
             <ArrowDown className="w-5 h-5 text-[var(--accent)] -mt-1" />
           </div>
 
           {/* Block 2: VPS / Cloud Gateway (Edge Node) */}
-          <div className="bg-[var(--accent-soft)]/20 border-2 border-[var(--accent)] rounded-xl p-5 shadow-[0_0_25px_rgba(16,185,129,0.08)] relative">
+          <div className="bg-[var(--accent-soft)]/20 border-2 border-[var(--accent)] rounded-xl p-5  relative">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--accent)] pb-3 mb-4">
               <div className="flex items-center gap-2.5">
                 <div className="p-2 rounded-lg bg-[var(--accent)]/10 border border-[var(--accent)] text-[var(--accent)]">
@@ -309,7 +309,7 @@ export const MeshTopology: React.FC<MeshTopologyProps> = ({
           </div>
 
           {/* Encrypted Tunnel Connector */}
-          <div className="bg-gradient-to-r from-emerald-950/40 via-emerald-900/30 to-emerald-950/40 border border-[var(--accent)] rounded-xl p-3.5 text-center relative shadow-md">
+          <div className=" from-emerald-950/40 via-emerald-900/30 to-emerald-950/40 border border-[var(--accent)] rounded-xl p-3.5 text-center relative shadow-md">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
               <div className="flex items-center gap-2">
                 <Lock className="w-4 h-4 text-[var(--accent)]" />
@@ -351,7 +351,7 @@ export const MeshTopology: React.FC<MeshTopologyProps> = ({
 
           {/* Animated Flow Arrow 2 */}
           <div className="flex flex-col items-center justify-center">
-            <div className="h-6 w-0.5 bg-gradient-to-b from-emerald-500 via-teal-500 to-teal-400 animate-pulse"></div>
+            <div className="h-6 w-0.5  from-emerald-500 via-teal-500 to-teal-400 "></div>
             <ArrowDown className="w-5 h-5 text-teal-400 -mt-1" />
           </div>
 
@@ -454,7 +454,7 @@ export const MeshTopology: React.FC<MeshTopologyProps> = ({
             disabled={isTracing}
             className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--accent)] hover:bg-[var(--accent)] text-white text-xs font-mono font-bold transition-all shadow-md disabled:opacity-50"
           >
-            <Zap className={`w-3.5 h-3.5 ${isTracing ? 'animate-bounce text-amber-300' : ''}`} />
+            <Zap className={`w-3.5 h-3.5 ${isTracing ? 'animate-bounce text-[var(--warn)]' : ''}`} />
             <span>{isTracing ? t.tracing : t.runTraceBtn}</span>
           </button>
         </div>
@@ -465,7 +465,7 @@ export const MeshTopology: React.FC<MeshTopologyProps> = ({
           <div
             className={`p-3.5 rounded-xl border transition-all ${
               activeTraceStep === 1
-                ? 'bg-[var(--accent-soft)]/80 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] scale-[1.02]'
+                ? 'bg-[var(--accent-soft)]/80 border-emerald-400  scale-[1.02]'
                 : activeTraceStep && activeTraceStep > 1
                 ? 'bg-[var(--paper-2)] border-[var(--line)] opacity-90'
                 : 'bg-[var(--paper)]/60 border-[var(--line)]'
@@ -487,7 +487,7 @@ export const MeshTopology: React.FC<MeshTopologyProps> = ({
           <div
             className={`p-3.5 rounded-xl border transition-all ${
               activeTraceStep === 2
-                ? 'bg-[var(--accent-soft)]/80 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] scale-[1.02]'
+                ? 'bg-[var(--accent-soft)]/80 border-emerald-400  scale-[1.02]'
                 : activeTraceStep && activeTraceStep > 2
                 ? 'bg-[var(--paper-2)] border-[var(--line)] opacity-90'
                 : 'bg-[var(--paper)]/60 border-[var(--line)]'
@@ -509,7 +509,7 @@ export const MeshTopology: React.FC<MeshTopologyProps> = ({
           <div
             className={`p-3.5 rounded-xl border transition-all ${
               activeTraceStep === 3
-                ? 'bg-[var(--accent-soft)]/80 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] scale-[1.02]'
+                ? 'bg-[var(--accent-soft)]/80 border-emerald-400  scale-[1.02]'
                 : activeTraceStep && activeTraceStep > 3
                 ? 'bg-[var(--paper-2)] border-[var(--line)] opacity-90'
                 : 'bg-[var(--paper)]/60 border-[var(--line)]'
@@ -531,7 +531,7 @@ export const MeshTopology: React.FC<MeshTopologyProps> = ({
           <div
             className={`p-3.5 rounded-xl border transition-all ${
               activeTraceStep === 4
-                ? 'bg-[var(--accent-soft)]/80 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] scale-[1.02]'
+                ? 'bg-[var(--accent-soft)]/80 border-emerald-400  scale-[1.02]'
                 : activeTraceStep && activeTraceStep > 4
                 ? 'bg-[var(--paper-2)] border-[var(--line)] opacity-90'
                 : 'bg-[var(--paper)]/60 border-[var(--line)]'
@@ -553,7 +553,7 @@ export const MeshTopology: React.FC<MeshTopologyProps> = ({
           <div
             className={`p-3.5 rounded-xl border transition-all ${
               activeTraceStep === 5
-                ? 'bg-[var(--accent-soft)]/80 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] scale-[1.02]'
+                ? 'bg-[var(--accent-soft)]/80 border-emerald-400  scale-[1.02]'
                 : activeTraceStep && activeTraceStep > 5
                 ? 'bg-[var(--paper-2)] border-[var(--line)] opacity-90'
                 : 'bg-[var(--paper)]/60 border-[var(--line)]'
@@ -575,7 +575,7 @@ export const MeshTopology: React.FC<MeshTopologyProps> = ({
           <div
             className={`p-3.5 rounded-xl border transition-all ${
               activeTraceStep === 6
-                ? 'bg-[var(--accent-soft)]/80 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] scale-[1.02]'
+                ? 'bg-[var(--accent-soft)]/80 border-emerald-400  scale-[1.02]'
                 : 'bg-[var(--paper)]/60 border-[var(--line)]'
             }`}
           >
@@ -596,7 +596,7 @@ export const MeshTopology: React.FC<MeshTopologyProps> = ({
         {activeTraceStep !== null && (
           <div className="bg-[var(--paper)] border border-[var(--line)] rounded-lg p-3 font-mono text-xs text-[var(--ink-2)] flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse"></span>
+              <span className="w-2 h-2 rounded-full bg-[var(--accent)] "></span>
               <span>
                 {activeTraceStep === 1 && 'Ingress Listener: Packet received from 93.175.204.12. SNI parsed.'}
                 {activeTraceStep === 2 && 'TLS Engine: TLS 1.3 handshake terminated. Decrypted HTTP request payload.'}

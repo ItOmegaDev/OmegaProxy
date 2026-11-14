@@ -215,7 +215,7 @@ export const TunnelsView: React.FC<TunnelsViewProps> = ({
       {/* Auto-Discovery Bar */}
       <div className="bg-[var(--paper)]/70 border border-[var(--line)]/90 rounded-xl p-4">
         <div className="flex items-center gap-2 text-xs font-mono font-bold text-[var(--ink-2)] mb-3">
-          <Zap className="w-4 h-4 text-amber-400" />
+          <Zap className="w-4 h-4 text-[var(--warn)]" />
           <span>{t.autoDiscoveryTitle}</span>
         </div>
 
@@ -240,7 +240,7 @@ export const TunnelsView: React.FC<TunnelsViewProps> = ({
                 ) : (
                   <button
                     onClick={() => handleAutoExpose(service)}
-                    className="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 font-bold transition-colors"
+                    className="text-[10px] px-2 py-0.5 rounded bg-[var(--warn)]/20 hover:bg-[var(--warn)]/20 text-[var(--warn)] border border-[var(--warn)] font-bold transition-colors"
                   >
                     + {t.exposeBtn}
                   </button>
@@ -309,7 +309,7 @@ export const TunnelsView: React.FC<TunnelsViewProps> = ({
                   <div className="flex items-center gap-2">
                     <span
                       className={`w-2.5 h-2.5 rounded-full ${
-                        isOnline ? 'bg-[var(--accent)] shadow-[0_0_8px_rgba(16,185,129,0.8)]' : 'bg-zinc-600'
+                        isOnline ? 'bg-[var(--accent)] ' : 'bg-zinc-600'
                       }`}
                     ></span>
                     <h3 className="font-bold text-white font-mono text-sm">{tunnel.name}</h3>
@@ -356,7 +356,7 @@ export const TunnelsView: React.FC<TunnelsViewProps> = ({
                 </div>
                 <div>
                   <span className="text-[10px] text-[var(--muted)] block uppercase">{t.rateLimit}</span>
-                  <span className="text-amber-300">{tunnel.rateLimit.maxRps} r/s</span>
+                  <span className="text-[var(--warn)]">{tunnel.rateLimit.maxRps} r/s</span>
                 </div>
               </div>
 

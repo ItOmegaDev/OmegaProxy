@@ -525,7 +525,7 @@ export default function App() {
       <footer className="border-t border-[var(--line)] py-4 px-6 text-center text-xs text-[var(--muted)] font-mono">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <span className={`w-2 h-2 rounded-full ${isWsConnected ? 'bg-[var(--accent)]' : 'bg-amber-400'}`}></span>
+            <span className={`w-2 h-2 rounded-full ${isWsConnected ? 'bg-[var(--accent)]' : 'bg-[var(--warn)]'}`}></span>
             <span>EdgeProxy — Go-based network infrastructure (vpn.how)</span>
             <span className="text-[var(--faint)]">|</span>
             <span className="text-[var(--muted)]">{isWsConnected ? 'WS Live' : 'Connecting WS...'}</span>

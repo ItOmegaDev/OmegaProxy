@@ -223,7 +223,7 @@ export const CoreCodeExplorer: React.FC<CoreCodeExplorerProps> = ({ language }) 
               })}
 
             <div className="text-[11px] text-[var(--muted)] font-bold px-2 pt-3 py-1 flex items-center gap-1.5">
-              <Terminal className="w-3 h-3 text-amber-400" />
+              <Terminal className="w-3 h-3 text-[var(--warn)]" />
               <span>/agent (Go CLI Agent)</span>
             </div>
             {fileList
@@ -236,12 +236,12 @@ export const CoreCodeExplorer: React.FC<CoreCodeExplorerProps> = ({ language }) 
                     onClick={() => setSelectedFile(file)}
                     className={`w-full text-left px-3 py-2 rounded-lg text-xs flex items-center justify-between transition-all ${
                       isSel
-                        ? 'bg-amber-950/80 border border-amber-500/50 text-amber-300 font-bold'
+                        ? 'bg-[var(--warn)]/20 border border-[var(--warn)] text-[var(--warn)] font-bold'
                         : 'text-[var(--muted)] hover:bg-[var(--paper-2)]/70 hover:text-[var(--ink)]'
                     }`}
                   >
                     <div className="flex items-center gap-2 truncate">
-                      <FileCode className={`w-3.5 h-3.5 ${isSel ? 'text-amber-400' : 'text-[var(--muted)]'}`} />
+                      <FileCode className={`w-3.5 h-3.5 ${isSel ? 'text-[var(--warn)]' : 'text-[var(--muted)]'}`} />
                       <span className="truncate">{file.replace('agent/', '')}</span>
                     </div>
                     <span className="text-[10px] text-[var(--muted)] bg-[var(--paper)] px-1.5 py-0.5 rounded border border-[var(--line)]">
@@ -252,7 +252,7 @@ export const CoreCodeExplorer: React.FC<CoreCodeExplorerProps> = ({ language }) 
               })}
 
             <div className="text-[11px] text-[var(--muted)] font-bold px-2 pt-3 py-1 flex items-center gap-1.5">
-              <Database className="w-3 h-3 text-cyan-400" />
+              <Database className="w-3 h-3 text-[var(--info)]" />
               <span>/db (PostgreSQL 16 Schema)</span>
             </div>
             {fileList
@@ -265,12 +265,12 @@ export const CoreCodeExplorer: React.FC<CoreCodeExplorerProps> = ({ language }) 
                     onClick={() => setSelectedFile(file)}
                     className={`w-full text-left px-3 py-2 rounded-lg text-xs flex items-center justify-between transition-all ${
                       isSel
-                        ? 'bg-cyan-950/80 border border-cyan-500/50 text-cyan-300 font-bold'
+                        ? 'bg-[var(--info)]/20 border border-cyan-500/50 text-[var(--info)] font-bold'
                         : 'text-[var(--muted)] hover:bg-[var(--paper-2)]/70 hover:text-[var(--ink)]'
                     }`}
                   >
                     <div className="flex items-center gap-2 truncate">
-                      <FileCode className={`w-3.5 h-3.5 ${isSel ? 'text-cyan-400' : 'text-[var(--muted)]'}`} />
+                      <FileCode className={`w-3.5 h-3.5 ${isSel ? 'text-[var(--info)]' : 'text-[var(--muted)]'}`} />
                       <span className="truncate">{file.replace('db/', '')}</span>
                     </div>
                     <span className="text-[10px] text-[var(--muted)] bg-[var(--paper)] px-1.5 py-0.5 rounded border border-[var(--line)]">
